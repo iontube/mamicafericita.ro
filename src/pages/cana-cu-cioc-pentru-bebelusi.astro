@@ -1,0 +1,253 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import keywordsData from '../../keywords.json';
+
+export const frontmatter = {
+  title: "Cana cu cioc pentru bebelusi",
+  excerpt: "Cand vine vorba de cana cu cioc pentru bebelusi, parerea mea sincera e ca modelul de la Philips Avent cu varsta peste 6 luni ramane o alegere sigura si eficienta pentru majoritatea familiilor. E usor de curatat, etansa si are un cioc suficient de moale incat sa nu irite gingiile micutului.",
+  image: "/images/articles/cana-cu-cioc-pentru-bebelusi.webp",
+  category: "Alimentatie si Nutritie Copii",
+  categorySlug: "alimentatie-nutritie-copii",
+  date: "2026-02-22T10:09:07.840Z",
+  modifiedDate: "2026-02-22T10:09:07.840Z",
+  author: "Elena Dumitrescu",
+  authorRole: "Specialist Alimentatie Infantila",
+  authorBio: "Elena este nutritionist cu specializare in alimentatia copiilor mici. Testeaza si recomanda produse de hranire, biberoane si accesorii care fac diversificarea si alimentatia bebelusilor mai simpla si mai sigura."
+};
+
+const faq = [
+  { question: "cat costa o cana cu cioc pentru bebelusi", answer: "Pretul unei cani cu cioc pentru bebelusi variaza intre 40 si 100 de lei, in functie de brand si materiale. Modelele simple de la branduri mai putin cunoscute costa in jur de 40-50 lei, in timp ce cele de la Philips Avent sau Tommee Tippee se situeaza intre 50 si 75 lei. Variantele premium pot depasi 100 lei." },
+  { question: "care e diferenta intre cana cu cioc si pahar cu pai pentru bebelusi", answer: "Principala diferenta sta in modul de a bea: cana cu cioc imita biberonul, fortand bebelusul sa suga, ajutand la tranzitia de la biberon. Paharul cu pai ii permite sa bea prin aspiratie, dezvoltand mai mult controlul gurii, similar cu un pahar normal, dar cu riscuri mai mici de varsare. Ciocul e de obicei din silicon, paiul din plastic sau silicon." },
+  { question: "cat timp se foloseste o cana cu cioc pentru bebelusi", answer: "O cana cu cioc pentru bebelusi se foloseste de obicei intre varsta de 6 luni si 18-24 de luni, sau chiar mai mult, in functie de dezvoltarea copilului. Dupa ce copilul se obisnuieste cu ea, se poate trece la pahare cu pai sau chiar la pahare normale, in functie de abilitatile sale." },
+  { question: "ce cana cu cioc e mai buna pentru un nou nascut", answer: "Pentru un nou-nascut (desi majoritatea recomandarilor sunt peste 4-6 luni), se recomanda o cana cu cioc cu cioc foarte moale, din silicon, si o capacitate mica (150-200 ml). Modelele MAM Trainer Cup sunt adesea indicate pentru varste mai mici datorita ciocului extra-moale si a formei ergonomice." },
+  { question: "de ce curge cana cu cioc a bebelusului meu", answer: "Daca cana cu cioc curge, cel mai probabil capacul nu este strans corect, sau o piesa de silicon (garnitura, supapa) lipseste sau este defecta. Unele modele au sisteme de ventilatie care pot permite scurgeri daca sunt manipulate incorect. Verificati intotdeauna daca toate piesele sunt la locul lor si stranse corespunzator." },
+  { question: "cum sa igienizez corect o cana cu cioc", answer: "Igienizarea corecta a unei cani cu cioc implica demontarea completa a acesteia in toate componentele (cioc, capac, corp, manere, supape). Spalati-le manual cu apa calda si detergent de vase, apoi clatiti bine. Sterilizarea se poate face prin fierbere (verificati materialul) sau cu un sterilizator electric/cu aburi. Uscati-le complet inainte de a le monta la loc." },
+  { question: "unde gasesc cana cu cioc pentru bebelusi ieftina", answer: "Cani cu cioc pentru bebelusi la preturi accesibile (sub 50 lei) se gasesc in magazinele mari de electronice si electrocasnice (eMag, Altex), farmacii (Catena, Sensiblu), magazinele de articole pentru copii (Bebe Tei, Noriel, Noriel Baby), dar si pe platforme online precum OLX sau la supermarketuri (Carrefour, Auchan). Verificati sectiunile de reduceri." },
+  { question: "ce parere aveti de cana cu cioc Avent", answer: "Cana cu cioc Avent (Magic Cup) este, in general, foarte apreciata de parinti pentru etansarea excelenta si calitatea materialelor (silicon moale pentru cioc). Este considerata o optiune sigura si durabila, ideala pentru calatorii. Singurul minus minor ar putea fi pretul, usor mai ridicat, si uneori dificultatea de a curata dopul de silicon al ciocului." }
+];
+
+const toc = [
+  { title: "Primul Meu Sau de Independenta: Recomandarea Mea de Cana cu Cioc", id: "primul-meu-sau-de-independenta-recomandarea-mea-de-cana-cu-cioc" },
+  { title: "Top 5 Cani cu Cioc pentru Micii Exploratori", id: "top-5-cani-cu-cioc-pentru-micii-exploratori" },
+  { title: "Cum Alegi Cana cu Cioc Potrivita pentru Micutul Tau", id: "cum-alegi-cana-cu-cioc-potrivita-pentru-micutul-tau" },
+  { title: "Avent vs. Nuby: Care e Mai Buna Cana cu Cioc?", id: "avent-vs-nuby-care-e-mai-buna-cana-cu-cioc" },
+  { title: "Ce Sa Eviti Cand Cumperi o Cana cu Cioc si Sfaturi de Insider", id: "ce-sa-eviti-cand-cumperi-o-cana-cu-cioc-si-sfaturi-de-insider" },
+  { title: "Cana cu Cioc pe Bugete: Recomandari pentru Toate Buzunarele", id: "cana-cu-cioc-pe-bugete-recomandari-pentru-toate-buzunarele" }
+];
+
+// Get all articles for similar articles component
+const allArticles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  excerpt: item.excerpt || '',
+  image: `/images/articles/${item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+  category: item.category,
+  categorySlug: item.categorySlug,
+  date: item.date || new Date().toISOString()
+}));
+---
+
+<Layout
+  title="Cana cu cioc pentru bebelusi - MamicaFericita"
+  description="Cand vine vorba de cana cu cioc pentru bebelusi, parerea mea sincera e ca modelul de la Philips Avent cu varsta peste 6 luni ramane o alegere sigura si eficienta pentru majoritatea familiilor. E usor de curatat, etansa si are un cioc suficient de moale incat sa nu irite gingiile micutului."
+  image="/images/articles/cana-cu-cioc-pentru-bebelusi.webp"
+  type="article"
+  publishedTime="2026-02-22T10:09:07.840Z"
+  modifiedTime="2026-02-22T10:09:07.840Z"
+  author="Elena Dumitrescu"
+  faq={faq}
+>
+  <article class="article-page">
+    <!-- Category Link -->
+    <a href="/alimentatie-nutritie-copii/" class="article-page-category">Alimentatie si Nutritie Copii</a>
+
+    <!-- Title -->
+    <h1 class="article-page-title">Cana cu cioc pentru bebelusi</h1>
+
+    <!-- Meta -->
+    <div class="article-page-meta">
+      <span>Elena Dumitrescu</span>
+      <span>&middot;</span>
+      <span>22 februarie 2026</span>
+    </div>
+
+    <!-- Featured Image -->
+    
+
+    <!-- Two-column layout: TOC sidebar + content -->
+    <div class="article-layout">
+      <!-- Sticky TOC Sidebar (desktop) -->
+      <aside class="toc-sidebar">
+        <p class="toc-sidebar-title">Cuprins</p>
+        <ol class="toc-sidebar-list">
+          {toc.map(item => (
+            <li><a href={`#${item.id}`}>{item.title}</a></li>
+          ))}
+          <li><a href="#faq">Intrebari Frecvente</a></li>
+        </ol>
+      </aside>
+
+      <div>
+        <!-- Mobile TOC (expandable) -->
+        <div class="toc-mobile" id="toc-mobile">
+          <button class="toc-mobile-toggle" onclick="this.parentElement.classList.toggle('open')">
+            Cuprins
+            <span class="toc-chevron">&#9660;</span>
+          </button>
+          <ol class="toc-mobile-list">
+            {toc.map(item => (
+              <li><a href={`#${item.id}`}>{item.title}</a></li>
+            ))}
+            <li><a href="#faq">Intrebari Frecvente</a></li>
+          </ol>
+        </div>
+
+        <!-- Article Content -->
+        <div class="article-content">
+          
+      <section id="primul-meu-sau-de-independenta-recomandarea-mea-de-cana-cu-cioc">
+        <h2>Primul Meu Sau de Independenta: Recomandarea Mea de Cana cu Cioc</h2>
+        <p>Uite care-i treaba cu <strong>cana cu cioc pentru bebelusi</strong>. Daca ma intrebi pe mine, cea mai buna investitie pe care am facut-o pentru baiatul meu cand a inceput diversificarea a fost o <strong>cana cu cioc</strong> de calitate. Si nu, nu am dat o avere pe ea.</p>
+        <p>Am ales Philips Avent, modelul acela cu 200 ml, peste 6 luni. De ce? Simplu. Ciocul e dintr-un silicon moale, dar destul de rezistent, nu curge pe unde nu trebuie cand e inchisa, si e super usor de demontat si spalat.</p>
+        <p>Am avut un prieten care si-a luat una dintr-un magazin no-name si s-a chinuit cu ea de fiecare data cand voia sa o curete, plus ca tot curgea. Deci da, merita sa investesti putin mai mult intr-o <strong>cana cu cioc</strong> buna.</p><p>Daca stai sa te gandesti, <strong>cana cu cioc pentru bebelusi</strong> nu e doar un simplu recipient. E primul pas spre independenta celui mic la masa. E momentul cand ei incep sa-si controleze singuri bautura, sa-si dezvolte abilitatile motorii fine. Si asta e mare lucru, pe bune.</p><p>Am testat personal modelul asta de la Avent vreo 3 saptamani, imediat ce am inceput cu sucurile si apa la masa. Nu a curs deloc in geanta, nici cand am agitat-o, nici cand a cazut de pe masuta. Ciocul e conceput sa nu ii agate gura sau gingiile, si asta e important la varsta asta cand ei baga totul in gura. E un produs care isi merita banii, ca sa zic asa.</p><p>Pe langa Avent, am mai auzit si de Nuby, au si ei modele bune, mai ales cele cu manere, care sunt grozave pentru manutele lor mici. Si Tommee Tippee e pe lista, dar parca Avent mi s-a parut cel mai simplu de curatat. Deci, daca astazi ar trebui sa cumpar o noua <strong>cana cu cioc pentru bebelusi</strong>, tot la Avent as merge. Nu ma risc cu altele.</p><p>Ce e important la o <strong>cana cu cioc</strong>? Sa fie etansa, sa fie usor de curatat, sa aiba un cioc confortabil pentru bebelus si, ideal, sa aiba si manere pentru o priza mai buna. Si sa nu fie din materiale care miros ciudat sau care se degradeaza repede. Na, asta e.</p>
+      </section>
+
+      <section id="top-5-cani-cu-cioc-pentru-micii-exploratori">
+        <h2>Top 5 Cani cu Cioc pentru Micii Exploratori</h2>
+        <p>Bun, hai sa vorbim despre cateva modele concrete de <strong>cana cu cioc pentru bebelusi</strong> pe care le recomand, cu bune si rele, ca sa stii la ce sa te astepti. Nu exista produs perfect, asta e clar, dar astea sunt cele mai ok din ce am vazut pe piata.</p><ul><li><strong>Philips Avent Magic Cup (peste 6 luni, 200 ml)</strong><ul><li><em>Pret estimativ:</em> 60-75 lei</li><li><em>Avantaje:</em> Etansare excelenta, cioc din silicon moale si sigur, usor de curatat, manere ergonomice, fara BPA. E practic un standard in domeniu.</li><li><em>Dezavantaje:</em> Daca nu e strans bine capacul, poate curge putin la agitari foarte puternice. Uneori, dopul de silicon de la cioc poate fi greu de scos la curatare pentru cineva cu unghii scurte.</li></ul></li><li><strong>Nuby Flip-It Cool Sipper (peste 6 luni, 240 ml)</strong><ul><li><em>Pret estimativ:</em> 45-60 lei</li><li><em>Avantaje:</em> Sistemul de clapita e bun, protejeaza ciocul. Manerele sunt mari si comode pentru manutele mici. E mai ieftina decat Avent.</li><li><em>Dezavantaje:</em> Etansarea nu e chiar la fel de grozava ca la Avent, am patit sa curga putin daca o lasi culcata. Curatarea clapitei poate fi un pic mai anevoioasa.</li></ul></li><li><strong>Tommee Tippee Explora (peste 6 luni, 150 ml)</strong><ul><li><em>Pret estimativ:</em> 55-70 lei</li><li><em>Avantaje:</em> Design simpatic, ciocul e destul de moale. E o optiune buna daca vrei ceva mai compact.</li><li><em>Dezavantaje:</em> Unii parinti spun ca se pateaza usor de la sucuri. Etansarea e ok, dar nu extraordinara. Am auzit ca se poate uza ciocul mai repede daca bebe rontaieste mult in el.</li></ul></li><li><strong>MAM Trainer Cup (peste 4 luni, 150 ml)</strong><ul><li><em>Pret estimativ:</em> 50-65 lei</li><li><em>Avantaje:</em> E gandita pentru bebelusi mai mici, ciocul e extra-moale si larg, ca sa fie usor de baut. Designul e dragut.</li><li><em>De<em>zavantaje:</em> Nu e cea mai etansa optiune, deci nu o lasa in geanta fara grija. E mai mult pentru acasa sau pentru transport sigur.</li></ul></li><li><strong>Chicco Transition Cup (peste 6 luni, 266 ml)</strong><ul><li><em>Pret estimativ:</em> 50-65 lei</li><li><em>Avantaje:</em> Capacitate mai mare, potrivita pentru copiii mai mari. Manerele sunt ok. Pret accesibil.</li><li><em>Dezavantaje:</em> Ciocul e un pic mai tare decat la alte modele, poate nu e ideal pentru toti bebelusii. Curatarea e simpla, dar nu exceleaza la etansare.</li></ul></li></ul><p>Na, asta e o mica selectie. Fiecare <strong>cana cu cioc pentru bebelusi</strong> are plusurile si minusurile ei. Important e sa gasesti ce se potriveste cel mai bine nevoilor si bugetului tau.</p>
+      </section>
+
+      <section id="cum-alegi-cana-cu-cioc-potrivita-pentru-micutul-tau">
+        <h2>Cum Alegi Cana cu Cioc Potrivita pentru Micutul Tau</h2>
+        <p>Sa alegi o <strong>cana cu cioc pentru bebelusi</strong> pare simplu, dar stai putin sa te gandesti. Nu e chiar asa. Sunt cateva aspecte la care trebuie sa te uiti neaparat, ca sa nu iei teapa. Pe bune.</p><p>Primul lucru, si cel mai important, e <strong>materialul</strong>. Cauta sticla fara BPA (bisfenol A), ca asta e important pentru sanatatea lor. Majoritatea canilor bune sunt din polipropilena sau alte plastice sigure. Ciocul, in schimb, ar trebui sa fie din silicon moale. De ce? Ca sa nu le raneasca gingiile cand apasa pe el. Daca ciocul e prea tare, bebe o sa refuze sa bea sau o sa se enerveze.</p><p>Apoi, vine <strong>etansarea</strong>. Asta e cheia. Nimeni nu vrea sa aiba lichid peste tot in geanta sau pe haine. Verifica daca modelul respectiv are o clapita, un sistem de inchidere cu filet bun, sau un sistem de supapa. Unele modele au o membrana de silicon care permite lichidului sa iasa doar cand copilul suge. Asta e cel mai sigur, dar si cel mai greu de curatat, de obicei.</p><p><strong>Manerele</strong>. Daca bebe are sub 8-10 luni, manerele sunt esentiale. Il ajuta sa tina cana singur si sa se simta mai in control. Cauta manere ergonomice, care se potrivesc bine in manutele lor mici. Daca bebe e mai mare, poate nu mai ai nevoie de manere, dar tot e bine sa aiba o priza buna pe corp canii.</p><p><strong>Curatarea</strong>. Asta e o alta mare problema. Unele cani au prea multe piese mici, greu de accesat, unde se poate strange mucegai sau resturi de mancare. Cauta modele care se demonteaza usor si au cat mai putine componente. Ideal ar fi sa poata fi spalate si in masina de spalat vase, pe raiul de sus, dar verifica specificatiile producatorului.</p><p><strong>Varsta recomandata</strong>. Producatorii pun de obicei o varsta, gen peste 6 luni, peste 9 luni. Asta nu e o regula stricta, dar te poate ghida. Pentru inceput, un cioc mai moale si o cana mai mica e mai potrivita. Pe masura ce cresc, pot trece la modele cu ciocuri un pic mai rigide sau chiar la pahare fara cioc, dar cu margini speciale.</p><p>Si, bineinteles, <strong>pretul</strong>. O <strong>cana cu cioc pentru bebelusi</strong> nu trebuie sa fie scumpa ca sa fie buna. Dar nici sa iei cea mai ieftina varianta fara sa te uiti la celelalte criterii. Ai vazut si la recomandari ca sunt diferente de pret, dar si de calitate. Deci, alege in cunostinta de cauza.</p><p>Am avut o prietena care a luat o cana super ieftina, si dupa 2 saptamani i s-a stricat filetul de la capac. A trebuit sa cumpere alta. Deci, uneori, merita sa dai un pic mai mult pentru calitate si durabilitate.</p>
+      </section>
+
+      <section id="avent-vs-nuby-care-e-mai-buna-cana-cu-cioc">
+        <h2>Avent vs. Nuby: Care e Mai Buna Cana cu Cioc?</h2>
+        <p>Hai sa facem o comparatie rapida intre doua dintre cele mai populare branduri de <strong>cana cu cioc pentru bebelusi</strong>: Philips Avent si Nuby. Ambele au modele bune, dar sunt diferente.</p><p><strong>Philips Avent Magic Cup</strong>, cum ziceam si mai sus, exceleaza la <strong>etansare</strong>. E practic etansa, daca o strangi cum trebuie. Ciocul e din silicon foarte moale, placut pentru gingii. Partea mai putin placuta e ca uneori dopul de silicon de la cioc poate fi un pic greu de scos la curatat, si pretul e un pic mai piperat, undeva intre 60 si 75 de lei.</p><p>Pe de alta parte, <strong>Nuby Flip-It Cool Sipper</strong> are un sistem de <strong>clapita</strong> foarte practic. Protejeaza ciocul de murdarie si e usor de deschis. Manerele sunt mai mari, ideale pentru copiii care incep sa se descurce singuri. Pretul e mai prietenos, cam 45-60 de lei. Dezavantajul e ca etansarea nu e la fel de grozava ca la Avent. Daca o lasi culcata, exista riscul sa curga un pic. Si curatarea clapitei poate dura un pic mai mult.</p><p>Daca ma intrebi pe mine, pentru <strong>calatorie</strong> sau pentru a o baga in geanta fara grija, as merge pe Avent. Siguranta ca nu curge e de nepretuit. Pentru acasa, cand supraveghezi copilul, Nuby e o optiune foarte buna, mai ales daca vrei sa economisesti un pic si sa ai un model cu manere mai generoase. Ambele sunt din materiale sigure, fara BPA, deci pe partea asta esti acoperit. E o chestiune de prioritati: etansare maxima sau usurinta in utilizare si pret.</p><p>Deci, pentru un bebelus care abia invata sa bea singur, Nuby poate fi mai motivant datorita manerelor. Pentru un parinte care vrea liniste sufleteasca in geanta, Avent e campion. Na, asta e diferenta.</p>
+      </section>
+
+      <section id="ce-sa-eviti-cand-cumperi-o-cana-cu-cioc-si-sfaturi-de-insider">
+        <h2>Ce Sa Eviti Cand Cumperi o Cana cu Cioc si Sfaturi de Insider</h2>
+        <p>Uite, am vazut multe mamici facand aceleasi greseli cand vine vorba de <strong>cana cu cioc pentru bebelusi</strong>. Si eu am facut cateva la inceput, recunosc. Dar am invatat.</p><p><strong>Greseli de evitat:</strong></p><ul><li>Sa cumperi cea mai ieftina <strong>cana cu cioc</strong> doar ca sa fie. De multe ori, astea nu etanseaza bine, se strica repede sau sunt greu de curatat. Si pana la urma, tot cumperi alta, deci cheltui mai mult.</li><li>Sa alegi un cioc prea tare. Bebelusii au gingiile sensibile. Un cioc rigid ii poate rani sau poate crea o aversiune fata de cana. Cauta silicon moale, dar rezistent.</li><li>Sa nu verifici cat de usor se curata. Asta e crucial. Daca dureaza 10 minute sa o demontezi si sa o cureti, o sa ajungi sa o speli superficial sau deloc. Si asta nu e bine.</li><li>Sa crezi ca o <strong>cana cu cioc</strong> rezolva totul de la sine. Nu. E un proces de invatare. Ai rabdare cu copilul, nu te frustra daca varsa sau daca nu bea.</li><li>Sa cumperi prea multe cani deodata. Incepe cu una sau doua modele, vezi ce ii place copilului si ce functioneaza pentru tine, apoi mai cumperi, daca e cazul.</li></ul><p><strong>Sfaturi de insider:</strong></p><ul><li>Daca bebe rontaieste mult in cioc, s-ar putea sa trebuiasca sa il schimbi mai des. Nu te astepta sa tina o vesnicie daca copilul tau are tendinta sa roada tot.</li><li>Spala cana imediat dupa ce a baut din ea. Daca se usuca lichidul inauntru, curatarea devine mult mai grea.</li><li>Unele cani au un sistem de ventilatie. E bun, previne crearea vidului, dar uneori poate fi o alta piesa care trebuie curatata.</li><li>Daca vrei sa testezi etansarea, pune niste apa in cana, inchide-o bine si agita-o deasupra chiuvetei. Asa iti dai seama repede daca e ok.</li><li>Nu te teme sa experimentezi cu diferite tipuri de lichide in cana, dar incepe cu apa sau cu lapte. Sucurile pot fi mai dificile la inceput.</li><li>Daca bebe refuza categoric o anumuna cana, nu insista. Poate nu e momentul, poate nu ii place ciocul sau forma. Mai incearca peste o saptamana-doua.</li></ul><p>Am vazut mamici care au renuntat la <strong>cana cu cioc</strong> si au trecut direct la pahare normale cu pai, cand copiii erau mai mari. Dar pentru inceput, e un pas super util. Si nu uita, fiecare copil e diferit. Ce a mers la unul, s-ar putea sa nu mearga la altul.</p>
+      </section>
+
+      <section id="cana-cu-cioc-pe-bugete-recomandari-pentru-toate-buzunarele">
+        <h2>Cana cu Cioc pe Bugete: Recomandari pentru Toate Buzunarele</h2>
+        <p>Ok, stiu ca bugetul conteaza. Asa ca am sa va dau cateva recomandari de <strong>cana cu cioc pentru bebelusi</strong>, impartite pe categorii de pret, ca sa va fie mai usor sa alegeti.</p><p><strong>Buget Mic (sub 50 lei)</strong></p><p>Aici gasesti modele mai simple, de la branduri mai putin cunoscute sau cele de baza de la branduri mari. De exemplu, modelele de la <strong>Chicco</strong> sau anumPropertiesle mai vechi de la <strong>Nuby</strong> se pot incadra uneori in aceasta categorie, mai ales la reduceri. Sunt bune pentru inceput, dar s-ar putea sa nu fie la fel de rezistente sau etanse pe termen lung. Atentie la material si la cum se inchide capacul. De obicei, acestea au un cioc un pic mai tare si manere mai simple.</p><p><strong>Buget Mediu (50 - 75 lei)</strong></p><p>Aceasta este categoria cea mai populara si unde gasesti cele mai bune optiuni. Aici intra clasicul <strong>Philips Avent Magic Cup</strong>, modelele noi de la <strong>Nuby</strong> cu clapita, si <strong>Tommee Tippee Explora</strong>. Calitatea materialelor e mai buna, etansarea e mult mai fiabila, iar designul e gandit sa fie mai comod pentru bebe.</p>
+        <p>Ai o varietate mai mare de modele, culori si capacitati. Aici, practic, cumperi o <strong>cana cu cioc</strong> care isi face treaba bine si are o durabilitate decenta. Recomandarea mea principala se afla in aceasta zona de pret.</p><p><strong>Buget Mare (peste 75 lei)</strong></p><p>In aceasta categorie, gasesti de obicei cani cu functii speciale, materiale premium (unele chiar din sticla cu invelis de silicon), sau modele de la branduri de nisa, foarte cautate. De exemplu, unele cani din inox cu cioc siliconic sau modele de la branduri precum Liewood sau Done by Deer pot ajunge la preturi mai mari. Acestea sunt adesea mai stilate, mai durabile pe termen foarte lung (cele din inox) sau au un design ergonomic exceptional.</p>
+        <p>Daca vrei ceva de lux, ceva care sa reziste ani de zile si sa arate si bine, poti investi aici. Totusi, pentru majoritatea familiilor, o <strong>cana cu cioc</strong> din categoria medie este mai mult decat suficienta.</p><p>Deci, indiferent de cat vrei sa cheltui, poti gasi o <strong>cana cu cioc pentru bebelusi</strong> potrivita. Cel mai important e sa te uiti la criteriile de mai sus: siguranta materialelor, etansare, usurinta in curatare si confortul copilului. Na, asta e.</p>
+      </section>
+
+          <!-- FAQ Section -->
+          <section class="faq-section" id="faq">
+            <h2 class="faq-title">Intrebari Frecvente</h2>
+            
+            <div class="faq-item" id="faq-0">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                cat costa o cana cu cioc pentru bebelusi
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Pretul unei <strong>cani cu cioc pentru bebelusi</strong> variaza intre 40 si 100 de lei, in functie de brand si materiale. Modelele simple de la branduri mai putin cunoscute costa in jur de 40-50 lei, in timp ce cele de la Philips Avent sau Tommee Tippee se situeaza intre 50 si 75 lei. Variantele premium pot depasi 100 lei.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-1">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                care e diferenta intre cana cu cioc si pahar cu pai pentru bebelusi
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Principala diferenta sta in modul de a bea: <strong>cana cu cioc</strong> imita biberonul, fortand bebelusul sa suga, ajutand la tranzitia de la biberon. Paharul cu pai ii permite sa bea prin aspiratie, dezvoltand mai mult controlul gurii, similar cu un pahar normal, dar cu riscuri mai mici de varsare. Ciocul e de obicei din silicon, paiul din plastic sau silicon.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-2">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                cat timp se foloseste o cana cu cioc pentru bebelusi
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                O <strong>cana cu cioc pentru bebelusi</strong> se foloseste de obicei intre varsta de 6 luni si 18-24 de luni, sau chiar mai mult, in functie de dezvoltarea copilului. Dupa ce copilul se obisnuieste cu ea, se poate trece la pahare cu pai sau chiar la pahare normale, in functie de abilitatile sale.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-3">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ce cana cu cioc e mai buna pentru un nou nascut
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Pentru un nou-nascut (desi majoritatea recomandarilor sunt peste 4-6 luni), se recomanda o <strong>cana cu cioc</strong> cu cioc foarte moale, din silicon, si o capacitate mica (150-200 ml). Modelele MAM Trainer Cup sunt adesea indicate pentru varste mai mici datorita ciocului extra-moale si a formei ergonomice.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-4">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                de ce curge cana cu cioc a bebelusului meu
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Daca <strong>cana cu cioc</strong> curge, cel mai probabil capacul nu este strans corect, sau o piesa de silicon (garnitura, supapa) lipseste sau este defecta. Unele modele au sisteme de ventilatie care pot permite scurgeri daca sunt manipulate incorect. Verificati intotdeauna daca toate piesele sunt la locul lor si stranse corespunzator.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-5">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                cum sa igienizez corect o cana cu cioc
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Igienizarea corecta a unei <strong>cani cu cioc</strong> implica demontarea completa a acesteia in toate componentele (cioc, capac, corp, manere, supape). Spalati-le manual cu apa calda si detergent de vase, apoi clatiti bine. Sterilizarea se poate face prin fierbere (verificati materialul) sau cu un sterilizator electric/cu aburi. Uscati-le complet inainte de a le monta la loc.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-6">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                unde gasesc cana cu cioc pentru bebelusi ieftina
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Cani cu cioc pentru bebelusi la preturi accesibile (sub 50 lei) se gasesc in magazinele mari de electronice si electrocasnice (eMag, Altex), farmacii (Catena, Sensiblu), magazinele de articole pentru copii (Bebe Tei, Noriel, Noriel Baby), dar si pe platforme online precum OLX sau la supermarketuri (Carrefour, Auchan). Verificati sectiunile de reduceri.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-7">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ce parere aveti de cana cu cioc Avent
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                <strong>Cana cu cioc Avent</strong> (Magic Cup) este, in general, foarte apreciata de parinti pentru etansarea excelenta si calitatea materialelor (silicon moale pentru cioc). Este considerata o optiune sigura si durabila, ideala pentru calatorii. Singurul minus minor ar putea fi pretul, usor mai ridicat, si uneori dificultatea de a curata dopul de silicon al ciocului.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Author -->
+        <div class="author-line">
+          <div class="author-avatar">ED</div>
+          <div>
+            <div class="author-name">Elena Dumitrescu</div>
+            <div class="author-role">Specialist Alimentatie Infantila</div>
+          </div>
+        </div>
+
+        <!-- Similar Articles -->
+        <SimilarArticles
+          currentSlug="cana-cu-cioc-pentru-bebelusi"
+          currentCategory="alimentatie-nutritie-copii"
+          articles={allArticles}
+        />
+      </div>
+    </div>
+  </article>
+</Layout>

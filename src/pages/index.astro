@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import keywordsData from '../../keywords.json';
+
+const categories = [
+  {
+    name: 'Carucioare si Accesorii Bebe',
+    slug: 'carucioare-accesorii-bebe',
+    description: 'Recenzii detaliate pentru carucioare 3 in 1, marsupii ergonomice, scaune auto si landouri. Comparam cele mai populare modele de pe piata romaneasca si te ajutam sa alegi ceea ce se potriveste cel mai bine stilului tau de viata si bugetului familiei tale.',
+    icon: '🍼'
+  },
+  {
+    name: 'Jucarii Educative',
+    slug: 'jucarii-educative',
+    description: 'Jucarii Montessori, puzzle-uri din lemn, cuburi de construit si seturi creative care stimuleaza dezvoltarea cognitiva si motricitatea fina a copiilor. Recomandam produse testate si sigure, pe grupe de varsta, pentru a sustine invatarea prin joaca.',
+    icon: '🧸'
+  },
+  {
+    name: 'Alimentatie si Nutritie Copii',
+    slug: 'alimentatie-nutritie-copii',
+    description: 'Tot ce ai nevoie pentru diversificare si hranirea bebelusului: scaune de masa, biberoane anticolici, sterilizatoare, roboti de bucatarie si accesorii de hranire. Sfaturi practice testate de mamici pentru o alimentatie sanatoasa si fara stres.',
+    icon: '🥣'
+  },
+  {
+    name: 'Produse pentru Mamici',
+    slug: 'produse-mamici',
+    description: 'Creme antivergeturi, perne de alaptat, sutiene speciale, centuri postnatale si genti organizator. Produse care fac viata mamicilor mai confortabila in timpul sarcinii si dupa nastere, testate si recomandate de mamici cu experienta.',
+    icon: '💛'
+  },
+  {
+    name: 'Camera Copilului',
+    slug: 'camera-copilului',
+    description: 'Patuturi cu saltea, lampi de veghe, monitoare video, covoare de joaca si mobilier pentru camera bebelusului. Te ajutam sa creezi un spatiu sigur, confortabil si placut pentru odihna si joaca micutului tau.',
+    icon: '🛏️'
+  }
+];
+
+// Get completed articles
+const articles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  excerpt: item.excerpt || '',
+  image: `/images/articles/${item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+  category: item.category,
+  categorySlug: item.categorySlug,
+  date: item.date || new Date().toISOString()
+})).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+// Count articles per category
+const categoryCounts = categories.map(cat => ({
+  ...cat,
+  count: articles.filter(a => a.categorySlug === cat.slug).length
+}));
+
+const featuredArticle = articles[0];
+const remainingArticles = articles.slice(1);
+---
+
+<Layout
+  title="MamicaFericita - Sfaturi si Recomandari pentru Mamici si Copii"
+  description="Sfaturi practice, recenzii de produse si recomandari pentru mamici si copii. De la carucioare si jucarii educative la alimentatie si camera copilului."
+>
+  <!-- Welcome + Featured Article -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Bine ai venit</p>
+      <h1 class="section-title" style="max-width: 700px;">Sfaturi sincere si recomandari testate pentru mamici si copii</h1>
+
+      {featuredArticle && (
+        <div style="margin-top: var(--space-2xl);">
+          <ArticleCard {...featuredArticle} variant="featured" />
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Ultimele articole (compact list) -->
+  {remainingArticles.length > 0 && (
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <h2 class="section-title">Ultimele articole</h2>
+        <div>
+          {remainingArticles.map(article => (
+            <ArticleCard {...article} variant="compact" />
+          ))}
+        </div>
+        {articles.length > 6 && (
+          <div style="text-align: center; margin-top: var(--space-2xl);">
+            <a href="/blog/" class="btn-accent-lg">Vezi blogul</a>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- Categories Section -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Categorii</p>
+      <h2 class="section-title">Exploreaza pe domenii de interes</h2>
+      <div class="categories-grid" style="margin-top: var(--space-xl);">
+        {categoryCounts.map(cat => (
+          <a href={`/${cat.slug}/`} class="category-card">
+            <div class="category-icon">{cat.icon}</div>
+            <div>
+              <h3>{cat.name}</h3>
+              <p>{cat.description}</p>
+              <span class="category-count">{cat.count} articole</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section - Full editorial article -->
+  <section class="section">
+    <div class="container">
+      <div class="about-editorial">
+        <p class="section-label">Despre noi</p>
+        <h2 class="section-title">De ce exista MamicaFericita?</h2>
+
+        <div class="about-editorial-content">
+          <p>
+            Stim pe propria piele cat de coplesitor poate fi sa devii mama. De la primele zile de sarcina pana la momentul in care micutul face primii pasi, fiecare etapa vine cu intrebari, nelinisti si o multime de decizii de luat. <strong>Ce carucior aleg?</strong> <strong>Ce jucarii sunt potrivite pentru varsta lui?</strong> <strong>Ce scaun de masa e sigur?</strong> Intrebarile nu se opresc niciodata.
+          </p>
+          <p>
+            MamicaFericita a aparut tocmai din aceasta nevoie &mdash; de a avea un loc de incredere unde gasesti raspunsuri sincere, bazate pe experienta reala. Nu suntem un catalog de produse. Suntem o echipa de mamici care au testat, comparat si ales, si care impartasesc tot ce au invatat pe parcurs. Fiecare articol de pe acest site este scris dupa ore de cercetare, consultat recenzii reale si, de multe ori, dupa ce am folosit produsele cu proprii nostri copii.
+          </p>
+          <p>
+            Credem ca informatia corecta face diferenta. O mama informata este o mama mai relaxata, iar un copil cu produse potrivite creste mai fericit si mai sanatos. De aceea, nu recomandam niciodata ceva doar pentru ca e popular &mdash; recomandam ceea ce functioneaza cu adevarat.
+          </p>
+
+          <h3>Ce gasesti pe MamicaFericita</h3>
+          <p>
+            Am impartit continutul nostru in cinci mari categorii, fiecare acoperind o zona importanta din viata de parinte:
+          </p>
+
+          <div class="about-category-detail">
+            <h4>Carucioare si Accesorii Bebe</h4>
+            <p>
+              Alegerea caruciorului e una dintre cele mai mari decizii ale primului an. Carucioare 3 in 1, carucioare sport, sisteme modulare &mdash; oferta e imensa si preturile variaza enorm. In aceasta categorie comparam modele de la branduri precum Cybex, Bugaboo, Joolz, Kinderkraft si altele, analizand confortul bebelusului, usurinta de pliere, greutatea, adaptabilitatea la diferite terenuri si raportul calitate-pret. Gasesti si recenzii pentru marsupii ergonomice, scaune auto, landouri si accesorii esentiale pentru plimbare.
+            </p>
+          </div>
+
+          <div class="about-category-detail">
+            <h4>Jucarii Educative</h4>
+            <p>
+              Joaca nu e doar distractie &mdash; e modul prin care copiii invata despre lumea din jur. In aceasta sectiune exploram jucarii Montessori, puzzle-uri din lemn, seturi de construit, jocuri senzoriale si materiale creative potrivite fiecarei grupe de varsta. Punem accent pe jucarii care stimuleaza motricitatea fina, gandirea logica, creativitatea si abilitatile sociale. Toate produsele recomandate sunt verificate din punct de vedere al sigurantei si al calitatii materialelor.
+            </p>
+          </div>
+
+          <div class="about-category-detail">
+            <h4>Alimentatie si Nutritie Copii</h4>
+            <p>
+              Diversificarea alimentatiei e un moment important si, de multe ori, stresant. Aici gasesti ghiduri practice despre cum sa incepi diversificarea, ce alimente sa introduci si cand, dar si recenzii pentru echipamentele care fac tot procesul mai usor: scaune de masa pentru bebelusi, biberoane anticolici, sterilizatoare, roboti de bucatarie si seturi de hranire BLW. Fiecare recomandare vine insotita de sfaturi practice din experienta noastra directa.
+            </p>
+          </div>
+
+          <div class="about-category-detail">
+            <h4>Produse pentru Mamici</h4>
+            <p>
+              O mama fericita inseamna un copil fericit. De aceea, o parte importanta din site-ul nostru e dedicata produselor care fac viata mamicilor mai confortabila. De la creme antivergeturi si uleiuri pentru sarcina, la perne de alaptat, sutiene de alaptare, centuri postnatale si genti organizator &mdash; toate testate si recomandate de mamici care au trecut prin aceleasi etape. Scriem sincer despre ce functioneaza si ce nu, fara compromisuri.
+            </p>
+          </div>
+
+          <div class="about-category-detail">
+            <h4>Camera Copilului</h4>
+            <p>
+              Camera bebelusului trebuie sa fie un spatiu sigur, confortabil si plin de caldura. In aceasta categorie analizam patuturi cu saltea, patuturi co-sleeping, lampi de veghe, monitoare video si audio, covoare de joaca, mobilier pentru camera copilului si tot ce ai nevoie pentru a crea un mediu perfect pentru somn si joaca. Punem accent pe siguranta, materialele non-toxice si designul functional care creste odata cu copilul.
+            </p>
+          </div>
+
+          <h3>Cum scriem articolele</h3>
+          <p>
+            Fiecare articol publicat pe MamicaFericita urmeaza un proces riguros. Cercetam piata, citim sute de recenzii de la parinti reali, consultam specificatiile producatorilor si, ori de cate ori e posibil, testam produsele personal. Nu acceptam continut sponsorizat care nu trece prin filtrul nostru de calitate. Daca recomandam ceva, o facem pentru ca am convingerea ca acel produs merita banii si va face viata familiei tale mai usoara.
+          </p>
+          <p>
+            Suntem mamici care scriu pentru mamici. Si vrem sa fii la fel de fericita cu alegerile tale pe cat suntem noi.
+          </p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: var(--space-2xl);">
+        <a href="/blog/" class="btn-accent-lg">Vezi blogul</a>
+      </div>
+    </div>
+  </section>
+</Layout>

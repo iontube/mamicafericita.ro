@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Monogram mark: stylized M with a subtle heart curve -->
+  <g transform="translate(12, 12)">
+    <!-- Circular background -->
+    <circle cx="48" cy="48" r="48" fill="#c9956b"/>
+    <!-- Letter M with soft curves, white -->
+    <text x="48" y="68" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="56" fill="white" letter-spacing="-2">M</text>
+    <!-- Small heart accent on top-right of the M -->
+    <path d="M62 22c-1.8-1.8-4.7-1.8-6.5 0l-.5.5-.5-.5c-1.8-1.8-4.7-1.8-6.5 0s-1.8 4.7 0 6.5l7 7 7-7c1.8-1.8 1.8-4.7 0-6.5z" fill="white" opacity="0.9" transform="translate(12,-4) scale(0.7)"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="128" y="58" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="38" fill="#1a1a2e" letter-spacing="0.5">MamicaFericita</text>
+
+  <!-- Tagline -->
+  <text x="130" y="85" font-family="'Inter', -apple-system, sans-serif" font-weight="500" font-size="13" fill="#8a8a96" letter-spacing="2.5" text-transform="uppercase">SFATURI PENTRU MAMICI SI COPII</text>
+
+  <!-- Thin accent line -->
+  <line x1="128" y1="96" x2="200" y2="96" stroke="#c9956b" stroke-width="1.5"/>
+</svg>

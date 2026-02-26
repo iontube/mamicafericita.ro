@@ -1,0 +1,129 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import keywordsData from '../../../keywords.json';
+
+const categories = [
+  { name: 'Carucioare', slug: 'carucioare-accesorii-bebe' },
+  { name: 'Jucarii', slug: 'jucarii-educative' },
+  { name: 'Alimentatie', slug: 'alimentatie-nutritie-copii' },
+  { name: 'Pentru Mamici', slug: 'produse-mamici' },
+  { name: 'Camera Copilului', slug: 'camera-copilului' }
+];
+
+export async function getStaticPaths() {
+  const ARTICLES_PER_PAGE = 15;
+  const allArticles = keywordsData.completed.map(item => ({
+    title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+    slug: item.keyword.toLowerCase()
+      .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+      .replace(/ș/g, 's').replace(/ț/g, 't')
+      .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+    excerpt: item.excerpt || '',
+    image: `/images/articles/${item.keyword.toLowerCase()
+      .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+      .replace(/ș/g, 's').replace(/ț/g, 't')
+      .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+    category: item.category,
+    categorySlug: item.categorySlug,
+    date: item.date || new Date().toISOString()
+  })).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  const totalPages = Math.max(1, Math.ceil(allArticles.length / ARTICLES_PER_PAGE));
+  const paths = [];
+
+  for (let i = 1; i <= totalPages; i++) {
+    const start = (i - 1) * ARTICLES_PER_PAGE;
+    const end = start + ARTICLES_PER_PAGE;
+    const pageArticles = allArticles.slice(start, end);
+
+    paths.push({
+      params: {
+        page: i === 1 ? undefined : String(i)
+      },
+      props: {
+        articles: pageArticles,
+        currentPage: i,
+        totalPages: totalPages
+      }
+    });
+  }
+
+  return paths;
+}
+
+const { articles, currentPage, totalPages } = Astro.props;
+const featuredArticle = currentPage === 1 ? articles[0] : null;
+const restArticles = currentPage === 1 ? articles.slice(1) : articles;
+---
+
+<Layout
+  title={currentPage === 1 ? "Blog - MamicaFericita" : `Blog - Pagina ${currentPage} - MamicaFericita`}
+  description="Toate articolele de pe MamicaFericita.ro. Sfaturi, recenzii si recomandari pentru mamici si copii."
+>
+  <div class="container" style="padding-top: var(--space-xl); padding-bottom: var(--space-3xl);">
+    <div class="blog-header">
+      <h1>Blog</h1>
+      <p>Toate articolele si recomandarile noastre, intr-un singur loc</p>
+    </div>
+
+    <!-- Category filter pills -->
+    <div class="category-pills">
+      {categories.map(cat => (
+        <a href={`/${cat.slug}/`} class="category-pill">{cat.name}</a>
+      ))}
+    </div>
+
+    {articles.length > 0 ? (
+      <>
+        {/* Featured article (only on first page) */}
+        {featuredArticle && (
+          <div style="margin-bottom: var(--space-2xl);">
+            <ArticleCard {...featuredArticle} variant="featured" />
+          </div>
+        )}
+
+        {/* Rest as compact list */}
+        {restArticles.length > 0 && (
+          <div>
+            {restArticles.map(article => (
+              <ArticleCard {...article} variant="compact" />
+            ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <nav class="pagination">
+            {currentPage > 1 && (
+              <a
+                href={currentPage === 2 ? `/blog/` : `/blog/${currentPage - 1}/`}
+                class="pagination-link"
+              >
+                &larr;
+              </a>
+            )}
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <a
+                href={page === 1 ? `/blog/` : `/blog/${page}/`}
+                class={`pagination-link ${page === currentPage ? 'active' : ''}`}
+              >
+                {page}
+              </a>
+            ))}
+
+            {currentPage < totalPages && (
+              <a href={`/blog/${currentPage + 1}/`} class="pagination-link">
+                &rarr;
+              </a>
+            )}
+          </nav>
+        )}
+      </>
+    ) : (
+      <p style="text-align: center; color: var(--color-muted); padding: var(--space-2xl);">
+        Articolele sunt in curs de pregatire. Revino curand!
+      </p>
+    )}
+  </div>
+</Layout>

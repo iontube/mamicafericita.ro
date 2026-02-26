@@ -1,0 +1,227 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import keywordsData from '../../keywords.json';
+
+export const frontmatter = {
+  title: "Marsupiu ergonomic pentru bebelusi",
+  excerpt: "Dragele mele mamici, astazi vorbim despre un subiect tare drag mie: cum sa purtam bebelusii confortabil si sigur. Am trecut si eu prin dilema alegerii unui marsupiu ergonomic si astazi impartasesc cu voi tot ce am invatat.",
+  image: "/images/articles/marsupiu-ergonomic-pentru-bebelusi.webp",
+  category: "Carucioare si Accesorii Bebe",
+  categorySlug: "carucioare-accesorii-bebe",
+  date: "2026-02-04T10:08:48.123Z",
+  modifiedDate: "2026-02-04T10:08:48.123Z",
+  author: "Ana Popescu",
+  authorRole: "Specialist Carucioare si Accesorii",
+  authorBio: "Ana este mamica a doi copii si testeaza carucioare, scaune auto si accesorii pentru bebe de peste 5 ani. Stie exact ce conteaza cand alegi un produs care sa fie sigur, confortabil si rezistent in timp."
+};
+
+const faq = [
+  { question: "Ce inseamna \"marsupiu ergonomic\"?", answer: "Un marsupiu ergonomic este conceput pentru a sustine pozitia naturala a corpului bebelusului (pozitia \"M\" pentru solduri si \"C\" pentru spate) si pentru a distribui greutatea in mod echilibrat pe corpul parintelui, prevenind durerile." },
+  { question: "De la ce varsta pot folosi un marsupiu ergonomic?", answer: "Majoritatea marsupiilor ergonomice sunt potrivite de la nastere, dar adesea necesita un insert special pentru nou-nascuti. Verifica specificatiile fiecarui model pentru varsta si greutatea minima recomandata." },
+  { question: "Ce pozitie este cea mai sigura pentru bebelus?", answer: "Pozitia cea mai sigura si recomandata este cu fata la parinte, asigurand sustinerea corecta a spatelui si a soldurilor. Pozitia cu fata spre exterior este recomandata doar pentru copiii mai mari, care stau singuri in sezut." },
+  { question: "Cat de mult timp pot tine copilul in marsupiu?", answer: "Nu exista o limita stricta de timp, insa este important sa faci pauze si sa schimbi pozitia. Asculta-ti corpul si pe cel al bebelusului. Sesiunile lungi pot obosi, asa ca alternarea cu caruciorul sau alte activitati este benefica." },
+  { question: "Cum curat marsupiul?", answer: "Verifica eticheta produsului. Majoritatea marsupiilor ergonomice pot fi spalate la masina pe un ciclu delicat, cu apa rece si detergenti blanzi. Evita uscatorul de rufe, pentru a nu deteriora materialul." },
+  { question: "Merita sa investesc intr-un marsupiu scump?", answer: "Daca intentionezi sa folosesti marsupiul frecvent, un model de calitate superioara ofera confort sporit, durabilitate si o mai buna sustinere. Pe termen lung, o investitie initiala mai mare poate fi mai avantajoasa decat achizitionarea mai multor modele mai ieftine." }
+];
+
+const toc = [
+  { title: "De ce conteaza alegerea corecta a unui marsupiu ergonomic", id: "de-ce-conteaza-alegerea-corecta-a-unui-marsupiu-ergonomic" },
+  { title: "Top recomandari de marsupii ergonomice", id: "top-recomandari-de-marsupii-ergonomice" },
+  { title: "Cum alegi corect un marsupiu ergonomic", id: "cum-alegi-corect-un-marsupiu-ergonomic" },
+  { title: "Avantaje si dezavantaje ale marsupiilor ergonomice", id: "avantaje-si-dezavantaje-ale-marsupiilor-ergonomice" },
+  { title: "Sfaturi practice din experienta mea", id: "sfaturi-practice-din-experienta-mea" },
+  { title: "Parerea mea finala despre marsupiile ergonomice", id: "parerea-mea-finala-despre-marsupiile-ergonomice" }
+];
+
+// Get all articles for similar articles component
+const allArticles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  excerpt: item.excerpt || '',
+  image: `/images/articles/${item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+  category: item.category,
+  categorySlug: item.categorySlug,
+  date: item.date || new Date().toISOString()
+}));
+---
+
+<Layout
+  title="Marsupiu ergonomic pentru bebelusi - MamicaFericita"
+  description="Dragele mele mamici, astazi vorbim despre un subiect tare drag mie: cum sa purtam bebelusii confortabil si sigur. Am trecut si eu prin dilema alegerii unui marsupiu ergonomic si astazi impartasesc cu voi tot ce am invatat."
+  image="/images/articles/marsupiu-ergonomic-pentru-bebelusi.webp"
+  type="article"
+  publishedTime="2026-02-04T10:08:48.123Z"
+  modifiedTime="2026-02-04T10:08:48.123Z"
+  author="Ana Popescu"
+  faq={faq}
+>
+  <article class="article-page">
+    <!-- Category Link -->
+    <a href="/carucioare-accesorii-bebe/" class="article-page-category">Carucioare si Accesorii Bebe</a>
+
+    <!-- Title -->
+    <h1 class="article-page-title">Marsupiu ergonomic pentru bebelusi</h1>
+
+    <!-- Meta -->
+    <div class="article-page-meta">
+      <span>Ana Popescu</span>
+      <span>&middot;</span>
+      <span>4 februarie 2026</span>
+    </div>
+
+    <!-- Featured Image -->
+    <img src="/images/articles/marsupiu-ergonomic-pentru-bebelusi.webp" alt="Marsupiu ergonomic pentru bebelusi" class="article-page-image" width="800" height="600" loading="eager">
+
+    <!-- Two-column layout: TOC sidebar + content -->
+    <div class="article-layout">
+      <!-- Sticky TOC Sidebar (desktop) -->
+      <aside class="toc-sidebar">
+        <p class="toc-sidebar-title">Cuprins</p>
+        <ol class="toc-sidebar-list">
+          {toc.map(item => (
+            <li><a href={`#${item.id}`}>{item.title}</a></li>
+          ))}
+          <li><a href="#faq">Intrebari Frecvente</a></li>
+        </ol>
+      </aside>
+
+      <div>
+        <!-- Mobile TOC (expandable) -->
+        <div class="toc-mobile" id="toc-mobile">
+          <button class="toc-mobile-toggle" onclick="this.parentElement.classList.toggle('open')">
+            Cuprins
+            <span class="toc-chevron">&#9660;</span>
+          </button>
+          <ol class="toc-mobile-list">
+            {toc.map(item => (
+              <li><a href={`#${item.id}`}>{item.title}</a></li>
+            ))}
+            <li><a href="#faq">Intrebari Frecvente</a></li>
+          </ol>
+        </div>
+
+        <!-- Article Content -->
+        <div class="article-content">
+          
+      <section id="de-ce-conteaza-alegerea-corecta-a-unui-marsupiu-ergonomic">
+        <h2>De ce conteaza alegerea corecta a unui marsupiu ergonomic</h2>
+        <p>Sa fim sincere, cand vine vorba de bebelusi, confortul si siguranta sunt pe primul loc. Si cand zic confort, ma gandesc atat la pitic, cat si la noi, mamici. Am avut norocul sa alaptez si sa alaptez si sa pot lua fetita cu mine peste tot, dar asta a insemnat si multa miscare. Iar pentru asta, un marsupiu ergonomic a fost salvarea.</p><p>Stiu ca sunt multe mamici care se gandesc la carucioare si scoici, dar uneori, viata te ia prin surprindere. O plimbare rapida la piata, o vizita la bunici, o iesire la doctor, sau pur si simplu nevoia de a avea mainile libere pentru a face ceva. In astfel de momente, caruciorul poate fi prea mult, iar a tine copilul in brate ore in sir nu e o optiune. Asa ca, un marsupiu bun devine un aliat de nadejde.</p><p>Pentru mine, a fost esential sa gasesc ceva care sa nu-mi rupa spatele si sa-i ofere fetitei mele sustinerea de care avea nevoie. La inceput, am fost tentata sa iau ceva ieftin, dar am realizat repede ca nu merita. Sincer sa fiu, am incercat si un sistem mai vechi, care nu era chiar ergonomic, si am simtit diferenta. Spatele meu a avut de suferit, iar fetita nu sta intr-o pozitie naturala.</p><p>Deci, alegerea unui marsupiu ergonomic nu e doar o chestiune de comoditate, ci si de sanatate, atat pentru copil, cat si pentru parinte. E vorba despre a putea naviga prin viata de zi cu zi fara dureri si fara a sacrifica apropierea de cel mic. E un echilibru pe care il cautam cu totii, nu-i asa?</p><p>In experienta mea, un marsupiu ergonomic de calitate face diferenta intre o zi obositoare si una in care te simti ca o supermamica, capabila sa faca fata oricarei provocari. Si asta, cred ca, merita investitia.</p><p>Cred ca cel mai mult conteaza sa te gandesti la stilul tau de viata. Daca esti o mamica activa, care iese des din casa, calatoreste, face plimbari lungi, atunci un marsupiu este absolut necesar. Daca stai mai mult pe acasa, poate nu e o prioritate asa mare, dar tot iti va fi de ajutor in anumite momente. Fiecare situatie e unica, si de aceea e important sa ne adaptam alegerile la nevoile noastre.</p>
+      </section>
+
+      <section id="top-recomandari-de-marsupii-ergonomice">
+        <h2>Top recomandari de marsupii ergonomice</h2>
+        <p>Dupa multe cautari si incercari, am ajuns sa am cateva preferate. Sincer sa fiu, piata e plina de optiuni, dar acestea mi s-au parut cele mai bune din punct de vedere al raportului calitate-pret si al confortului.</p><p><strong>1. Ergobaby Omni 360</strong></p><p>Acesta a fost practic "sfantul graal" pentru mine. L-am folosit de cand fetita a inceput sa stea in sezut si inca il folosesc. Ce-mi place la el e versatilitatea. Poate fi folosit in 4 pozitii: cu fata la parinte, cu fata spre exterior, pe sold si pe spate. E perfect pentru ca se adapteaza nevoilor copilului pe masura ce creste. Materialul e moale, respirabil, iar bretelele si centura sunt foarte confortabile, distribuind greutatea uniform.</p><ul><li><strong>Avantaje:</strong> Foarte adaptabil, confortabil pentru parinte si copil, permite mai multe pozitii de purtare, are gluga integrata pentru protectie solara sau somn.</li><li><strong>Dezavantaje:</strong> E printre cele mai scumpe optiuni, poate fi putin voluminos.</li><li><strong>Pret estimativ:</strong> Intre 650 - 850 RON.</li></ul><p><strong>2. Tula Free-to-Grow</strong></p><p>Tula e un alt brand de top. Acest model e si el foarte adaptabil, avand posibilitatea de a ajusta latimea si inaltimea panoului pentru a se potrivi perfect bebelusului de la nou-nascut (cu insert, vandut separat) pana la copilul mai mare. Imi place mult cum arata, are modele faine si e foarte rezistent. Eu am avut unul cu un imprimeu floral si arata superb.</p><ul><li><strong>Avantaje:</strong> Foarte confortabil, permite purtarea in fata si pe spate, creste odata cu copilul, material de calitate.</li><li><strong>Dezavantaje:</strong> Pentru nou-nascuti e necesar un insert, care adauga costuri.</li><li><strong>Pret estimativ:</strong> In jur de 550 - 750 RON (fara insert).</li></ul><p><strong>3. Chicco Go Baby</strong></p><p>Daca bugetul e mai restrans, Chicco Go Baby e o optiune buna. E un marsupiu mai simplu, potrivit pentru bebelusii mai mici, care pot fi purtati cu fata spre parinte. E usor de pus si de scos, si e destul de confortabil pentru plimbari scurte. Nu are atatea optiuni de pozitionare ca celelalte, dar isi face treaba.</p><ul><li><strong>Avantaje:</strong> Pret accesibil, usor de utilizat, compact.</li><li><strong>Dezavantaje:</strong> Mai putin adaptabil pentru copiii mai mari, suportul lombar poate fi mai putin eficient pentru perioade lungi.</li><li><strong>Pret estimativ:</strong> In jur de 150 - 250 RON.</li></ul><p><strong>4. Manduca XT</strong></p><p>Manduca e un alt nume pe care il vei auzi des. Modelul XT e o varianta mai noua, care se ajusteaza foarte bine. Poate fi folosit de la nou-nascut (cu insert) pana la aproximativ 3 ani. E facut dintr-un material respirabil si ofera un suport bun atat pentru bebelus, cat si pentru parinte.</p><ul><li><strong>Avantaje:</strong> Versatil, confortabil, creste cu copilul, material de calitate.</li><li><strong>Dezavantaje:</strong> Necesita insert pentru nou-nascuti, pretul e mediu-ridicat.</li><li><strong>Pret estimativ:</strong> In jur de 450 - 600 RON.</li></ul><p>In experienta mea, e bine sa te uiti si la recenziile altor mamici si sa te gandesti ce anume cauti. Nu exista un marsupiu perfect pentru toata lumea, dar exista unul perfect pentru tine.</p>
+      </section>
+
+      <section id="cum-alegi-corect-un-marsupiu-ergonomic">
+        <h2>Cum alegi corect un marsupiu ergonomic</h2>
+        <p>Alegerea unui marsupiu ergonomic poate parea complicata, dar daca stii la ce sa te uiti, devine mult mai simplu. In primul rand, cel mai important criteriu este<strong>pozitia naturala a copilului</strong>. Asta inseamna ca spatele bebelusului trebuie sa fie usor curbat (forma de "C"), iar genunchii sa fie mai sus decat soldurile (pozitia "M"). Asta asigura o dezvoltare sanatoasa a soldurilor si previne displazia.</p><p>Verifica<strong>latimea si inaltimea panoului</strong>. Panoul trebuie sa fie suficient de lat incat sa sustina copilul de la un genunchi la celalalt, fara a-i strange picioarele. Inaltimea trebuie sa fie potrivita pentru varsta si marimea copilului, astfel incat sa-i sustina corect capul si gatul (mai ales la nou-nascuti).</p><p><strong>Centura lombara si bretelele</strong> sunt cruciale pentru confortul tau. O centura lombara bine captusita si ajustabila distribuie greutatea pe solduri, nu pe umeri si spate, ceea ce e esential pentru a evita durerile. Bretelele trebuie sa fie si ele moi, dar suficient de rezistente, si sa poata fi ajustate usor.</p><p><strong>Materialul</strong> conteaza mult, mai ales in functie de anotimp. Pentru vara, cauta materiale respirabile, din bumbac sau plasa. Pentru iarna, un material mai gros poate fi mai confortabil. Verifica daca materialul este usor de curatat, pentru ca, sa fim sincere, se mai intampla accidente.</p><p><strong>Varsta si greutatea copilului</strong> sunt, de asemenea, importante. Unele marsupii sunt potrivite de la nastere (cu insert special), altele de la cateva luni. Verifica greutatea maxima admisa de producator.</p><p><strong>Pozitiile de purtare</strong> sunt un alt aspect de luat in considerare. Daca vrei un marsupiu pe care sa-l folosesti pe termen lung, cauta unul care permite mai multe pozitii: cu fata la parinte (cea mai recomandata pentru inceput), cu fata spre exterior (cand copilul poate sta singur in sezut si e curios de lume), pe sold si pe spate.</p><p><strong>Usorinta in utilizare</strong> este un alt punct. Cat de repede il poti pune si scoate? Cat de usor se ajusteaza? Daca e prea complicat, s-ar putea sa nu-l folosesti la fel de des.</p><p><strong>Pretul</strong> este, desigur, un factor. Marsupiile ergonomice de calitate pot fi o investitie, dar gandeste-te la cat timp il vei folosi si la beneficiile pe care le aduce. Sincer sa fiu, am invatat ca e mai bine sa cumperi o data ceva bun, decat de mai multe ori ceva ieftin si nesatisfacator.</p><p>Nu in ultimul rand,<strong>siguranta</strong>. Verifica daca marsupiul respecta standardele de siguranta si daca are catarame si sisteme de prindere solide.</p>
+      </section>
+
+      <section id="avantaje-si-dezavantaje-ale-marsupiilor-ergonomice">
+        <h2>Avantaje si dezavantaje ale marsupiilor ergonomice</h2>
+        <p>Ca orice produs pentru bebelusi, si marsupiile ergonomice au partile lor bune si mai putin bune. In experienta mea, avantajele depasesc cu mult dezavantajele, dar e bine sa fim informate.</p><p><strong>Avantaje:</strong></p><ul><li><strong>Confort pentru copil:</strong> Pozitia naturala in "M" si "C" este ideala pentru dezvoltarea soldurilor si a coloanei vertebrale. Copilul se simte in siguranta, apropiat de parinte, ceea ce ii reduce plansul si ii creste starea de bine.</li><li><strong>Libertate de miscare pentru parinte:</strong> Acesta e probabil cel mai mare avantaj pentru noi, mamici (si tati!). Mainile sunt libere, asa ca poti face treaba prin casa, poti cumpara, poti plimba alt copil, poti manca linistita. E o senzatie de putere si eficienta.</li><li><strong>Distribuirea greutatii:</strong> Marsupiile ergonomice bune distribuie greutatea uniform pe soldurile si umerii parintelui, prevenind durerile de spate si oboseala. Nu vei simti ca "ti se taie" spatele dupa o ora de purtat copilul, cum se intampla cu celelalte tipuri.</li><li><strong>Imbunatatirea legaturii parinte-copil:</strong> Purtatul copilului aproape de corp stimuleaza eliberarea de oxitocina, hormonul iubirii, atat la parinte, cat si la copil. Aceasta apropiere fizica intareste legatura si creeaza un sentiment de incredere.</li><li><strong>Versatilitate:</strong> Multe modele permit purtarea in diverse pozitii si se adapteaza pe masura ce copilul creste, oferind o solutie pe termen lung.</li><li><strong>Portabilitate:</strong> Sunt mult mai usor de transportat decat un carucior, mai ales in spatii aglomerate sau cand calatoresti.</li></ul><p><strong>Dezavantaje:</strong></p><ul><li><strong>Pretul:</strong> Marsupiile ergonomice de calitate pot fi destul de scumpe. Investitia initiala poate fi mare, desi pe termen lung se amortizeaza.</li><li><strong>Calduara excesiva:</strong> In zilele foarte calduroase de vara, purtatul copilului poate duce la supraincalzire, atat pentru el, cat si pentru tine. Aici ajuta materialele respirabile sau purtarea doar cu un strat de haine.</li><li><strong>Curba de invatare:</strong> Unele modele pot necesita putin timp pentru a te obisnui cu ele, mai ales cu ajustarea bretelelor si a centurii.</li><li><strong>Nu sunt potrivite pentru toti:</strong> Daca ai probleme medicale specifice la spate sau umeri, ar fi bine sa discuti cu un specialist inainte de a folosi un marsupiu.</li><li><strong>Potrivirea pentru nou-nascuti:</strong> Pentru bebelusii foarte mici, e necesar un insert special sau un marsupiu conceput special pentru nou-nascuti, pentru a asigura pozitia corecta si sustinerea gatului.</li></ul><p>Sincer sa fiu, cand am inceput sa ma documentez, am fost putin intimidata de tot ce trebuia sa stiu. Dar, pe masura ce am experimentat, mi-am dat seama ca e mai simplu decat pare. Conteaza sa citesti instructiunile, sa ceri sfaturi si sa ai rabdare.</p>
+      </section>
+
+      <section id="sfaturi-practice-din-experienta-mea">
+        <h2>Sfaturi practice din experienta mea</h2>
+        <p>Am gresit, am invatat, am ajustat si acum ma simt mult mai sigura in alegerile mele. Iata cateva sfaturi practice pe care le-as da oricarei mamici care se gandeste sa cumpere un marsupiu ergonomic:</p><p><strong>1. Nu te grabi sa cumperi cel mai scump model de la inceput.</strong> Daca nu esti sigura ca vei folosi un marsupiu intensiv, poti incepe cu un model mai accesibil, cum ar fi Chicco Go Baby, pentru a vedea daca ti se potriveste stilului tau. Daca vezi ca iti place si il folosesti mult, atunci poti investi intr-un model premium.</p><p><strong>2. Incearca-l inainte, daca se poate.</strong> Daca ai prietene care au marsupii, roaga-le sa ti le imprumute pentru cateva minute. Sau mergi intr-un magazin specializat unde poti testa diferite modele. Fiecare corp e diferit, si ceea ce e confortabil pentru mine, s-ar putea sa nu fie pentru tine.</p><p><strong>3. Citeste instructiunile cu atentie.</strong> Pare banal, dar multe probleme apar din cauza utilizarii incorecte. O pozitionare gresita a copilului sau o ajustare necorespunzatoare a bretelelor pot duce la disconfort si chiar la probleme de sanatate.</p><p><strong>4. Nu uita de insertul pentru nou-nascuti, daca e cazul.</strong> Daca ai un bebelus mic si marsupiul tau necesita insert, asigura-te ca il folosesti corect. Acest insert ajuta la crearea unei "cuib" sigure pentru bebelus, sustinandu-i gatul si capul.</p><p><strong>5. Ajusteaza-l corect.</strong> Atat bretelele, cat si centura lombara trebuie sa fie bine stranse, dar nu incomode. Copilul trebuie sa fie suficient de sus incat sa-i poti saruta fruntea, iar spatele lui sa fie bine sustinut. Verifica daca genunchii sunt mai sus decat soldurile.</p><p><strong>6. Ai grija la pozitia "cu fata spre exterior".</strong> Aceasta pozitie este doar pentru copiii care pot sta singuri in sezut si sunt suficient de mari. Daca copilul e prea mic, poate fi obositor pentru el si ii poate afecta dezvoltarea. In plus, unii bebelusi se simt nesiguri fara sa aiba parintele in fata.</p><p><strong>7. Ai grija la supraincalzire.</strong> Vara, alege zilele mai racoroase pentru plimbari mai lungi cu marsupiul. Daca e prea cald, limita timpul petrecut in marsupiu sau cauta un model cu panou din plasa. Hidrateaza-te si tu, si copilul!</p><p><strong>8. Nu te descuraja daca la inceput pare complicat.</strong> Ai rabdare cu tine si cu copilul. Cu fiecare utilizare vei deveni mai rapida si mai sigura. E normal sa fie o mica "curba de invatare".</p><p><strong>9. Spala-l conform instructiunilor.</strong> Majoritatea marsupiilor se pot spala la masina, dar e bine sa verifici eticheta pentru a nu deteriora materialul sau cataramele.</p><p><strong>10. Nu uita de confortul tau!</strong> Daca simti durere sau disconfort, opreste-te si ajusteaza marsupiul. Sanatatea ta este la fel de importanta.</p>
+      </section>
+
+      <section id="parerea-mea-finala-despre-marsupiile-ergonomice">
+        <h2>Parerea mea finala despre marsupiile ergonomice</h2>
+        <p>Dupa ce am incercat diverse solutii de a purta bebelusul, pot spune cu mana pe inima ca un marsupiu ergonomic a fost una dintre cele mai bune investitii pe care le-am facut ca mama. Nu e doar un accesoriu, ci un instrument care mi-a simplificat viata si mi-a permis sa raman activa si conectata la fetita mea.</p><p>In primul rand, mi-a oferit<strong>libertate</strong>. Libertatea de a merge unde vreau, cand vreau, fara sa ma gandesc la logistica unui carucior. Libertatea de a avea mainile libere pentru a face lucruri, a raspunde la telefon, a manca, a bea o cafea calda (asta da lux!).</p><p>In al doilea rand, a contribuit enorm la<strong>confortul meu fizic</strong>. Aici ma refer atat la mine, cat si la fetita. Daca inainte ma dureau spatele si umerii dupa o ora de stat cu ea in brate, acum pot sa o car ore in sir fara probleme. Iar pentru ea, a fost mereu un loc sigur si calduros, unde se simtea protejata si iubita.</p><p>Recomand cu toata caldura un marsupiu ergonomic oricarei mamici. Dar, ca sa fie o experienta pozitiva, e important sa<strong>alegi corect</strong>. In functie de buget, de stilul tau de viata si de varsta copilului. Pentru mine, modelele de la Ergobaby si Tula au fost cele mai potrivite, dar am vazut ca si alte branduri au optiuni bune.</p><p>Daca esti la inceput de drum si nu esti sigura, nu te sfii sa ceri sfaturi. Grupurile de pe Facebook dedicate purtatului bebelusilor sunt pline de mamici cu experienta care te pot ghida. Si nu uita, cel mai important este sa te simti tu confortabil si in siguranta, si sa stii ca si copilul tau este.</p><p>Sincer sa fiu, uneori ma gandesc cum m-as fi descurcat fara el. Probabil mult mai greu. E o unealta care te face sa te simti mai capabila, mai independenta si mai conectata cu bebelusul tau. Asa ca, daca te gandesti sa achizitionezi unul, eu zic ca merita din plin!</p>
+      </section>
+
+          <!-- FAQ Section -->
+          <section class="faq-section" id="faq">
+            <h2 class="faq-title">Intrebari Frecvente</h2>
+            
+            <div class="faq-item" id="faq-0">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Ce inseamna "marsupiu ergonomic"?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Un marsupiu ergonomic este conceput pentru a sustine pozitia naturala a corpului bebelusului (pozitia "M" pentru solduri si "C" pentru spate) si pentru a distribui greutatea in mod echilibrat pe corpul parintelui, prevenind durerile.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-1">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                De la ce varsta pot folosi un marsupiu ergonomic?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Majoritatea marsupiilor ergonomice sunt potrivite de la nastere, dar adesea necesita un insert special pentru nou-nascuti. Verifica specificatiile fiecarui model pentru varsta si greutatea minima recomandata.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-2">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Ce pozitie este cea mai sigura pentru bebelus?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Pozitia cea mai sigura si recomandata este cu fata la parinte, asigurand sustinerea corecta a spatelui si a soldurilor. Pozitia cu fata spre exterior este recomandata doar pentru copiii mai mari, care stau singuri in sezut.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-3">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Cat de mult timp pot tine copilul in marsupiu?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Nu exista o limita stricta de timp, insa este important sa faci pauze si sa schimbi pozitia. Asculta-ti corpul si pe cel al bebelusului. Sesiunile lungi pot obosi, asa ca alternarea cu caruciorul sau alte activitati este benefica.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-4">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Cum curat marsupiul?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Verifica eticheta produsului. Majoritatea marsupiilor ergonomice pot fi spalate la masina pe un ciclu delicat, cu apa rece si detergenti blanzi. Evita uscatorul de rufe, pentru a nu deteriora materialul.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-5">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Merita sa investesc intr-un marsupiu scump?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Daca intentionezi sa folosesti marsupiul frecvent, un model de calitate superioara ofera confort sporit, durabilitate si o mai buna sustinere. Pe termen lung, o investitie initiala mai mare poate fi mai avantajoasa decat achizitionarea mai multor modele mai ieftine.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Author -->
+        <div class="author-line">
+          <div class="author-avatar">AP</div>
+          <div>
+            <div class="author-name">Ana Popescu</div>
+            <div class="author-role">Specialist Carucioare si Accesorii</div>
+          </div>
+        </div>
+
+        <!-- Similar Articles -->
+        <SimilarArticles
+          currentSlug="marsupiu-ergonomic-pentru-bebelusi"
+          currentCategory="carucioare-accesorii-bebe"
+          articles={allArticles}
+        />
+      </div>
+    </div>
+  </article>
+</Layout>

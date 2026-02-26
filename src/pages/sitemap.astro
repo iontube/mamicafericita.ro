@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import keywordsData from '../../keywords.json';
+
+const categories = [
+  { name: 'Carucioare si Accesorii Bebe', slug: 'carucioare-accesorii-bebe' },
+  { name: 'Jucarii Educative', slug: 'jucarii-educative' },
+  { name: 'Alimentatie si Nutritie Copii', slug: 'alimentatie-nutritie-copii' },
+  { name: 'Produse pentru Mamici', slug: 'produse-mamici' },
+  { name: 'Camera Copilului', slug: 'camera-copilului' }
+];
+
+const articles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  category: item.category,
+  categorySlug: item.categorySlug
+}));
+
+const legalPages = [
+  { name: 'Politica de Confidentialitate', slug: 'privacy-policy' },
+  { name: 'Termeni si Conditii', slug: 'terms' },
+  { name: 'Politica de Cookies', slug: 'cookies' },
+  { name: 'Contact', slug: 'contact' }
+];
+---
+
+<Layout
+  title="Sitemap - MamicaFericita"
+  description="Sitemap-ul complet al site-ului MamicaFericita.ro. Gaseste rapid toate articolele si paginile."
+>
+  <div class="sitemap-page">
+    <h1>Sitemap</h1>
+    <p style="color: var(--color-gray-600); margin-bottom: var(--space-2xl);">
+      Toate paginile si articolele de pe MamicaFericita.ro
+    </p>
+
+    <section class="sitemap-section">
+      <h2>Pagini Principale</h2>
+      <ul class="sitemap-list">
+        <li><a href="/">Acasa</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        {legalPages.map(page => (
+          <li><a href={`/${page.slug}/`}>{page.name}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="sitemap-section">
+      <h2>Categorii</h2>
+      <ul class="sitemap-list">
+        {categories.map(cat => (
+          <li><a href={`/${cat.slug}/`}>{cat.name}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    {categories.map(cat => {
+      const catArticles = articles.filter(a => a.categorySlug === cat.slug);
+      return catArticles.length > 0 && (
+        <section class="sitemap-section">
+          <h2>{cat.name}</h2>
+          <ul class="sitemap-list">
+            {catArticles.map(article => (
+              <li><a href={`/${article.slug}/`}>{article.title}</a></li>
+            ))}
+          </ul>
+        </section>
+      );
+    })}
+  </div>
+</Layout>

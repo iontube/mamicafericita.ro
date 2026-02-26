@@ -1,0 +1,36 @@
+---
+---
+
+<div class="cookie-banner" id="cookie-banner">
+  <div class="cookie-content">
+    <p class="cookie-text">
+      Acest site foloseste cookies pentru a-ti oferi cea mai buna experienta de navigare.
+      Continuand sa folosesti site-ul, esti de acord cu
+      <a href="/cookies/">Politica noastra de Cookies</a>.
+    </p>
+    <div class="cookie-buttons">
+      <button class="btn btn-secondary" id="cookie-decline">Refuz</button>
+      <button class="btn btn-primary" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+  const declineBtn = document.getElementById('cookie-decline');
+
+  if (!localStorage.getItem('cookies-consent')) {
+    banner?.classList.add('show');
+  }
+
+  acceptBtn?.addEventListener('click', () => {
+    localStorage.setItem('cookies-consent', 'accepted');
+    banner?.classList.remove('show');
+  });
+
+  declineBtn?.addEventListener('click', () => {
+    localStorage.setItem('cookies-consent', 'declined');
+    banner?.classList.remove('show');
+  });
+</script>

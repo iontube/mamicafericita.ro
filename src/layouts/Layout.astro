@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  faq?: Array<{ question: string; answer: string }>;
+}
+
+const {
+  title,
+  description,
+  image = '/images/default-og.jpg',
+  canonical,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  faq
+} = Astro.props;
+
+const siteUrl = 'https://mamicafericita.ro';
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
+// Schema markup
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "MamicaFericita",
+  "url": siteUrl,
+  "description": "Sfaturi si recomandari pentru mamici si copii fericiti",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": `${siteUrl}/?s={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const faqSchema = faq && faq.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faq.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+} : null;
+---
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonicalUrl}>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content={type}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalUrl}>
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:locale" content="ro_RO">
+  <meta property="og:site_name" content="MamicaFericita">
+
+  {publishedTime && <meta property="article:published_time" content={publishedTime}>}
+  {modifiedTime && <meta property="article:modified_time" content={modifiedTime}>}
+  {author && <meta property="article:author" content={author}>}
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- Fonts: Playfair Display + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- Sitemap -->
+  <link rel="sitemap" href="/sitemap_index.xml">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
+  {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>}
+</head>
+<body>
+  <Header />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+  <CookieBanner />
+</body>
+</html>

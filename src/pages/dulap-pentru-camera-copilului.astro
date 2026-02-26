@@ -1,0 +1,312 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import keywordsData from '../../keywords.json';
+
+export const frontmatter = {
+  title: "Dulap pentru camera copilului",
+  excerpt: "Cel mai bun dulap pentru camera copilului este cel care imbina siguranta, functionalitatea si spatiul de depozitare adecvat varstei. Daca ma intrebi pe mine, un dulap modular, cu sertare adanci si polite reglabile, din lemn masiv sau PAL de calitate, este o investitie pe termen lung. Stai putin sa-ti explic de ce.",
+  image: "/images/articles/dulap-pentru-camera-copilului.webp",
+  category: "Camera Copilului",
+  categorySlug: "camera-copilului",
+  date: "2026-02-26T11:09:58.535Z",
+  modifiedDate: "2026-02-26T11:09:58.535Z",
+  author: "Raluca Marin",
+  authorRole: "Designer Interior Camera Copilului",
+  authorBio: "Raluca are experienta in design interior pentru camere de copii si bebelusi. Recomanda mobilier, decoratiuni si accesorii care transforma camera micutului intr-un spatiu sigur, functional si placut."
+};
+
+const faq = [
+  { question: "Ce pret are un dulap pentru camera copilului?", answer: "Pretul unui dulap pentru camera copilului variaza considerabil, de la aproximativ 300-500 lei pentru modele simple din PAL, pana la 1500-3000 lei sau chiar mai mult pentru piese din lemn masiv sau sisteme modulare complexe. Un pret mediu pentru un dulap decent, din PAL de calitate, se situeaza intre 600 si 1200 lei." },
+  { question: "Care e diferenta intre un dulap clasic si unul modular pentru copii?", answer: "Dulapul clasic e o unitate fixa, cu usi batante si compartimentare prestabilita (spatiu umerase, polite). Dulapul modular e format din corpuri si piese ce se pot combina in diverse moduri, oferind flexibilitate maxima si adaptabilitate pe termen lung. Modularul este mai scump, dar si mai versatil." },
+  { question: "Merita sa cumpar un dulap din lemn masiv pentru copil?", answer: "Absolut. Un dulap pentru camera copilului din lemn masiv este extrem de durabil, ecologic si sigur, rezistand generatii. Dezavantajul major este pretul, care poate fi de 2-3 ori mai mare decat al unui dulap din PAL de calitate. Daca bugetul permite, e o investitie pe viata." },
+  { question: "Ce dimensiuni ar trebui sa aiba un dulap pentru camera copilului?", answer: "Dimensiunile depind de spatiul disponibil si de varsta copilului. Pentru un copil mic, un dulap de 80-100 cm latime, cu inaltime de 120-150 cm, este adesea suficient. Pentru un copil mai mare sau pentru a acoperi nevoile unei familii, se recomanda dulapuri de 120-150 cm latime sau chiar mai mari, cu adancime standard de 50-60 cm." },
+  { question: "De ce e important sistemul anti-rasturnare la dulapul pentru copii?", answer: "Sistemul anti-rasturnare (prinderea de perete) este esential pentru siguranta copilului. Copiii pot incerca sa se urce pe dulap, iar acesta, daca nu e fixat, se poate rasturna peste ei, provocand accidente grave. Este un element de siguranta obligatoriu." },
+  { question: "Cum sa aleg cel mai bun dulap pentru camera copilului?", answer: "Cel mai bun dulap pentru camera copilului este cel sigur (colturi rotunjite, sistem anti-rasturnare), functional (spatiu de depozitare adecvat, polite reglabile, sertare), realizat din materiale de calitate (lemn masiv sau PAL rezistent) si cu un design pe care sa-l aprecieze atat parintele, cat si copilul pe termen lung." },
+  { question: "Unde gasesc dulapuri bune pentru camera copilului?", answer: "Dulapuri bune pentru camera copilului gasiti in magazine de mobilier pentru copii, in marii retaileri de mobilier (IKEA, Mobexpert, JYSK, Kika), pe platforme online de profil (eMag, Vivre, Bonami) sau la producatori locali de mobilier. Recomand sa verificati atat magazinele fizice, cat si cele online pentru cea mai variata oferta." },
+  { question: "Ce greseli sa evit cand cumpar un dulap pentru copii?", answer: "Evitati sa ignorati siguranta (fara sistem anti-rasturnare, colturi ascutite), sa alegeti un design prea copilaresc care devine demodat rapid, sa subestimati spatiul de depozitare necesar si sa achizitionati produse din materiale ieftine, cu feronerie de proasta calitate. Calitatea si siguranta sunt prioritare." }
+];
+
+const toc = [
+  { title: "Cum alegi dulapul pentru camera copilului perfect, fara batai de cap", id: "cum-alegi-dulapul-pentru-camera-copilului-perfect-fara-batai-de-cap" },
+  { title: "Top 5 dulapuri pentru camera copilului: recomandari cu plusuri si minusuri", id: "top-5-dulapuri-pentru-camera-copilului-recomandari-cu-plusuri-si-minusuri" },
+  { title: "Ghid pas cu pas: cum alegi dulapul pentru camera copilului", id: "ghid-pas-cu-pas-cum-alegi-dulapul-pentru-camera-copilului" },
+  { title: "Dulap clasic vs. Dulap modular: ce alegi pentru camera copilului?", id: "dulap-clasic-vs-dulap-modular-ce-alegi-pentru-camera-copilului" },
+  { title: "Greșeli de evitat la alegerea dulapului pentru camera copilului", id: "greseli-de-evitat-la-alegerea-dulapului-pentru-camera-copilului" },
+  { title: "Recomandări de dulap pentru camera copilului pe categorii de buget", id: "recomandari-de-dulap-pentru-camera-copilului-pe-categorii-de-buget" }
+];
+
+// Get all articles for similar articles component
+const allArticles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  excerpt: item.excerpt || '',
+  image: `/images/articles/${item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+  category: item.category,
+  categorySlug: item.categorySlug,
+  date: item.date || new Date().toISOString()
+}));
+---
+
+<Layout
+  title="Dulap pentru camera copilului - MamicaFericita"
+  description="Cel mai bun dulap pentru camera copilului este cel care imbina siguranta, functionalitatea si spatiul de depozitare adecvat varstei. Daca ma intrebi pe mine, un dulap modular, cu sertare adanci si polite reglabile, din lemn masiv sau PAL de calitate, este o investitie pe termen lung. Stai putin sa-ti explic de ce."
+  image="/images/articles/dulap-pentru-camera-copilului.webp"
+  type="article"
+  publishedTime="2026-02-26T11:09:58.535Z"
+  modifiedTime="2026-02-26T11:09:58.535Z"
+  author="Raluca Marin"
+  faq={faq}
+>
+  <article class="article-page">
+    <!-- Category Link -->
+    <a href="/camera-copilului/" class="article-page-category">Camera Copilului</a>
+
+    <!-- Title -->
+    <h1 class="article-page-title">Dulap pentru camera copilului</h1>
+
+    <!-- Meta -->
+    <div class="article-page-meta">
+      <span>Raluca Marin</span>
+      <span>&middot;</span>
+      <span>26 februarie 2026</span>
+    </div>
+
+    <!-- Featured Image -->
+    <img src="/images/articles/dulap-pentru-camera-copilului.webp" alt="Dulap pentru camera copilului" class="article-page-image" width="800" height="600" loading="eager">
+
+    <!-- Two-column layout: TOC sidebar + content -->
+    <div class="article-layout">
+      <!-- Sticky TOC Sidebar (desktop) -->
+      <aside class="toc-sidebar">
+        <p class="toc-sidebar-title">Cuprins</p>
+        <ol class="toc-sidebar-list">
+          {toc.map(item => (
+            <li><a href={`#${item.id}`}>{item.title}</a></li>
+          ))}
+          <li><a href="#faq">Intrebari Frecvente</a></li>
+        </ol>
+      </aside>
+
+      <div>
+        <!-- Mobile TOC (expandable) -->
+        <div class="toc-mobile" id="toc-mobile">
+          <button class="toc-mobile-toggle" onclick="this.parentElement.classList.toggle('open')">
+            Cuprins
+            <span class="toc-chevron">&#9660;</span>
+          </button>
+          <ol class="toc-mobile-list">
+            {toc.map(item => (
+              <li><a href={`#${item.id}`}>{item.title}</a></li>
+            ))}
+            <li><a href="#faq">Intrebari Frecvente</a></li>
+          </ol>
+        </div>
+
+        <!-- Article Content -->
+        <div class="article-content">
+          
+      <section id="cum-alegi-dulapul-pentru-camera-copilului-perfect-fara-batai-de-cap">
+        <h2>Cum alegi dulapul pentru camera copilului perfect, fara batai de cap</h2>
+        <p>Uite care-i treaba cu <strong>dulapul pentru camera copilului</strong>: nu e chiar atat de simplu cum pare. E un fel de piesa centrala pentru organizare, mai ales cand vine vorba de hainute, jucarii si tot felul de chestii mici care ajung peste tot. Prima chestie la care te uiti, si asta e pe bune, e siguranta.</p>
+        <p>Gandeste-te la colturi rotunjite, la manere care nu ies in afara sa se agate copilul si, cel mai important, la sistemele anti-rasturnare. Nu vrei sa ai surprize neplacute, nu-i asa? Apoi, te gandesti la spatiu. Un <strong>dulap pentru camera copilului</strong> trebuie sa fie suficient de incapator pentru hainele pe care le are acum, dar si pentru ce va mai creste.</p>
+        <p>Si da, stiu, cresc repede. Deci, cauta modele cu polite reglabile sau cu posibilitatea de a adauga rafturi sau sertare ulterior. Asta iti da flexibilitate.</p>
+        <p>Materialul conteaza enorm. Lemnul masiv e cel mai bun, e durabil si arata misto, dar e si cel mai scump. PAL-ul de calitate, cu canturi bine finisate, e o alternativa buna, mai ales daca vrei sa economisesti.</p>
+        <p>Evita placajele ieftine, alea se umfla la prima inundatie de suc de pe jos. Culorile? Aici depinde de gustul tau si de restul mobilierului, dar pariez pe nuante neutre sau pastelate, care se potrivesc cu orice decor si nu obosesc copilul. Un dulap alb, gri deschis sau bej e o alegere sigura.</p>
+        <p>Si inca ceva, ca sa nu uiti: verifica balamalele si glisierele sertarelor. Alea ieftine se strica rapid si te trezesti cu un sertar blocat sau care nu se mai inchide. Am patit-o cu un dulap de jucarii, zici ca era facut din carton si scobitori.</p>
+        <p>Sa nu uitam de ergonomie. Daca e prea inalt sau prea adanc, copilul nu va putea ajunge singur la lucrurile lui si tot tu vei fi cea care baga si scoate totul. Pentru copiii mai mari, un <strong>dulap pentru camera copilului</strong> cu rafturi joase sau sertare usor accesibile ii incurajeaza sa-si puna singuri lucrurile la locul lor.</p>
+        <p>E o chestie mica, dar face diferenta cand vine vorba de invatat responsabilitatea. Daca ai spatiu, cauta un model cu mai multe compartimente: polite pentru haine impaturite, un spatiu pentru umerase si, neaparat, sertare. Sertarele sunt salvatoare pentru sosete, lenjerie intima, lenjerie de pat sau chiar jucarii mici.</p>
+        <p>Am vazut dulapuri cu usi glisante, astea sunt bune in camere mici, unde nu ai loc sa deschizi usile batante. Dar, sincer, usile batante sunt mai practice pentru accesul rapid. Si daca tot vorbim de practic, gandeste-te la curatare.</p>
+        <p>Un <strong>dulap pentru camera copilului</strong> din materiale usor de sters, fara prea multe ornamente unde se aduna praful, te scapa de mult efort. Si, na, daca ai buget, poti chiar sa te gandesti la un dulap modular, pe care sa-l reconfigurezi pe masura ce copilul creste si nevoile lui se schimba. Asta e genul de piesa de mobilier care te tine ani buni.</p>
+        <p>Nu te grabi sa cumperi primul dulap pe care-l vezi. Fa-ti o lista cu ce ai nevoie, masoara spatiul si compara modelele. E o investitie, pana la urma.</p>
+        <p>Acum, sa vorbim si de aspectul estetic. Un <strong>dulap pentru camera copilului</strong> poate fi si o piesa de decor. Poti alege ceva clasic, cu linii simple, sau ceva mai jucaus, cu imprimeuri sau culori vii.</p>
+        <p>Daca alegi ceva mai colorat, gandeste-te daca se va potrivi si peste 5 ani, cand gusturile copilului se vor schimba. De obicei, piesele mai neutre sunt mai versatile. Poti adauga personalitate prin accesorii, cum ar fi manerele.</p>
+        <p>Sunt o gramada de manere simpatice, de la cele cu forme de animale la cele mai simple, dar cu o culoare interesanta. Si sa nu uiti de lumina. Daca dulapul e intr-un colt mai intunecat, ar fi util sa aiba o mica lampa integrata sau sa fie pozitionat astfel incat sa beneficieze de lumina naturala.</p>
+        <p>E mult mai usor sa gasesti lucrurile atunci cand vezi ce faci. Si, pe bune, cate nu am cautat eu prin dulap pe intuneric. Pana la urma, cel mai bun <strong>dulap pentru camera copilului</strong> este cel care te ajuta pe tine sa mentii ordinea si pe copil sa se simta confortabil si in siguranta in camera lui.</p>
+        <p>Nu te lasa pacalita de preturi prea mici, de obicei ascund probleme de calitate. Mai bine platesti un pic mai mult acum si ai un dulap care rezista ani de zile, decat sa cumperi unul ieftin care se strica in sezonul urmator.</p>
+      </section>
+
+      <section id="top-5-dulapuri-pentru-camera-copilului-recomandari-cu-plusuri-si-minusuri">
+        <h2>Top 5 dulapuri pentru camera copilului: recomandari cu plusuri si minusuri</h2>
+        <p>Am rasfoit netul si am vorbit cu mamici, asa ca am o lista scurta cu cateva optiuni faine de <strong>dulap pentru camera copilului</strong>. Fiecare cu bunele si relele ei, ca sa stii la ce sa te astepti.</p>
+        <ul><li><strong>Dulap modular cu 3 usi si 2 sertare (ex: IKEA STUVA/FÖLJA)</strong><br><strong>Pret estimativ:</strong> 700-1200 lei, in functie de configuratie.<br><strong>Avantaje:</strong> Extrem de versatil, poti crea combinatii infinite, se adapteaza perfect nevoilor tale. Usor de montat, materiale sigure (PAL melaminat de calitate). Culori variate. Poti adauga sau muta politele si sertarele. Sistem anti-rasturnare inclus, evident. E un fel de Lego pentru mobilierul de copii. Am folosit eu o configuratie similara pentru pitica mea si a tinut ani buni, am tot rearanjat-o pe masura ce crestea.<strong>Minusuri:</strong> Poate deveni scump daca vrei o configuratie mare. PAL-ul, chiar si de calitate, nu e la fel de rezistent ca lemnul masiv la zgarieturi puternice sau lovituri repetate. Daca nu il montezi corect, poate fi un pic instabil.</li><li><strong>Dulap din lemn masiv cu 2 usi si un sertar (ex: diverse branduri romanesti sau import)</strong><br><strong>Pret estimativ:</strong> 1500-3000 lei.<br><strong>Avantaje:</strong> Durabilitate exceptionala, arata premium, e ecologic si sanatos. Lemnul masiv rezista la uzura, zgarieturi si chiar la umezeala moderata. Design clasic, se potriveste in multe stiluri de camere. Poti cauta modele cu vopsea pe baza de apa, fara chimicale nocive. E o investitie pe termen foarte lung, probabil il poti da si nepotilor.<strong>Minusuri:</strong> Pretul e destul de piperat. Greutatea mare il face mai greu de mutat sau reconfigurat. Poate fi mai rigid in design, mai putin modular decat variantele din PAL. Unele modele pot avea colturile mai ascutite, deci verifica bine.</li><li><strong>Dulap compact cu usi glisante (ex: modele pentru camere mici)</strong><br><strong>Pret estimativ:</strong> 600-1100 lei.<br><strong>Avantaje:</strong> Perfect pentru camere mici, unde usile batante ar fi incomode. Ofera destul spatiu de depozitare pe verticala. Poate avea un design modern, minimalist. Usile glisante sunt practice si elegante. Bun pentru organizarea hainelor pe umerase si a celor impaturite.<strong>Minusuri:</strong> Accesul la interior poate fi mai limitat comparativ cu usile batante, mai ales daca obiectele sunt in spatele usii. Sertarele interioare pot fi mai greu de integrat sau mai putin adanci. Calitatea glisierelor e cruciala, cele ieftine se blocheaza usor. Nu prea poti modifica interiorul.</li><li><strong>Dulap cu rafturi si spatiu pentru umerase (tip sifonier clasic)</strong><br><strong>Pret estimativ:</strong> 500-900 lei.<br><strong>Avantaje:</strong> Solutie clasica, gasesti o gramada de modele, de la cele mai simple la cele mai elaborate. Ofera un echilibru bun intre spatiul pentru haine pe umerase si cel pentru haine impaturite. Usor de gasit in magazine fizice, poti vedea si atinge produsul. Unele au si oglinda integrata, utila pentru adolescenti.<strong>Minusuri:</strong> Designul poate fi mai putin modern. Daca nu are polite reglabile, poate fi mai greu sa adaptezi spatiul la nevoile tale. Unele modele ieftine din PAL pot avea finisaje mai slabe.</li><li><strong>Dulap tip comoda inalta cu sertare (numit uneori si dresing)</strong><br><strong>Pret estimativ:</strong> 400-800 lei.<br><strong>Avantaje:</strong> Excelent pentru depozitarea hainelor mici, lenjerie, sosete, jucarii. Sertarele sunt foarte practice si usor de accesat pentru copii. Ocupa mai putin spatiu pe inaltime decat un dulap clasic. Poate fi integrat usor in diverse amenajari. Am gasit modele cu sertare adanci, care chiar incapa multe.<strong>Minusuri:</strong> Nu are spatiu pentru umerase, deci nu e o solutie unica pentru toata garderoba. Poate fi instabil daca nu e bine prins de perete, mai ales cand e plin de lucruri. Calitatea glisierelor e iarasi importanta aici.</li></ul>
+        <p>Alegerea depinde mult de varsta copilului, de cat spatiu ai si, bineinteles, de buget. Dar cu o mica cercetare, poti gasi un <strong>dulap pentru camera copilului</strong> care sa fie si frumos, si functional.</p>
+      </section>
+
+      <section id="ghid-pas-cu-pas-cum-alegi-dulapul-pentru-camera-copilului">
+        <h2>Ghid pas cu pas: cum alegi dulapul pentru camera copilului</h2>
+        <p>Ok, hai sa luam pe rand ce conteaza cand alegi un <strong>dulap pentru camera copilului</strong>. Nu te complica, doar gandeste-te la lucrurile practice.</p>
+        <h3>Siguranta pe primul loc</h3>
+        <p>Asta e non-negociabil. Uita-te dupa:</p>
+        <ul><li><strong>Colturi si margini rotunjite</strong>: Previne loviturile si zgarieturile.</li><li><strong>Manere sigure</strong>: Nu iesi in relief, nu au forme care pot agata hainele sau degetele. Unele dulapuri au manere frezate direct in usa sau sertar, astea sunt cele mai sigure.</li><li><strong>Sistem anti-rasturnare</strong>: Asta e crucial! Dulapul trebuie prins de perete cu o chinga sau un sistem special. Nu conteaza cat de greu pare, copiii sunt surprinzatori.</li><li><strong>Materiale non-toxice</strong>: Vopsele si lacuri pe baza de apa, fara formaldehida sau alte chimicale daunatoare. Verifica certificatele, daca le gasesti.</li></ul>
+        <h3>Functionalitate si spatiu de depozitare</h3>
+        <p>Aici te gandesti la ce ai de depozitat si cine o sa foloseasca dulapul.</p>
+        <ul><li><strong>Dimensiuni</strong>: Masoara spatiul unde vrei sa pui dulapul si verifica daca incape. Nu uita sa lasi loc si pentru deschiderea usilor, daca e cazul.</li><li><strong>Compartimentare</strong>: Ai nevoie de spatiu pentru umerase? De multe polite pentru haine impaturite? De sertare pentru lenjerie si sosete? Uita-te la configuratie.</li><li><strong>Polite reglabile</strong>: Foarte utile! Iti permit sa schimbi inaltimea compartimentelor pe masura ce hainele copilului cresc.</li><li><strong>Adancimea sertarelor/politelor</strong>: Sertarele prea adanci pot fi greu de accesat pentru copii mici. Politele prea adanci fac ca hainele din spate sa fie uitate.</li><li><strong>Accesibilitate</strong>: E usor pentru copil sa ajunga la lucrurile lui? Daca e prea inalt, va depinde mereu de tine.</li></ul>
+        <h3>Materiale si durabilitate</h3>
+        <p>Aici e vorba de cat de mult vrei sa investesti si cat de mult vrei sa reziste.</p>
+        <ul><li><strong>Lemn masiv</strong>: Cea mai buna optiune ca rezistenta si aspect. Dar si cea mai scumpa.</li><li><strong>PAL/MDF de calitate</strong>: O alternativa buna, mai accesibila. Cauta PAL melaminat cu canturi bine finisate. Evita placajele ieftine.</li><li><strong>Finisaje</strong>: Usor de curatat, rezistente la zgarieturi.</li><li><strong>Balamele si glisiere</strong>: Investeste in calitate. Cele ieftine se strica repede si te trezesti cu probleme.</li></ul>
+        <h3>Stil si design</h3>
+        <p>Asta e partea distractiva, dar si cea care poate deveni rapid demodata.</p>
+        <ul><li><strong>Culori</strong>: Neutre sau pastelate sunt cele mai versatile. Culorile vii pot obosi sau pot deveni nepotrivite pe masura ce copilul creste.</li><li><strong>Forme</strong>: Line simple, moderne sau clasice, depinde de stilul camerei.</li><li><strong>Personalizare</strong>: Poti adauga personalitate prin manere sau stickere, care pot fi schimbate usor.</li></ul>
+        <p>Eu zic ca cel mai bine e sa gasesti un echilibru. Un <strong>dulap pentru camera copilului</strong> care e sigur, suficient de mare, usor de organizat si care arata cat de cat ok. Nu te complica cu prea multe detalii inutile. Pana la urma, scopul principal e sa-ti tina casa in ordine. Si sa-l faca pe copil sa se simta bine in camera lui.</p>
+      </section>
+
+      <section id="dulap-clasic-vs-dulap-modular-ce-alegi-pentru-camera-copilului">
+        <h2>Dulap clasic vs. Dulap modular: ce alegi pentru camera copilului?</h2>
+        <p>Cand vine vorba de <strong>dulap pentru camera copilului</strong>, ai de ales intre solutii mai traditionale, cum ar fi dulapul clasic, si cele mai moderne, cum e cel modular. Fiecare are avantaje si dezavantaje, deci hai sa le punem fata in fata.</p>
+        <h3>Dulapul clasic (Sifonier)</h3>
+        <p>Asta e varianta pe care o stim cu totii: un corp de mobilier de sine statator, de obicei cu doua usi batante, un spatiu pentru umerase si cateva polite sau sertare. Poate fi din lemn masiv sau PAL.</p>
+        <ul><li><strong>Avantaje:</strong></li><li><strong>Simplitate</strong>: Il cumperi, il montezi si gata. Nu trebuie sa te gandesti la combinatii.</li><li><strong>Accesibilitate</strong>: In general, sunt mai ieftine decat cele modulare, mai ales daca alegi variante din PAL.</li><li><strong>Disponibilitate</strong>: Le gasesti peste tot, in magazine fizice si online.</li><li><strong>Spatiu pentru umerase</strong>: De obicei, au un compartiment generos pentru umerase, ideal pentru rochii, camasi sau geci.</li><li><strong>Minusuri:</strong></li><li><strong>Rigiditate</strong>: Odata cumparat, asa ramane. Nu-l poti reconfigura sau extinde usor pe masura ce nevoile copilului se schimba.</li><li><strong>Design</strong>: Unele modele pot fi un pic demodate sau prea voluminoase pentru camerele mici.</li><li><strong>Adaptabilitate</strong>: Daca nu are polite reglabile, s-ar putea sa nu profiti la maximum de spatiu.</li></ul>
+        <h3>Dulapul modular</h3>
+        <p>Asta e ca un fel de Lego pentru mobilier. Cumperi module separate (corpuri cu usi, corpuri cu sertare, etajere) si le combini cum vrei tu, creand un <strong>dulap pentru camera copilului</strong> personalizat.</p>
+        <ul><li><strong>Avantaje:</strong></li><li><strong>Flexibilitate maxima</strong>: Poti crea exact configuratia de care ai nevoie, poti adauga module noi pe masura ce copilul creste sau achizitionezi mai multe haine.</li><li><strong>Adaptabilitate</strong>: Poti schimba pozitia politelelor, poti adauga sertare, poti rearanja totul. E un mobilier care creste odata cu copilul.</li><li><strong>Optimizarea spatiului</strong>: Poti crea solutii compacte si inteligente, potrivite chiar si pentru camere foarte mici.</li><li><strong>Design modern</strong>: Multe sisteme modulare au un design curat, minimalist, care se potriveste in camere moderne.</li><li><strong>Minusuri:</strong></li><li><strong>Cost</strong>: Poate deveni destul de scump, mai ales daca vrei o configuratie mare si complexa. Pretul per modul se aduna.</li><li><strong>Complexitate la montaj</strong>: Unele sisteme pot fi mai greu de asamblat, necesita mai multa atentie la detalii.</li><li><strong>Estetica</strong>: Daca nu combini modulele cu grija, s-ar putea sa nu arate la fel de unitar ca un dulap clasic.</li></ul>
+        <p><strong>Verdictul meu:</strong> Daca ai un buget mai generos si vrei o solutie pe termen lung, care sa se adapteze constant, mergi pe varianta modulara. IKEA STUVA sau FÖLJA sunt exemple bune. Daca vrei ceva simplu, rapid si mai ieftin, un dulap clasic bine ales e perfect. Eu, personal, am mers pe modular pentru ca am vrut sa pot adapta spatiul, dar recunosc ca si un dulap clasic frumos, din lemn masiv, e o piesa de rezistenta.</p>
+      </section>
+
+      <section id="greseli-de-evitat-la-alegerea-dulapului-pentru-camera-copilului">
+        <h2>Greșeli de evitat la alegerea dulapului pentru camera copilului</h2>
+        <p>Am văzut tot felul de situații, de la dulapuri care arătau grozav în poze și în realitate erau un dezastru, la alegeri total nepotrivite pentru vârsta copilului. Hai să vedem ce ar trebui să eviți ca să nu dai cu piciorul banilor și să te trezești cu un dulap inutil.</p>
+        <h3>1. Ignorarea siguranței</h3>
+        <p>Asta e cea mai mare greșeală. Să cumperi un dulap fără sistem anti-rasturnare, cu margini ascuțite sau cu manere care ies mult în afară, e ca și cum ai invita necazurile. Știu, pare drăguț un dulap cu tot felul de forme proeminente, dar siguranța copilului e pe primul loc. Niciodată nu uita de sistemul de prindere de perete.</p>
+        <p>Pare un detaliu mic, dar face diferența între o cameră sigură și una cu potențial periculos. Am văzut dulapuri vechi, din lemn, care erau grele și stăteau bine pe podea, dar chiar și alea, dacă se prăbușesc peste un copil, e dezastru. Deci, obligatoriu, sistem anti-rasturnare.</p>
+        <h3>2. Alegerea unui design prea „copilăresc”</h3>
+        <p>Dulapurile cu personaje din desene animate, cu culori neon sau cu forme foarte specifice pot fi grozave la 3 ani, dar la 7 sau 10? S-ar putea să nu mai placă deloc. Copiii își schimbă gusturile rapid, iar un <strong>dulap pentru camera copilului</strong> e o piesă de mobilier destul de costisitoare ca să o schimbi la câțiva ani. Eu recomand să alegi un design mai neutru, mai clasic, și să aduci personalitate prin accesorii – stickere care se pot dezlipi ușor, manere colorate, sau chiar prin textilele din cameră.</p>
+        <p>Așa, dulapul va rămâne relevant mult mai mult timp.</p>
+        <h3>3. Subestimarea spațiului de depozitare necesar</h3>
+        <p>E ușor să crezi că un dulap mic e suficient, mai ales când copilul e bebeluș. Dar hainele se acumulează, jucăriile se înmulțesc, iar pe măsură ce crește, va avea nevoie de spațiu pentru șosete, lenjerie, rechizite, cărți. Mai bine să ai un pic de spațiu în plus decât să te trezești că nu mai ai unde să pui nimic.</p>
+        <p>Caută un <strong>dulap pentru camera copilului</strong> cu o compartimentare inteligentă: un spațiu pentru umerase, polite reglabile și, neapărat, sertare. Sertarele sunt salvatoare pentru obiectele mici.</p>
+        <h3>4. Ignorarea calității materialelor și a feroneriei</h3>
+        <p>Asta e legată de durabilitate. Un dulap ieftin din PAL subțire, cu canturi prost finisate și glisiere de plastic, va începe să se degradeze repede. Sertarele se vor bloca, ușile se vor lăsa, colțurile se vor ciobi. Gândește-te la un <strong>dulap pentru camera copilului</strong> ca la o investiție pe termen lung. Merită să plătești un pic mai mult pentru un material de calitate, din lemn masiv sau PAL/MDF de densitate mare, și pentru balamale și glisiere metalice. Vei vedea diferența în timp.</p>
+        <h3>5. Lipsa planificării</h3>
+        <p>Nu te arunca să cumperi primul dulap care îți iese în cale. Măsoară spațiul, gândește-te la ce ai nevoie (câte umerase, câte haine impăturite, câte jucării etc.), compară modele și prețuri. Citește recenzii.</p>
+        <p>Asta te scutește de multe bătăi de cap și de posibile regrete. Un dulap nepotrivit poate crea mai mult dezordine decât ordine. Pe scurt, gândește-te la siguranță, la evoluția nevoilor copilului, la calitatea materialelor și la un design care să reziste în timp.</p>
+        <p>Asta te va ajuta să alegi un <strong>dulap pentru camera copilului</strong> care să fie cu adevărat util și să te bucuri de el ani de zile.</p>
+      </section>
+
+      <section id="recomandari-de-dulap-pentru-camera-copilului-pe-categorii-de-buget">
+        <h2>Recomandări de dulap pentru camera copilului pe categorii de buget</h2>
+        <p>Știu că bugetul e un factor decisiv pentru majoritatea dintre noi. Așa că am împărțit recomandările mele în trei categorii, ca să fie mai ușor să te orientezi. Nu uita că prețurile sunt estimative și pot varia în funcție de promoții și de magazin.</p>
+        <h3>Buget redus (sub 500 lei)</h3>
+        <p>În această categorie, te poți orienta spre dulapuri din PAL mai subțire, cu un design simplu, sau spre soluții de depozitare mai compacte, cum ar fi comodele înalte cu sertare sau dulapurile mai înguste, tip sifonier. Caută modele de la branduri cunoscute pentru raportul calitate-preț, chiar dacă nu sunt din lemn masiv. Atenție sporită la finisaje și la calitatea balamalelor.</p>
+        <p>Un exemplu ar fi un dulap compact cu 2 uși și o bară pentru umerase, din PAL melaminat. De obicei, astea au un preț bun și sunt suficiente pentru un copil mic sau pentru a suplimenta spațiul de depozitare. E important să verifici dacă include sistemul anti-rasturnare, chiar și la modelele mai ieftine.</p>
+        <p>Unele magazine oferă și pachete de comode cu dulapuri mici la prețuri avantajoase.</p>
+        <h3>Buget mediu (500 - 1200 lei)</h3>
+        <p>Aici ai deja opțiuni mult mai bune. Poți găsi dulapuri din PAL de calitate superioară, cu design mai modern, sau chiar combinații modulare accesibile, cum ar fi cele de la IKEA (STUVA sau FÖLJA, în funcție de configurație). Vei găsi modele cu mai multe sertare, cu polite reglabile și cu finisaje mai rezistente.</p>
+        <p>Un dulap din această gamă ar trebui să fie suficient de spațios pentru a acoperi nevoile unui copil în creștere. Poți opta pentru un dulap cu 3 uși, cu un mix de spațiu pentru umerase și polite, sau pentru o comodă înaltă cu multe sertare, dacă vrei să depozitezi mai mult lucruri mici. Calitatea materialelor și a feroneriei este, în general, mult mai bună în acest segment de preț, deci investiția se merită pe termen lung.</p>
+        <h3>Buget generos (peste 1200 lei)</h3>
+        <p>În acest segment, poți alege ce e mai bun: dulapuri din lemn masiv de calitate, cu finisaje impecabile, sau sisteme modulare complexe, care îți permit să creezi o amenajare completă și personalizată pentru camera copilului. Dulapurile din lemn masiv sunt o investiție pe viață, rezistente, ecologice și cu un aspect deosebit. Poți găsi modele clasice, elegante, sau chiar cu un design mai modern, adaptat.</p>
+        <p>Sistemele modulare de la branduri de top îți oferă o flexibilitate incredibilă, permițându-ți să adaptezi spațiul perfect la nevoile copilului, de la vârsta de bebeluș până la adolescență. Acestea sunt cele mai bune opțiuni dacă îți permiți, pentru că rezolvă problema depozitării pe termen foarte lung. Caută modele cu accesorii premium, cum ar fi glisiere cu amortizare sau uși cu balamale de înaltă calitate.</p>
+        <p>Indiferent de buget, nu uita să verifici întotdeauna specificațiile de siguranță și să citești recenzii, dacă sunt disponibile. Un <strong>dulap pentru camera copilului</strong> bine ales face minuni pentru organizarea casei și starea de bine a întregii familii.</p>
+      </section>
+
+          <!-- FAQ Section -->
+          <section class="faq-section" id="faq">
+            <h2 class="faq-title">Intrebari Frecvente</h2>
+            
+            <div class="faq-item" id="faq-0">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Ce pret are un dulap pentru camera copilului?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Pretul unui dulap pentru camera copilului variaza considerabil, de la aproximativ 300-500 lei pentru modele simple din PAL, pana la 1500-3000 lei sau chiar mai mult pentru piese din lemn masiv sau sisteme modulare complexe. Un pret mediu pentru un dulap decent, din PAL de calitate, se situeaza intre 600 si 1200 lei.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-1">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Care e diferenta intre un dulap clasic si unul modular pentru copii?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Dulapul clasic e o unitate fixa, cu usi batante si compartimentare prestabilita (spatiu umerase, polite). Dulapul modular e format din corpuri si piese ce se pot combina in diverse moduri, oferind flexibilitate maxima si adaptabilitate pe termen lung. Modularul este mai scump, dar si mai versatil.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-2">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Merita sa cumpar un dulap din lemn masiv pentru copil?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Absolut. Un dulap pentru camera copilului din lemn masiv este extrem de durabil, ecologic si sigur, rezistand generatii. Dezavantajul major este pretul, care poate fi de 2-3 ori mai mare decat al unui dulap din PAL de calitate. Daca bugetul permite, e o investitie pe viata.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-3">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Ce dimensiuni ar trebui sa aiba un dulap pentru camera copilului?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Dimensiunile depind de spatiul disponibil si de varsta copilului. Pentru un copil mic, un dulap de 80-100 cm latime, cu inaltime de 120-150 cm, este adesea suficient. Pentru un copil mai mare sau pentru a acoperi nevoile unei familii, se recomanda dulapuri de 120-150 cm latime sau chiar mai mari, cu adancime standard de 50-60 cm.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-4">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                De ce e important sistemul anti-rasturnare la dulapul pentru copii?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Sistemul anti-rasturnare (prinderea de perete) este esential pentru siguranta copilului. Copiii pot incerca sa se urce pe dulap, iar acesta, daca nu e fixat, se poate rasturna peste ei, provocand accidente grave. Este un element de siguranta obligatoriu.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-5">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Cum sa aleg cel mai bun dulap pentru camera copilului?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Cel mai bun dulap pentru camera copilului este cel sigur (colturi rotunjite, sistem anti-rasturnare), functional (spatiu de depozitare adecvat, polite reglabile, sertare), realizat din materiale de calitate (lemn masiv sau PAL rezistent) si cu un design pe care sa-l aprecieze atat parintele, cat si copilul pe termen lung.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-6">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Unde gasesc dulapuri bune pentru camera copilului?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Dulapuri bune pentru camera copilului gasiti in magazine de mobilier pentru copii, in marii retaileri de mobilier (IKEA, Mobexpert, JYSK, Kika), pe platforme online de profil (eMag, Vivre, Bonami) sau la producatori locali de mobilier. Recomand sa verificati atat magazinele fizice, cat si cele online pentru cea mai variata oferta.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-7">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Ce greseli sa evit cand cumpar un dulap pentru copii?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Evitati sa ignorati siguranta (fara sistem anti-rasturnare, colturi ascutite), sa alegeti un design prea copilaresc care devine demodat rapid, sa subestimati spatiul de depozitare necesar si sa achizitionati produse din materiale ieftine, cu feronerie de proasta calitate. Calitatea si siguranta sunt prioritare.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Author -->
+        <div class="author-line">
+          <div class="author-avatar">RM</div>
+          <div>
+            <div class="author-name">Raluca Marin</div>
+            <div class="author-role">Designer Interior Camera Copilului</div>
+          </div>
+        </div>
+
+        <!-- Similar Articles -->
+        <SimilarArticles
+          currentSlug="dulap-pentru-camera-copilului"
+          currentCategory="camera-copilului"
+          articles={allArticles}
+        />
+      </div>
+    </div>
+  </article>
+</Layout>

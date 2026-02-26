@@ -1,0 +1,52 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  excerpt: string;
+  image: string;
+  category: string;
+  categorySlug: string;
+  date: string;
+  variant?: 'featured' | 'compact';
+}
+
+const { title, slug, excerpt, image, category, categorySlug, date, variant = 'compact' } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('ro-RO', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+{variant === 'featured' ? (
+  <a href={`/${slug}/`} class="article-card-featured">
+    <div class="card-image-wrap">
+      <img
+        src={image}
+        alt={title}
+        class="card-image"
+        loading="lazy"
+        width="600"
+        height="380"
+      >
+    </div>
+    <div>
+      <span class="card-label">{category}</span>
+      <h3 class="card-title">{title}</h3>
+      <span class="card-date">{formattedDate}</span>
+    </div>
+  </a>
+) : (
+  <a href={`/${slug}/`} class="article-card-compact">
+    <img src={image} alt={title} class="card-thumb" loading="lazy" width="80" height="80">
+    <div class="card-body">
+      <h3 class="card-title">{title}</h3>
+      <div class="card-meta">
+        <span class="card-label">{category}</span>
+        <span class="dot">&middot;</span>
+        <span>{formattedDate}</span>
+      </div>
+    </div>
+  </a>
+)}

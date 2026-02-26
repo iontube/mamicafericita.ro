@@ -1,0 +1,51 @@
+---
+const currentYear = new Date().getFullYear();
+
+const categories = [
+  { name: 'Carucioare', slug: 'carucioare-accesorii-bebe' },
+  { name: 'Jucarii', slug: 'jucarii-educative' },
+  { name: 'Alimentatie', slug: 'alimentatie-nutritie-copii' },
+  { name: 'Pentru Mamici', slug: 'produse-mamici' },
+  { name: 'Camera Copilului', slug: 'camera-copilului' }
+];
+
+const navLinks = [
+  { name: 'Acasa', href: '/' },
+  ...categories.map(cat => ({ name: cat.name, href: `/${cat.slug}/` })),
+  { name: 'Blog', href: '/blog/' },
+  { name: 'Contact', href: '/contact/' }
+];
+
+const legalLinks = [
+  { name: 'Politica de Confidentialitate', href: '/privacy-policy/' },
+  { name: 'Politica GDPR', href: '/gdpr/' },
+  { name: 'Termeni si Conditii', href: '/terms/' },
+  { name: 'Politica Cookies', href: '/cookies/' },
+  { name: 'Sitemap', href: '/sitemap/' }
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-brand">
+      <a href="/"><img src="/images/logo-transparent.png" alt="MamicaFericita" class="footer-logo"></a>
+    </div>
+
+    <nav class="footer-nav">
+      {navLinks.map((link, i) => (
+        <>
+          <a href={link.href}>{link.name}</a>
+          {i < navLinks.length - 1 && <span class="nav-dot">&middot;</span>}
+        </>
+      ))}
+    </nav>
+
+    <div class="footer-legal">
+      {legalLinks.map(link => (
+        <a href={link.href}>{link.name}</a>
+      ))}
+    </div>
+
+    <p class="footer-copyright">&copy; {currentYear} MamicaFericita.ro - Toate drepturile rezervate.</p>
+  </div>
+</footer>

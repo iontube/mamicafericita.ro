@@ -1,0 +1,94 @@
+---
+const categories = [
+  { name: 'Carucioare', slug: 'carucioare-accesorii-bebe' },
+  { name: 'Jucarii', slug: 'jucarii-educative' },
+  { name: 'Alimentatie', slug: 'alimentatie-nutritie-copii' },
+  { name: 'Pentru Mamici', slug: 'produse-mamici' },
+  { name: 'Camera Copilului', slug: 'camera-copilului' }
+];
+
+const navLinks = [
+  { name: 'Acasa', href: '/' },
+  ...categories.map(cat => ({ name: cat.name, href: `/${cat.slug}/` })),
+  { name: 'Blog', href: '/blog/' }
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header" id="site-header">
+  <div class="container" style="position: relative;">
+    <div class="header-brand">
+      <a href="/"><img src="/images/logo-transparent.png" alt="MamicaFericita" class="header-logo"></a>
+    </div>
+
+    <nav class="header-nav">
+      {navLinks.map((link, i) => (
+        <>
+          <a href={link.href} class={currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) ? 'active' : ''}>{link.name}</a>
+          {i < navLinks.length - 1 && <span class="nav-dot">&middot;</span>}
+        </>
+      ))}
+    </nav>
+
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Meniu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- Full-screen mobile overlay -->
+<div class="mobile-overlay" id="mobile-overlay">
+  <button class="mobile-overlay-close" id="mobile-overlay-close" aria-label="Inchide meniu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+  <img src="/images/icon-512.png" alt="MamicaFericita" class="mobile-overlay-logo">
+  {navLinks.map(link => (
+    <a href={link.href}>{link.name}</a>
+  ))}
+  <a href="/contact/">Contact</a>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const overlay = document.getElementById('mobile-overlay');
+  const closeBtn = document.getElementById('mobile-overlay-close');
+
+  menuBtn?.addEventListener('click', () => {
+    overlay?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    overlay?.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+
+  // Close overlay on link click
+  overlay?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      overlay?.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Sticky header scroll behavior
+  const header = document.getElementById('site-header');
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+    if (currentScroll > 80) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+    lastScroll = currentScroll;
+  });
+</script>

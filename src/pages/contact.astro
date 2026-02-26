@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Contact - MamicaFericita"
+  description="Contacteaza echipa MamicaFericita pentru intrebari, sugestii sau colaborari. Suntem aici sa te ajutam."
+>
+  <div class="contact-page">
+    <h1>Contact</h1>
+    <p style="color: var(--color-gray-600); max-width: 500px; margin: 0 auto;">
+      Ai intrebari despre articolele noastre sau vrei sa ne trimiti o sugestie?
+      Scrie-ne si iti vom raspunde cat mai curand.
+    </p>
+
+    <div class="contact-card">
+      <div class="contact-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </div>
+      <a href="mailto:contact@mamicafericita.ro" class="contact-email">contact@mamicafericita.ro</a>
+      <p class="contact-info">
+        Echipa noastra raspunde de obicei in 24-48 de ore.
+        Iti multumim pentru rabdare!
+      </p>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import keywordsData from '../../../keywords.json';
+
+const categoryDescriptions: Record<string, string> = {
+  'carucioare-accesorii-bebe': 'Recenzii detaliate pentru carucioare 3 in 1, marsupii ergonomice, scaune auto si landouri. Te ajutam sa alegi ceea ce se potriveste cel mai bine stilului tau de viata.',
+  'jucarii-educative': 'Jucarii Montessori, puzzle-uri din lemn, cuburi de construit si seturi creative care stimuleaza dezvoltarea cognitiva si motricitatea fina a copiilor.',
+  'alimentatie-nutritie-copii': 'Tot ce ai nevoie pentru diversificare si hranirea bebelusului: scaune de masa, biberoane anticolici, sterilizatoare si accesorii de hranire.',
+  'produse-mamici': 'Creme antivergeturi, perne de alaptat, sutiene speciale, centuri postnatale si genti organizator. Produse care fac viata mamicilor mai confortabila.',
+  'camera-copilului': 'Patuturi cu saltea, lampi de veghe, monitoare video, covoare de joaca si mobilier pentru camera bebelusului.'
+};
+
+export async function getStaticPaths() {
+  const categories = [
+    { name: 'Carucioare si Accesorii Bebe', slug: 'carucioare-accesorii-bebe' },
+    { name: 'Jucarii Educative', slug: 'jucarii-educative' },
+    { name: 'Alimentatie si Nutritie Copii', slug: 'alimentatie-nutritie-copii' },
+    { name: 'Produse pentru Mamici', slug: 'produse-mamici' },
+    { name: 'Camera Copilului', slug: 'camera-copilului' }
+  ];
+
+  const ARTICLES_PER_PAGE = 15;
+  const paths = [];
+
+  for (const category of categories) {
+    const categoryArticles = keywordsData.completed
+      .filter(item => item.categorySlug === category.slug)
+      .map(item => ({
+        title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+        slug: item.keyword.toLowerCase()
+          .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+          .replace(/ș/g, 's').replace(/ț/g, 't')
+          .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+        excerpt: item.excerpt || '',
+        image: `/images/articles/${item.keyword.toLowerCase()
+          .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+          .replace(/ș/g, 's').replace(/ț/g, 't')
+          .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+        category: item.category,
+        categorySlug: item.categorySlug,
+        date: item.date || new Date().toISOString()
+      }))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    const totalPages = Math.max(1, Math.ceil(categoryArticles.length / ARTICLES_PER_PAGE));
+
+    for (let i = 1; i <= totalPages; i++) {
+      const start = (i - 1) * ARTICLES_PER_PAGE;
+      const end = start + ARTICLES_PER_PAGE;
+      const pageArticles = categoryArticles.slice(start, end);
+
+      paths.push({
+        params: {
+          category: category.slug,
+          page: i === 1 ? undefined : String(i)
+        },
+        props: {
+          categoryName: category.name,
+          categorySlug: category.slug,
+          articles: pageArticles,
+          currentPage: i,
+          totalPages: totalPages
+        }
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { categoryName, categorySlug, articles, currentPage, totalPages } = Astro.props;
+const description = categoryDescriptions[categorySlug] || '';
+const featuredArticle = articles[0];
+const restArticles = articles.slice(1);
+---
+
+<Layout
+  title={`${categoryName} - MamicaFericita`}
+  description={`Cele mai bune produse si sfaturi pentru ${categoryName.toLowerCase()}. Recenzii detaliate si recomandari testate de mamici.`}
+>
+  <div class="container" style="padding-top: var(--space-xl); padding-bottom: var(--space-3xl);">
+    <div class="blog-header">
+      <h1>{categoryName}</h1>
+      {description && <p>{description}</p>}
+    </div>
+
+    {articles.length > 0 ? (
+      <>
+        {/* Featured article at top */}
+        {featuredArticle && (
+          <div style="margin-bottom: var(--space-2xl);">
+            <ArticleCard {...featuredArticle} variant="featured" />
+          </div>
+        )}
+
+        {/* Rest as compact list */}
+        {restArticles.length > 0 && (
+          <div>
+            {restArticles.map(article => (
+              <ArticleCard {...article} variant="compact" />
+            ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <nav class="pagination">
+            {currentPage > 1 && (
+              <a
+                href={currentPage === 2 ? `/${categorySlug}/` : `/${categorySlug}/${currentPage - 1}/`}
+                class="pagination-link"
+              >
+                &larr;
+              </a>
+            )}
+
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+              <a
+                href={page === 1 ? `/${categorySlug}/` : `/${categorySlug}/${page}/`}
+                class={`pagination-link ${page === currentPage ? 'active' : ''}`}
+              >
+                {page}
+              </a>
+            ))}
+
+            {currentPage < totalPages && (
+              <a href={`/${categorySlug}/${currentPage + 1}/`} class="pagination-link">
+                &rarr;
+              </a>
+            )}
+          </nav>
+        )}
+      </>
+    ) : (
+      <p style="text-align: center; color: var(--color-muted); padding: var(--space-2xl);">
+        Articolele pentru aceasta categorie sunt in curs de pregatire.
+      </p>
+    )}
+  </div>
+</Layout>

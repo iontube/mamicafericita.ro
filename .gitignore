@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.astro/
+temp-articles.json
+successful-keywords.json
+generation-results.json
+cron.log
+generation.log
+.claude/
+.DS_Store

@@ -1,0 +1,259 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import keywordsData from '../../keywords.json';
+
+export const frontmatter = {
+  title: "Biberon anticolici pentru bebelusi",
+  excerpt: "Daca bebelusul tau se chinuie cu gaze si colici, cel mai bun biberon anticolici pentru bebelusi este cel cu un sistem de ventilatie performant, care reduce semnificativ inghitirea aerului. Modelele de la Dr. Brown's si Philips Avent sunt printre cele mai apreciate, insa alegerea potrivita depinde si de preferintele copilului.",
+  image: "/images/articles/biberon-anticolici-pentru-bebelusi.webp",
+  category: "Alimentatie si Nutritie Copii",
+  categorySlug: "alimentatie-nutritie-copii",
+  date: "2026-02-10T10:08:41.004Z",
+  modifiedDate: "2026-02-10T10:08:41.004Z",
+  author: "Elena Dumitrescu",
+  authorRole: "Specialist Alimentatie Infantila",
+  authorBio: "Elena este nutritionist cu specializare in alimentatia copiilor mici. Testeaza si recomanda produse de hranire, biberoane si accesorii care fac diversificarea si alimentatia bebelusilor mai simpla si mai sigura."
+};
+
+const faq = [
+  { question: "cat costa un biberon anticolici bun?", answer: "Un biberon anticolici pentru bebelusi bun costa intre 40 si 70 lei pe bucata. Modelele mai accesibile se gasesc de la 30 lei, in timp ce cele premium, precum Dr. Brown's, ajung la 60-70 lei. Pretul poate varia in functie de brand, numar de piese si oferte." },
+  { question: "care e diferenta intre un biberon normal si unul anticolici?", answer: "Diferenta principala consta in sistemul de ventilatie. Un biberon anticolici pentru bebelusi are o canula sau o valva speciala care permite aerului sa iasa din biberon, reducand astfel cantitatea de aer inghitita de copil in timpul hranirii. Un biberon normal nu are acest sistem, crescand riscul de gaze si colici." },
+  { question: "merita sa cumpar biberoane anticolici pentru nou nascuti?", answer: "Da, merita sa cumperi biberoane anticolici pentru bebelusi, mai ales daca alaptezi la biberon sau daca bebelusul manifesta deja semne de colici. Aceste biberoane ajuta la reducerea acumularii de gaze, previn refluxul si disconfortul abdominal, facand hranirea mai placuta pentru copil." },
+  { question: "ce biberon anticolici e mai bun Dr. Brown's sau Avent?", answer: "Dr. Brown's este considerat mai eficient pentru colici severe datorita sistemului complex cu canula, dar este greu de curatat. Philips Avent are un sistem mai simplu cu valva in tetina, usor de curatat si eficient pentru colici moderate. Alegerea depinde de severitatea colicilor si de preferinta pentru usurinta in curatare." },
+  { question: "de ce se infunda tetina la biberonul anticolici?", answer: "Tetina unui biberon anticolici pentru bebelusi se poate infunda din cauza reziduurilor de lapte uscate, mai ales daca nu este curatata imediat dupa utilizare. De asemenea, sistemul de ventilatie se poate bloca daca nu este curatat corect, afectand fluxul de lapte si eficienta anticolici." },
+  { question: "cum sa curat corect un biberon anticolici?", answer: "Curatarea corecta a unui biberon anticolici pentru bebelusi presupune dezasamblarea completa a tuturor pieselor. Foloseste o perie speciala pentru a curata canula, tubul si tetina. Sterilizeaza piesele prin fierbere sau cu un sterilizator. Verifica instructiunile specifice ale fiecarui model." },
+  { question: "unde gasesc biberoane anticolici originale?", answer: "Poti gasi biberoane anticolici pentru bebelusi originale in farmacii mari, magazine pentru copii (Noriel, Bebe Tei, eMag Baby), supermarketuri cu departament de produse pentru copii si pe site-urile oficiale ale producatorilor. Verifica mereu ambalajul si cauta sigle de autenticitate." },
+  { question: "ce flux de tetina anticolici sa aleg pentru un bebelus de 2 luni?", answer: "Pentru un bebelus de 2 luni, se recomanda de obicei un flux mediu (flux 2). Majoritatea brandurilor de biberoane anticolici pentru bebelusi ofera tetine cu flux lent (flux 1) pentru nou-nascuti si flux mediu (flux 2) pentru 1-3 luni. Verifica ghidul de varsta al producatorului." }
+];
+
+const toc = [
+  { title: "Biberonul Anticolici Perfect: Cum Alegi Fara Sa Dau Cu Banul", id: "biberonul-anticolici-perfect-cum-alegi-fara-sa-dau-cu-banul" },
+  { title: "Top Recomandari Biberon Anticolici: Partea Mea De Experienta Si Minusuri", id: "top-recomandari-biberon-anticolici-partea-mea-de-experienta-si-minusuri" },
+  { title: "Ce Sa Uiti Sa Nu Faci Cand Alegi Biberon Anticolici", id: "ce-sa-uiti-sa-nu-faci-cand-alegi-biberon-anticolici" },
+  { title: "Dr. Brown's vs. Philips Avent: Duelul Titanilor Anticolici", id: "dr-browns-vs-philips-avent-duelul-titanilor-anticolici" },
+  { title: "Pazeste-te De Capcane: Greșeli Comune La Alegerea Biberonului Anticolici", id: "pazeste-te-de-capcane-greseli-comune-la-alegerea-biberonului-anticolici" },
+  { title: "Verdict Pe Buget: Biberon Anticolici Pentru Fiecare Buzunar", id: "verdict-pe-buget-biberon-anticolici-pentru-fiecare-buzunar" }
+];
+
+// Get all articles for similar articles component
+const allArticles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  excerpt: item.excerpt || '',
+  image: `/images/articles/${item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+  category: item.category,
+  categorySlug: item.categorySlug,
+  date: item.date || new Date().toISOString()
+}));
+---
+
+<Layout
+  title="Biberon anticolici pentru bebelusi - MamicaFericita"
+  description="Daca bebelusul tau se chinuie cu gaze si colici, cel mai bun biberon anticolici pentru bebelusi este cel cu un sistem de ventilatie performant, care reduce semnificativ inghitirea aerului. Modelele de la Dr. Brown's si Philips Avent sunt printre cele mai apreciate, insa alegerea potrivita depinde si de preferintele copilului."
+  image="/images/articles/biberon-anticolici-pentru-bebelusi.webp"
+  type="article"
+  publishedTime="2026-02-10T10:08:41.004Z"
+  modifiedTime="2026-02-10T10:08:41.004Z"
+  author="Elena Dumitrescu"
+  faq={faq}
+>
+  <article class="article-page">
+    <!-- Category Link -->
+    <a href="/alimentatie-nutritie-copii/" class="article-page-category">Alimentatie si Nutritie Copii</a>
+
+    <!-- Title -->
+    <h1 class="article-page-title">Biberon anticolici pentru bebelusi</h1>
+
+    <!-- Meta -->
+    <div class="article-page-meta">
+      <span>Elena Dumitrescu</span>
+      <span>&middot;</span>
+      <span>10 februarie 2026</span>
+    </div>
+
+    <!-- Featured Image -->
+    <img src="/images/articles/biberon-anticolici-pentru-bebelusi.webp" alt="Biberon anticolici pentru bebelusi" class="article-page-image" width="800" height="600" loading="eager">
+
+    <!-- Two-column layout: TOC sidebar + content -->
+    <div class="article-layout">
+      <!-- Sticky TOC Sidebar (desktop) -->
+      <aside class="toc-sidebar">
+        <p class="toc-sidebar-title">Cuprins</p>
+        <ol class="toc-sidebar-list">
+          {toc.map(item => (
+            <li><a href={`#${item.id}`}>{item.title}</a></li>
+          ))}
+          <li><a href="#faq">Intrebari Frecvente</a></li>
+        </ol>
+      </aside>
+
+      <div>
+        <!-- Mobile TOC (expandable) -->
+        <div class="toc-mobile" id="toc-mobile">
+          <button class="toc-mobile-toggle" onclick="this.parentElement.classList.toggle('open')">
+            Cuprins
+            <span class="toc-chevron">&#9660;</span>
+          </button>
+          <ol class="toc-mobile-list">
+            {toc.map(item => (
+              <li><a href={`#${item.id}`}>{item.title}</a></li>
+            ))}
+            <li><a href="#faq">Intrebari Frecvente</a></li>
+          </ol>
+        </div>
+
+        <!-- Article Content -->
+        <div class="article-content">
+          
+      <section id="biberonul-anticolici-perfect-cum-alegi-fara-sa-dau-cu-banul">
+        <h2>Biberonul Anticolici Perfect: Cum Alegi Fara Sa Dau Cu Banul</h2>
+        <p>Uite care-i treaba, daca bebelusul tau se zbate, plange si pare sa sufere din cauza gazelor, primul gand te duce la un <strong>biberon anticolici pentru bebelusi</strong>. Si pe buna dreptate. Nu exista o formula magica, da, dar exista niste principii clare care te ajuta sa faci cea mai buna alegere.</p>
+        <p>Am trecut prin asta cu doi copii, deci stiu ce zic. Cel mai important e sa cauti un biberon cu un sistem de ventilatie eficient. Asta inseamna ca aerul nu intra in stomacelul micutului odata cu laptele.</p>
+        <p>Am vazut bebelusi care se calmeaza pur si simplu pentru ca am schimbat un biberon normal cu unul anticolici bun. Efectiv, se vede diferenta in primele zile.</p><p>Sistemele astea de ventilatie pot fi de mai multe feluri. Unele au o canula interioara speciala, cum sunt cele de la Dr. Brown's, care dirijeaza aerul afara din biberon, nu in el.</p>
+        <p>Altele au o valva in tetina sau la baza biberonului. Important e sa fie simplu de curatat, ca na, nu avem timp de ore intregi de spalat. Si sa fie fabricat dintr-un material sigur, fara BPA, evident.</p>
+        <p>Am avut un prieten care a luat un biberon super scump, dar copilul lui refuza tetina. Deci, uneori, forma si textura tetinei conteaza enorm. Nu uita ca si modul in care il tii tu cand alaptezi la biberon conteaza.</p>
+        <p>Inclinatia corecta, sa fie tetina mereu plina cu lapte, asta reduce si ea aerul inghitit. Deci, nu-i doar despre biberon, ci si despre cum il folosesti.</p><p>Sincer, am incercat vreo 3 modele diferite pana sa gasesc ce i se potriveste perfect fetitei mele. E un pic de research, un pic de trial and error, dar cand vezi copilul fericit, merita tot efortul. Nu te baza doar pe ce scrie pe ambalaj, citeste pareri de la alte mamici, intreaba prietenele. Pana la urma, fiecare bebelus e diferit si ce merge la unul s-ar putea sa nu mearga la altul. Dar un <strong>biberon anticolici pentru bebelusi</strong> bun e un start excelent.</p>
+      </section>
+
+      <section id="top-recomandari-biberon-anticolici-partea-mea-de-experienta-si-minusuri">
+        <h2>Top Recomandari Biberon Anticolici: Partea Mea De Experienta Si Minusuri</h2>
+        <p>Am testat, am vazut la prieteni, am citit pareri. Hai sa-ti zic ce-a iesit la mine pe teren. Nu sunt liste facute de marketing, ci ce am vazut ca functioneaza si ce are si el, ca nu exista produs perfect, nu?</p><ul><li><strong>Dr. Brown's Natural Flow Options+</strong>: Asta e clasicul, nu? Sistemul cu canula interioara e genial pentru a elimina aerul. Se vede clar cum ies bulele de aer pe langa lapte, nu in el. Avantaje: Reduce colicii si refluxul foarte bine, tetina e moale si imitata sanul. Dezavantaje: E un cosmar de curatat. Are multe piese mici, trebuie perie speciala. Si daca il uiti pe drum, e greu sa mai gasesti piese. Pret: ~50-70 lei.</li><li><strong>Philips Avent Anti-colic</strong>: Asta e mai simplu. Are o valva speciala in tetina. Avantaje: Mult mai usor de curatat decat Dr. Brown's, tetina e si ea apreciata de multi bebei. Se simte ca e mai robust. Dezavantaje: Unii spun ca nu e la fel de eficient ca Dr. Brown's pentru colici severe. Uneori, valva poate fi un pic capricioasa daca nu e curatata perfect. Pret: ~45-60 lei.</li><li><strong>Tommee Tippee Closer to Nature Advanced Anti-Colic</strong>: Asta are un sistem de ventilatie in tubul interior, dar e diferit de Dr. Brown's, mai integrat. Avantaje: E destul de intuitiv, curatarea e mai usoara decat la Dr. Brown's. Copiii par sa-l accepte bine. Dezavantaje: Unele mamici au raportat ca uneori curge daca nu e pus capacul perfect. Sistemul de ventilatie e bun, dar poate nu de top. Pret: ~40-55 lei.</li><li><strong>Nuk First Choice+ Anti-Colic</strong>: Asta are o valva in tetina, similar cu Avent, dar cu un design putin diferit. Avantaje: Tetina e foarte bine gandita, parca se adapteaza mai bine la gura copilului. Curatare decenta. Dezavantaje: E un pic mai greu de gasit in unele magazine. Eficienta anticolici e buna, dar nu exceptionala pentru cazuri extreme. Pret: ~40-50 lei.</li></ul><p>Sa stii ca astea sunt preturi aproximative, le gasesti mai ieftin la oferte sau pe site-uri gen emag, noriel, bebelu. Am avut un model de la un brand mai obscur, cumparat de pe un grup de facebook, si a fost o dezamagire totala. Deci, merita sa mergi pe ceva testat.</p>
+      </section>
+
+      <section id="ce-sa-uiti-sa-nu-faci-cand-alegi-biberon-anticolici">
+        <h2>Ce Sa Uiti Sa Nu Faci Cand Alegi Biberon Anticolici</h2>
+        <p>Pe bune, sunt cateva chestii pe care le-am invatat pe pielea mea si care te pot scuti de multe frustrari. Nu te arunca la primul <strong>biberon anticolici pentru bebelusi</strong> pe care il vezi. Gandeste-te la asta:</p><ul><li><strong>Materialul</strong>: Toate sunt fara BPA azi, dar verifica sa fie un plastic de calitate, rezistent la fierbere si sterilizare. Unele se zgarie usor, altele se decoloreaza. Am vazut si sticla, dar alea sunt grele si se sparg. Pentru un nou-nascut, plasticul e mai sigur.</li><li><strong>Tetina</strong>: Asta e cruciala. Uita-te la forma (simetrica, anatomica), la flux (lent, mediu, rapid - pentru nou-nascuti incepi cu lent) si la material (silicon, cauciuc). Daca bebelusul tau e alaptat si la san, o tetina care imita sanul e ideală. Nu lua multe deodata, ia una sa vezi cum o accepta.</li><li><strong>Sistemul anticolici</strong>: Cum ziceam, poate fi canula, valva in tetina, valva la baza. Cele cu canula sunt cele mai eficiente teoretic, dar si cele mai greu de curatat. Cele cu valva sunt mai practice. Important e sa fie un sistem testat, nu unul din ala dubios care se blocheaza.</li><li><strong>Curatarea</strong>: Asta e mama tuturor grijilor. Ai timp, rabdare? Atunci Dr. Brown's e o optiune. Nu ai? Mergi pe Avent, Tommee Tippee sau Nuk. Verifica daca piesele se pot baga la masina de spalat vase (desi eu le spal manual, nu am incredere totala).</li><li><strong>Capacitatea</strong>: Pentru inceput, 120-150 ml e suficient. Pe masura ce creste, vei avea nevoie de 240-270 ml. E bine sa poti cumpara si de capacitate mai mare, daca modelul iti place.</li><li><strong>Compatibilitatea cu pompa de san</strong>: Daca alaptezi si extragi lapte, verifica daca biberonul se potriveste cu adaptorul pompei tale. Altfel, trebuie sa transferi laptele, si nu e ideal.</li></ul><p>Eu am invatat ca nu exista 'cel mai bun' <strong>biberon anticolici pentru bebelusi</strong> in general. Exista 'cel mai bun' pentru copilul tau. Deci, uneori, trebuie sa incerci si sa vezi ce reactioneaza copilul. Nu te descuraja daca primele incercari nu sunt perfecte.</p>
+      </section>
+
+      <section id="dr-browns-vs-philips-avent-duelul-titanilor-anticolici">
+        <h2>Dr. Brown's vs. Philips Avent: Duelul Titanilor Anticolici</h2>
+        <p>Ambele sunt nume mari in lumea asta a biberoanelor si ambele au sisteme anticolici destul de eficiente. Dar care e diferenta reala? Hai sa le punem fata in fata.</p><p><strong>Dr. Brown's Natural Flow Options+</strong>: Asta e campionul pentru colici severe, reflux, gaze. Sistemul cu canula interioara e pur si simplu genial la capitolul asta.</p>
+        <p>Aerul este evacuat printr-un sistem de ventilatie, iar laptele ajunge in stomacel fara sa traga aer. Tetina e moale, imitata sanul, e un plus. Pretul e cam 50-70 lei.</p>
+        <p>Pe partea naspa: sunt o gramada de piese de curatat. Canula, tubul de ventilatie, capacelul interior, capacul exterior, tetina, biberonul... E un chin.</p>
+        <p>Am stat cu peria lui speciala cate 10 minute la fiecare spalare. Daca nu il cureti perfect, se infunda sistemul si nu mai functioneaza.</p><p><strong>Philips Avent Anti-colic</strong>: Asta merge pe un sistem diferit, o valva speciala integrata in tetina. E mult mai simplu de curatat. Practic, ai tetina, capacul si biberonul.</p>
+        <p>Gata. Pretul e un pic mai mic, cam 45-60 lei. Valva permite aerului sa intre in biberon, dar intr-un mod controlat, astfel incat sa nu se formeze vid si sa fie inghitit de copil.</p>
+        <p>E eficient, am vazut diferenta, dar poate nu la fel de spectaculos ca Dr. Brown's in cazuri de colici foarte puternice. Uneori, valva asta se poate bloca daca laptele se usuca pe ea, dar o curatare rapida rezolva.</p><p>Deci, daca bebelusul tau sufera ingrozitor si medicii recomanda atentie sporita la colici si reflux, merita sa te chinui un pic cu curatatul si sa alegi Dr. Brown's. Daca vrei ceva practic, usor de intretinut si totusi eficient pentru colici moderate, Philips Avent e o alegere excelenta. Ambele sunt facute din materiale sigure, nu am auzit probleme legate de asta.</p>
+      </section>
+
+      <section id="pazeste-te-de-capcane-greseli-comune-la-alegerea-biberonului-anticolici">
+        <h2>Pazeste-te De Capcane: Greșeli Comune La Alegerea Biberonului Anticolici</h2>
+        <p>Am facut si eu greseli, recunosc. Si am vazut la alte mamici aceleasi prostii. Hai sa le luam pe rand, ca sa nu patiti la fel.</p><p><strong>1. Alegerea fluxului nepotrivit</strong>: Cand bebelusul e nou-nascut, are nevoie de un flux lent. Daca ii pui un flux rapid, se ineca, trage aer, si totul se duce pe apa sambetei. Un <strong>biberon anticolici pentru bebelusi</strong> e bun, dar daca tetina e prea rapida, nu te ajuta. Majoritatea au coduri de culori sau numere pe tetina.incepe cu cel mai mic.</p><p><strong>2. Ignorarea curatarii corecte</strong>: Asta e marea problema la Dr. Brown's, de exemplu. Daca nu cureti *toate* piesele alea mici, sistemul nu mai functioneaza. Si tot aerul ajunge in burtica. Si banii aruncati pe geam. Nu te zgarci la periute speciale, sunt esentiale.</p><p><strong>3. Scoaterea canulei anticolici din greseala</strong>: Unele mamici, ca sa simplifice curatarea, scot canula. Dar canula aia e sufletul sistemului anticolici. Fara ea, e un biberon normal. Deci, daca vrei sa fie anticolici, las-o acolo.</p><p><strong>4. Asteptarea unui miracol imediat</strong>: Da, un <strong>biberon anticolici pentru bebelusi</strong> bun ajuta enorm, dar nu va rezolva 100% problemele de colici. Colicile au multe cauze. Biberonul e doar o piesa din puzzle. Mai trebuie sa te uiti si la cum alaptezi, la ce mananci tu daca alaptezi, la masajul burticii, la probiotice. Nu te astepta ca schimbarea biberonului sa fie sfarsitul luptei.</p><p><strong>5. Cumpararea in masa</strong>: Nu cumpara 10 biberoane de acelasi fel pana nu vezi daca ii place copilului. Ia unul sau doua, vezi cum reactioneaza. Daca ii place, abia apoi cumperi restul. Am patit-o cu un set de 6 biberoane, pe care copilul meu le-a refuzat categoric. Na, asta e.</p><p><strong>6. Ignorarea semnalelor copilului</strong>: Daca bebelusul se agita la un anumit tip de tetina, refuza sa suga, sau pare sa se inece constant, poate nu e biberonul potrivit. Nu forta. Fiecare copil e diferit.</p>
+      </section>
+
+      <section id="verdict-pe-buget-biberon-anticolici-pentru-fiecare-buzunar">
+        <h2>Verdict Pe Buget: Biberon Anticolici Pentru Fiecare Buzunar</h2>
+        <p>Ca sa nu te pierzi in detalii, am grupat recomandarile pe trei categorii de buget. Sa fie clar, nu inseamna ca cel scump e automat cel mai bun, dar de obicei vine cu un plus de eficienta sau materiale mai bune.</p><p><strong>Buget Mic (sub 35 lei/bucata)</strong>: Aici gasesti modele mai simple, de obicei cu valva in tetina. <strong>Nuk First Choice+ Anti-Colic</strong> intra uneori in aceasta categorie, la oferta. Sau modele de la branduri mai putin cunoscute, dar care au recenzii decente. Nu te astepta la minuni, dar pentru colici usoare, pot fi suficiente. Verifica bine materialul si tetina. Un dezavantaj major e ca s-ar putea sa nu fie la fel de durabile sau eficiente pe termen lung.</p><p><strong>Buget Mediu (35 - 55 lei/bucata)</strong>: Aici se incadreaza majoritatea modelelor populare: <strong>Philips Avent Anti-colic</strong>, <strong>Tommee Tippee Closer to Nature Advanced Anti-Colic</strong>. Sunt optiuni echilibrate, care ofera o buna protectie impotriva colicilor, sunt relativ usor de curatat si au tetine acceptate de multi bebelusi. Sunt cele mai populare pentru ca gasesc un echilibru bun intre pret, eficienta si usurinta in utilizare.</p><p><strong>Buget Mare (peste 55 lei/bucata)</strong>: Aici domina <strong>Dr. Brown's Natural Flow Options+</strong>. E cel mai scump, dar si cel mai eficient pentru colici si reflux severe. Daca bebelusul tau chiar sufera si nu gasesti solutie, merita investitia. Pretul mai mare se justifica prin sistemul de ventilatie complex, dar si prin faptul ca sunt facute sa reziste. Daca vrei cea mai buna protectie, chiar daca vine cu un efort de curatare, asta e alegerea.</p><p>Pana la urma, cel mai bun <strong>biberon anticolici pentru bebelusi</strong> este cel pe care il accepta copilul tau si care ii amelioreaza disconfortul. Nu te uita doar la pret, ci si la cum reactioneaza cel mic. Si nu uita de reduceri, sunt mereu oferte bune la magazinele de profil.</p>
+      </section>
+
+          <!-- FAQ Section -->
+          <section class="faq-section" id="faq">
+            <h2 class="faq-title">Intrebari Frecvente</h2>
+            
+            <div class="faq-item" id="faq-0">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                cat costa un biberon anticolici bun?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Un <strong>biberon anticolici pentru bebelusi</strong> bun costa intre 40 si 70 lei pe bucata. Modelele mai accesibile se gasesc de la 30 lei, in timp ce cele premium, precum Dr. Brown's, ajung la 60-70 lei. Pretul poate varia in functie de brand, numar de piese si oferte.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-1">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                care e diferenta intre un biberon normal si unul anticolici?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Diferenta principala consta in sistemul de ventilatie. Un <strong>biberon anticolici pentru bebelusi</strong> are o canula sau o valva speciala care permite aerului sa iasa din biberon, reducand astfel cantitatea de aer inghitita de copil in timpul hranirii. Un biberon normal nu are acest sistem, crescand riscul de gaze si colici.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-2">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                merita sa cumpar biberoane anticolici pentru nou nascuti?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Da, merita sa cumperi <strong>biberoane anticolici pentru bebelusi</strong>, mai ales daca alaptezi la biberon sau daca bebelusul manifesta deja semne de colici. Aceste biberoane ajuta la reducerea acumularii de gaze, previn refluxul si disconfortul abdominal, facand hranirea mai placuta pentru copil.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-3">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ce biberon anticolici e mai bun Dr. Brown's sau Avent?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Dr. Brown's este considerat mai eficient pentru colici severe datorita sistemului complex cu canula, dar este greu de curatat. Philips Avent are un sistem mai simplu cu valva in tetina, usor de curatat si eficient pentru colici moderate. Alegerea depinde de severitatea colicilor si de preferinta pentru usurinta in curatare.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-4">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                de ce se infunda tetina la biberonul anticolici?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Tetina unui <strong>biberon anticolici pentru bebelusi</strong> se poate infunda din cauza reziduurilor de lapte uscate, mai ales daca nu este curatata imediat dupa utilizare. De asemenea, sistemul de ventilatie se poate bloca daca nu este curatat corect, afectand fluxul de lapte si eficienta anticolici.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-5">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                cum sa curat corect un biberon anticolici?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Curatarea corecta a unui <strong>biberon anticolici pentru bebelusi</strong> presupune dezasamblarea completa a tuturor pieselor. Foloseste o perie speciala pentru a curata canula, tubul si tetina. Sterilizeaza piesele prin fierbere sau cu un sterilizator. Verifica instructiunile specifice ale fiecarui model.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-6">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                unde gasesc biberoane anticolici originale?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Poti gasi <strong>biberoane anticolici pentru bebelusi</strong> originale in farmacii mari, magazine pentru copii (Noriel, Bebe Tei, eMag Baby), supermarketuri cu departament de produse pentru copii si pe site-urile oficiale ale producatorilor. Verifica mereu ambalajul si cauta sigle de autenticitate.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-7">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                ce flux de tetina anticolici sa aleg pentru un bebelus de 2 luni?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Pentru un bebelus de 2 luni, se recomanda de obicei un flux mediu (flux 2). Majoritatea brandurilor de <strong>biberoane anticolici pentru bebelusi</strong> ofera tetine cu flux lent (flux 1) pentru nou-nascuti si flux mediu (flux 2) pentru 1-3 luni. Verifica ghidul de varsta al producatorului.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Author -->
+        <div class="author-line">
+          <div class="author-avatar">ED</div>
+          <div>
+            <div class="author-name">Elena Dumitrescu</div>
+            <div class="author-role">Specialist Alimentatie Infantila</div>
+          </div>
+        </div>
+
+        <!-- Similar Articles -->
+        <SimilarArticles
+          currentSlug="biberon-anticolici-pentru-bebelusi"
+          currentCategory="alimentatie-nutritie-copii"
+          articles={allArticles}
+        />
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mamicafericita.ro/sitemap-index.xml
+Sitemap: https://mamicafericita.ro/sitemap-images.xml
