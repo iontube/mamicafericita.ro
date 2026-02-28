@@ -208,6 +208,37 @@ function generateSitemapXsl() {
   console.log('Created: sitemap.xsl (stylesheet)');
 }
 
+// Inject images into Astro's sitemap-0.xml
+function injectImagesIntoAstroSitemap() {
+  const sitemapPath = path.join(DIST_DIR, 'sitemap-0.xml');
+  if (!fs.existsSync(sitemapPath)) return;
+
+  let xml = fs.readFileSync(sitemapPath, 'utf-8');
+
+  if (!xml.includes('xmlns:image')) {
+    xml = xml.replace(
+      'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
+      'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'
+    );
+  }
+
+  let injected = 0;
+  xml = xml.replace(/<url><loc>(https?:\/\/[^<]+)<\/loc><\/url>/g, (match, loc) => {
+    const urlPath = new URL(loc).pathname.replace(/^\/|\/$/g, '');
+    if (!urlPath || urlPath.includes('/')) return match;
+    const imagePath = path.join(DIST_DIR, 'images', 'articles', `${urlPath}.webp`);
+    if (fs.existsSync(imagePath)) {
+      injected++;
+      const origin = new URL(loc).origin;
+      return `<url><loc>${loc}</loc><image:image><image:loc>${origin}/images/articles/${urlPath}.webp</image:loc></image:image></url>`;
+    }
+    return match;
+  });
+
+  fs.writeFileSync(sitemapPath, xml, 'utf-8');
+  console.log(`Injected images into sitemap-0.xml: ${injected} articles`);
+}
+
 // Main
 function main() {
   console.log('Generating sitemaps for MamicaFericita.ro...\n');
@@ -216,6 +247,7 @@ function main() {
   generatePostSitemap();
   generateCategorySitemap();
   generateSitemapXsl();
+  injectImagesIntoAstroSitemap();
 
   console.log('\nDone! Sitemaps generated successfully.');
 }
