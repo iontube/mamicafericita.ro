@@ -118,6 +118,35 @@ function stripBrands(text) {
     .trim();
 }
 
+// Use Gemini to rephrase a title into a generic description without brand names
+async function rephraseWithoutBrands(text) {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const apiKey = getNextGeminiKey();
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: `Rephrase the following into a short, generic English description for an image prompt. Remove ALL brand names, trademarks, product names, and game names. Replace them with generic descriptions of what they are. Return ONLY the rephrased text, nothing else.\n\nExample: "Boggle classic word game" -> "classic letter dice word game on a table"\nExample: "Kindle Paperwhite review" -> "slim e-reader device with paper-like screen"\nExample: "Duolingo app for learning languages" -> "colorful language learning mobile app interface"\n\nText: "${text}"` }] }],
+          generationConfig: { temperature: 0.5, maxOutputTokens: 100 }
+        })
+      });
+      const data = await response.json();
+      if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+        const result = data.candidates[0].content.parts[0].text.trim();
+        console.log(`  Rephrased prompt (no brands): ${result}`);
+        return result;
+      }
+    } catch (error) {
+      console.error(`  Rephrase attempt ${attempt + 1} error: ${error.message}`);
+    }
+    if (attempt < 2) await new Promise(r => setTimeout(r, 2000));
+  }
+  // Fallback to basic stripBrands
+  return stripBrands(text);
+}
+
 async function generateImage(titleRo, slug, categorySlug) {
   const categoryPrompts = {
     'carucioare-accesorii-bebe': 'in a bright and cheerful nursery, soft warm lighting, pastel colors, safe family atmosphere',
@@ -148,7 +177,8 @@ async function generateImage(titleRo, slug, categorySlug) {
     console.log(`  Translated title: ${titleEn}`);
 
     const setting = categoryPrompts[categorySlug] || 'in a modern home setting, soft natural lighting, clean contemporary background';
-    const prompt = `Realistic photograph of ${promptFlagged ? stripBrands(titleEn) : titleEn} ${setting}, no text, no brand name, no writing, no words, no letters, no numbers. Photorealistic, high quality, professional product photography.`;
+    const subject = promptFlagged ? await rephraseWithoutBrands(titleEn) : titleEn;
+    const prompt = `Realistic photograph of ${subject} ${setting}, no text, no brand name, no writing, no words, no letters, no numbers. Photorealistic, high quality, professional product photography.`;
 
     const formData = new FormData();
     formData.append('prompt', prompt);
