@@ -1,7 +1,7 @@
 name: Auto Generate Articles
 on:
   schedule:
-    - cron: '0 8 * * *'
+    - cron: '0 14 * * *'
   workflow_dispatch:
 permissions:
   contents: write
