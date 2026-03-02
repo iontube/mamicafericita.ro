@@ -185,7 +185,7 @@ async function main() {
   }
 
   // Random delay 0-45 minutes to avoid patterns
-  const delayMs = Math.floor(Math.random() * 45 * 60 * 1000);
+  const delayMs = Math.floor(Math.random() * 20 * 60 * 1000);
   const delayMin = Math.round(delayMs / 60000);
   await log(`Random delay: ${delayMin} minutes`);
   await new Promise(r => setTimeout(r, delayMs));
