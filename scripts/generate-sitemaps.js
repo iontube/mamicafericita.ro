@@ -1,131 +1,144 @@
 #!/usr/bin/env node
 
 /**
- * Generate WordPress-style sitemaps for mamicafericita.ro
+ * Generate WordPress-style sitemaps
  * Creates:
- * - sitemap_index.xml (main index)
- * - post-sitemap.xml (articles with images)
+ * - sitemap_index.xml (main index with XSL)
+ * - post-sitemap.xml, post-sitemap2.xml, ... (articles with images, max 200 per file)
  * - category-sitemap.xml (category pages)
+ * - sitemap.xsl (stylesheet)
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.join(__dirname, '..');
 const DIST_DIR = path.join(ROOT_DIR, 'dist');
-const SITE_URL = 'https://mamicafericita.ro';
+const MAX_URLS_PER_SITEMAP = 200;
 
-// Get current date in ISO format
+// Read site config from keywords.json
+const keywordsPath = path.join(ROOT_DIR, 'keywords.json');
+const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
+
+// Auto-detect site URL from astro.config.mjs
+function getSiteUrl() {
+  const configPath = path.join(ROOT_DIR, 'astro.config.mjs');
+  const config = fs.readFileSync(configPath, 'utf-8');
+  const match = config.match(/site:\s*['"]([^'"]+)['"]/);
+  return match ? match[1] : 'https://example.com';
+}
+
+const SITE_URL = getSiteUrl();
+const SITE_NAME = new URL(SITE_URL).hostname.replace(/^www\./, '');
 const now = new Date().toISOString().replace(/\.\d{3}Z$/, '+00:00');
 
-// Categories
-const categories = [
-  { name: 'Carucioare si Accesorii Bebe', slug: 'carucioare-accesorii-bebe' },
-  { name: 'Jucarii Educative', slug: 'jucarii-educative' },
-  { name: 'Alimentatie si Nutritie Copii', slug: 'alimentatie-nutritie-copii' },
-  { name: 'Produse pentru Mamici', slug: 'produse-mamici' },
-  { name: 'Camera Copilului', slug: 'camera-copilului' }
-];
+// Get categories from keywords.json or extract from completed articles
+function getCategories() {
+  if (keywordsData.categories && keywordsData.categories.length > 0) {
+    return keywordsData.categories;
+  }
+  // Fallback: extract unique categories from completed articles
+  const seen = new Set();
+  const cats = [];
+  for (const article of (keywordsData.completed || [])) {
+    if (article.categorySlug && !seen.has(article.categorySlug)) {
+      seen.add(article.categorySlug);
+      cats.push({ name: article.category || article.categorySlug, slug: article.categorySlug });
+    }
+  }
+  return cats;
+}
 
-// Read keywords.json to get articles
+// Read date from .astro frontmatter as fallback
+function getDateFromAstro(slug) {
+  const astroFile = path.join(ROOT_DIR, 'src', 'pages', `${slug}.astro`);
+  try {
+    if (!fs.existsSync(astroFile)) return null;
+    const content = fs.readFileSync(astroFile, 'utf-8');
+    // Try publishDate, modifiedDate, or date
+    const match = content.match(/(?:publishDate|modifiedDate|date):\s*["']([^"']+)["']/);
+    return match ? match[1] : null;
+  } catch { return null; }
+}
+
+// Get completed articles sorted by date descending (newest first)
 function getArticles() {
-  const keywordsPath = path.join(ROOT_DIR, 'keywords.json');
-  const keywordsData = JSON.parse(fs.readFileSync(keywordsPath, 'utf-8'));
-  return keywordsData.completed || [];
-}
-
-// Slugify function
-function slugify(text) {
-  return text
-    .toLowerCase()
-    .replace(/[ăâ]/g, 'a')
-    .replace(/[îï]/g, 'i')
-    .replace(/[șş]/g, 's')
-    .replace(/[țţ]/g, 't')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-// Get the most recent article date (prefers modifiedDate over date)
-function getLatestArticleDate() {
-  const articles = getArticles();
-  if (articles.length === 0) return now;
-  const dates = articles
-    .filter(a => a.date || a.modifiedDate)
-    .map(a => new Date(a.modifiedDate || a.date).getTime());
-  if (dates.length === 0) return now;
-  return new Date(Math.max(...dates)).toISOString().replace(/\.\d{3}Z$/, '+00:00');
-}
-
-// Generate sitemap index (only articles and categories)
-function generateSitemapIndex() {
-  const latestDate = getLatestArticleDate();
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<sitemap>
-		<loc>${SITE_URL}/post-sitemap.xml</loc>
-		<lastmod>${latestDate}</lastmod>
-	</sitemap>
-	<sitemap>
-		<loc>${SITE_URL}/category-sitemap.xml</loc>
-		<lastmod>${latestDate}</lastmod>
-	</sitemap>
-</sitemapindex>`;
-
-  fs.writeFileSync(path.join(DIST_DIR, 'sitemap_index.xml'), xml);
-  console.log('Created: sitemap_index.xml');
-}
-
-// Generate post sitemap with images
-function generatePostSitemap() {
-  const articles = getArticles();
-
-  // Sort by date descending (newest first)
+  const articles = keywordsData.completed || [];
+  // Fill in missing dates from .astro frontmatter
+  for (const article of articles) {
+    if (!article.date && !article.modifiedDate) {
+      const slug = article.slug || slugify(article.keyword);
+      const astroDate = getDateFromAstro(slug);
+      if (astroDate) article.date = astroDate;
+    }
+  }
   articles.sort((a, b) => {
-    const dateA = a.date ? new Date(a.date).getTime() : 0;
-    const dateB = b.date ? new Date(b.date).getTime() : 0;
+    const dateA = new Date(a.modifiedDate || a.date || 0).getTime();
+    const dateB = new Date(b.modifiedDate || b.date || 0).getTime();
     return dateB - dateA;
   });
+  return articles;
+}
 
-  let urlEntries = '';
+function slugify(text) {
+  return text.toLowerCase()
+    .replace(/[ăâ]/g, 'a').replace(/[îï]/g, 'i')
+    .replace(/[șş]/g, 's').replace(/[țţ]/g, 't')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
 
-  for (const article of articles) {
-    const slug = slugify(article.keyword);
-    const imagePath = `/images/articles/${slug}.webp`;
+function formatDate(dateStr) {
+  if (!dateStr) return now;
+  return new Date(dateStr).toISOString().replace(/\.\d{3}Z$/, '+00:00');
+}
 
-    // Check if image exists
-    const imageFullPath = path.join(DIST_DIR, 'images', 'articles', `${slug}.webp`);
-    const hasImage = fs.existsSync(imageFullPath);
+// Generate post sitemaps (paginated at 200)
+function generatePostSitemaps() {
+  const articles = getArticles();
+  const chunks = [];
+  for (let i = 0; i < articles.length; i += MAX_URLS_PER_SITEMAP) {
+    chunks.push(articles.slice(i, i + MAX_URLS_PER_SITEMAP));
+  }
+  if (chunks.length === 0) chunks.push([]);
 
-    const articleDate = (article.modifiedDate || article.date)
-      ? new Date(article.modifiedDate || article.date).toISOString().replace(/\.\d{3}Z$/, '+00:00')
-      : now;
+  const filenames = [];
 
-    urlEntries += `
+  chunks.forEach((chunk, idx) => {
+    let urlEntries = '';
+    for (const article of chunk) {
+      const slug = article.slug || slugify(article.keyword);
+      const imageFile = path.join(DIST_DIR, 'images', 'articles', `${slug}.webp`);
+      const hasImage = fs.existsSync(imageFile);
+
+      urlEntries += `
 	<url>
 		<loc>${SITE_URL}/${slug}/</loc>
-		<lastmod>${articleDate}</lastmod>${hasImage ? `
+		<lastmod>${formatDate(article.modifiedDate || article.date)}</lastmod>${hasImage ? `
 		<image:image>
-			<image:loc>${SITE_URL}${imagePath}</image:loc>
+			<image:loc>${SITE_URL}/images/articles/${slug}.webp</image:loc>
 		</image:image>` : ''}
 	</url>`;
-  }
+    }
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${urlEntries}
 </urlset>`;
 
-  fs.writeFileSync(path.join(DIST_DIR, 'post-sitemap.xml'), xml);
-  console.log(`Created: post-sitemap.xml (${articles.length} articles)`);
+    const filename = idx === 0 ? 'post-sitemap.xml' : `post-sitemap${idx + 1}.xml`;
+    fs.writeFileSync(path.join(DIST_DIR, filename), xml);
+    console.log(`Created: ${filename} (${chunk.length} articles)`);
+    filenames.push(filename);
+  });
+
+  return filenames;
 }
 
 // Generate category sitemap
 function generateCategorySitemap() {
+  const categories = getCategories();
   let urlEntries = '';
 
   for (const cat of categories) {
@@ -145,8 +158,39 @@ function generateCategorySitemap() {
   console.log(`Created: category-sitemap.xml (${categories.length} categories)`);
 }
 
-// Generate XSL stylesheet for pretty sitemap display
+// Generate sitemap index
+function generateSitemapIndex(postFilenames) {
+  const articles = getArticles();
+  const latestDate = articles.length > 0
+    ? formatDate(articles[0].modifiedDate || articles[0].date)
+    : now;
+
+  let sitemapEntries = '';
+  for (const filename of postFilenames) {
+    sitemapEntries += `
+	<sitemap>
+		<loc>${SITE_URL}/${filename}</loc>
+		<lastmod>${latestDate}</lastmod>
+	</sitemap>`;
+  }
+  sitemapEntries += `
+	<sitemap>
+		<loc>${SITE_URL}/category-sitemap.xml</loc>
+		<lastmod>${latestDate}</lastmod>
+	</sitemap>`;
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemapEntries}
+</sitemapindex>`;
+
+  fs.writeFileSync(path.join(DIST_DIR, 'sitemap_index.xml'), xml);
+  console.log('Created: sitemap_index.xml');
+}
+
+// Generate XSL stylesheet
 function generateSitemapXsl() {
+  const capitalizedName = SITE_NAME.charAt(0).toUpperCase() + SITE_NAME.slice(1);
   const xsl = `<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="2.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -156,18 +200,18 @@ function generateSitemapXsl() {
 <xsl:template match="/">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>XML Sitemap - MamicaFericita.ro</title>
+  <title>XML Sitemap - ${capitalizedName}</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <style type="text/css">
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #333; max-width: 1200px; margin: 0 auto; padding: 20px; }
-    h1 { color: #be185d; border-bottom: 3px solid #ec4899; padding-bottom: 10px; }
+    h1 { color: #1a1a1a; border-bottom: 3px solid #4f46e5; padding-bottom: 10px; }
     table { border-collapse: collapse; width: 100%; margin-top: 20px; }
     th, td { text-align: left; padding: 12px; border-bottom: 1px solid #e5e7eb; }
-    th { background: #fdf2f8; font-weight: 600; }
-    tr:hover { background: #fdf2f8; }
-    a { color: #db2777; text-decoration: none; }
+    th { background: #f3f4f6; font-weight: 600; }
+    tr:hover { background: #f9fafb; }
+    a { color: #4f46e5; text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .count { background: #ec4899; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; }
+    .count { background: #4f46e5; color: white; padding: 2px 8px; border-radius: 12px; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -208,46 +252,18 @@ function generateSitemapXsl() {
   console.log('Created: sitemap.xsl (stylesheet)');
 }
 
-// Inject images into Astro's sitemap-0.xml
-function injectImagesIntoAstroSitemap() {
-  const sitemapPath = path.join(DIST_DIR, 'sitemap-0.xml');
-  if (!fs.existsSync(sitemapPath)) return;
-
-  let xml = fs.readFileSync(sitemapPath, 'utf-8');
-
-  if (!xml.includes('xmlns:image')) {
-    xml = xml.replace(
-      'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
-      'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"'
-    );
-  }
-
-  let injected = 0;
-  xml = xml.replace(/<url><loc>(https?:\/\/[^<]+)<\/loc><\/url>/g, (match, loc) => {
-    const urlPath = new URL(loc).pathname.replace(/^\/|\/$/g, '');
-    if (!urlPath || urlPath.includes('/')) return match;
-    const imagePath = path.join(DIST_DIR, 'images', 'articles', `${urlPath}.webp`);
-    if (fs.existsSync(imagePath)) {
-      injected++;
-      const origin = new URL(loc).origin;
-      return `<url><loc>${loc}</loc><image:image><image:loc>${origin}/images/articles/${urlPath}.webp</image:loc></image:image></url>`;
-    }
-    return match;
-  });
-
-  fs.writeFileSync(sitemapPath, xml, 'utf-8');
-  console.log(`Injected images into sitemap-0.xml: ${injected} articles`);
-}
-
 // Main
 function main() {
-  console.log('Generating sitemaps for MamicaFericita.ro...\n');
+  console.log('Generating WordPress-style sitemaps...\n');
 
-  generateSitemapIndex();
-  generatePostSitemap();
+  if (!fs.existsSync(DIST_DIR)) {
+    fs.mkdirSync(DIST_DIR, { recursive: true });
+  }
+
+  const postFilenames = generatePostSitemaps();
   generateCategorySitemap();
+  generateSitemapIndex(postFilenames);
   generateSitemapXsl();
-  injectImagesIntoAstroSitemap();
 
   console.log('\nDone! Sitemaps generated successfully.');
 }
