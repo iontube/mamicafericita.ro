@@ -1,0 +1,127 @@
+---
+interface Article {
+  title: string;
+  slug: string;
+  category?: string;
+  categorySlug?: string;
+  date?: string;
+}
+
+interface Props {
+  currentSlug: string;
+  currentCategory: string;
+  articles: Article[];
+}
+
+const { currentSlug, currentCategory, articles } = Astro.props;
+
+// Sort articles chronologically (oldest first)
+const sorted = [...articles]
+  .filter(a => a.slug !== currentSlug)
+  .sort((a, b) => new Date(a.date || 0).getTime() - new Date(b.date || 0).getTime());
+
+// Find current article index in full sorted list (including current)
+const allSorted = [...articles]
+  .sort((a, b) => new Date(a.date || 0).getTime() - new Date(b.date || 0).getTime());
+const currentIndex = allSorted.findIndex(a => a.slug === currentSlug);
+
+// Try same category first
+const sameCategory = sorted.filter(a => a.categorySlug === currentCategory);
+
+let prevArticle: Article | null = null;
+let nextArticle: Article | null = null;
+
+if (sameCategory.length > 0) {
+  // Find prev/next within same category based on date order
+  const sameCatAll = allSorted.filter(a => a.categorySlug === currentCategory);
+  const catIndex = sameCatAll.findIndex(a => a.slug === currentSlug);
+  if (catIndex > 0) prevArticle = sameCatAll[catIndex - 1];
+  if (catIndex < sameCatAll.length - 1) nextArticle = sameCatAll[catIndex + 1];
+}
+
+// Fallback to chronological if no same-category prev/next
+if (!prevArticle && currentIndex > 0) {
+  prevArticle = allSorted[currentIndex - 1];
+}
+if (!nextArticle && currentIndex < allSorted.length - 1) {
+  nextArticle = allSorted[currentIndex + 1];
+}
+---
+
+{(prevArticle || nextArticle) && (
+  <nav class="prev-next-nav" aria-label="Navigare articole">
+    <div class="prev-next-grid">
+      {prevArticle ? (
+        <a href={`/${prevArticle.slug}/`} class="prev-next-card prev-card">
+          <span class="prev-next-label">&#8592; Anterior</span>
+          <span class="prev-next-title">{prevArticle.title}</span>
+        </a>
+      ) : <div />}
+      {nextArticle ? (
+        <a href={`/${nextArticle.slug}/`} class="prev-next-card next-card">
+          <span class="prev-next-label">Urmator &#8594;</span>
+          <span class="prev-next-title">{nextArticle.title}</span>
+        </a>
+      ) : <div />}
+    </div>
+  </nav>
+)}
+
+<style>
+  .prev-next-nav {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e8e4df;
+  }
+
+  .prev-next-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .prev-next-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .prev-next-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    border: 1px solid #e8e4df;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .prev-next-card:hover {
+    border-color: #c9956b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .next-card {
+    text-align: right;
+  }
+
+  .prev-next-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #c9956b;
+  }
+
+  .prev-next-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1a1a2e;
+    line-height: 1.4;
+  }
+
+  .prev-next-card:hover .prev-next-title {
+    color: #c9956b;
+  }
+</style>

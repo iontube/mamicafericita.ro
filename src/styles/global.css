@@ -1265,6 +1265,237 @@ p {
 }
 
 /* ===== UTILITIES ===== */
+/* ===== PRODUCT REVIEW CARDS ===== */
+.product-review {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-bottom: var(--space-xl);
+  transition: border-color 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .product-review { padding: var(--space-xl); }
+}
+
+.product-review:hover {
+  border-left-color: var(--color-accent-hover);
+}
+
+.product-review__header {
+  margin-bottom: var(--space-lg);
+}
+
+.product-review__header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-heading);
+  margin-bottom: var(--space-md);
+}
+
+.product-review__specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-sm);
+}
+
+.product-review__spec {
+  background: var(--color-bg);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-heading);
+}
+
+.product-review__spec strong {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.product-review__content {
+  line-height: 1.8;
+  color: var(--color-body);
+}
+
+.product-review__content p { margin-bottom: var(--space-md); }
+
+.product-review__content h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-heading);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.product-review__pros,
+.product-review__cons {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-md) 0;
+}
+
+.product-review__pros li,
+.product-review__cons li {
+  position: relative;
+  padding-left: var(--space-xl);
+  margin-bottom: var(--space-sm);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.product-review__pros li::before,
+.product-review__cons li::before {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+}
+
+.product-review__pros li::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2300d4aa' stroke-width='2.5'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+}
+
+.product-review__cons li::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2.5'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E");
+}
+
+.product-review__lists {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+@media (min-width: 640px) {
+  .product-review__lists { grid-template-columns: 1fr 1fr; }
+}
+
+.section-tag {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-accent);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+}
+
+/* ===== COMPARISON TABLE ===== */
+.comparison-outer {
+  position: relative;
+  margin: var(--space-xl) 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.comparison-outer::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 48px;
+  background: linear-gradient(to left, var(--color-bg-card), transparent);
+  pointer-events: none;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.comparison-outer.can-scroll::after {
+  opacity: 1;
+}
+
+.comparison-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  scrollbar-width: thin;
+}
+
+.comparison-hint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .comparison-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    margin-bottom: var(--space-sm);
+  }
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 600px;
+}
+
+.comparison-table thead {
+  background: var(--color-bg);
+}
+
+.comparison-table th {
+  padding: var(--space-md);
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.comparison-table td {
+  padding: var(--space-md);
+  border-top: 1px solid var(--color-border-light);
+  color: var(--color-body);
+}
+
+.comparison-table td strong {
+  color: var(--color-heading);
+}
+
+/* ===== GUIDE SECTION ===== */
+.guide {
+  line-height: 1.8;
+  color: var(--color-body);
+}
+
+.guide h4 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-heading);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-sm);
+}
+
+.guide p {
+  margin-bottom: var(--space-md);
+}
+
 .text-center { text-align: center; }
 .visually-hidden {
   position: absolute;
