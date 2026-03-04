@@ -147,6 +147,41 @@ async function rephraseWithoutBrands(text) {
   return stripBrands(text);
 }
 
+async function generateSafePrompt(text, categorySlug) {
+  const categoryFallbacks = {
+    'carucioare-accesorii-bebe': 'a modern stroller and accessories arranged in a bright nursery, soft warm lighting, pastel colors',
+    'jucarii-educative': 'colorful educational wooden toys and building blocks on a playroom shelf, cheerful bright atmosphere',
+    'alimentatie-nutritie-copii': 'healthy colorful food plates and bowls arranged on a bright modern kitchen table, natural lighting',
+    'produse-mamici': 'cozy self-care products and soft blankets in a modern bedroom, warm relaxing atmosphere',
+    'camera-copilului': 'beautifully decorated nursery room with soft pastel furniture and plush toys, cozy whimsical atmosphere',
+  };
+  // Try Gemini to create a safe, abstract prompt
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const apiKey = getNextGeminiKey();
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: `Create a short, safe English image prompt for a stock photo related to this topic: "${text}". The prompt must describe ONLY objects, scenery, and atmosphere. NEVER mention people, children, babies, faces, hands, or any human body parts. NEVER use brand names. Focus on products, objects, books, devices, furniture, toys, or abstract scenes. Return ONLY the description, nothing else.\n\nExample: "baby stroller review" -> "modern stroller parked in a sunny garden with flowers"\nExample: "children board game" -> "colorful board game pieces and dice on a wooden table"\nExample: "interactive book for babies" -> "colorful pop-up book open on a soft blanket with plush toys around"` }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 100 }
+        })
+      });
+      const data = await response.json();
+      if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+        const result = data.candidates[0].content.parts[0].text.trim();
+        console.log(`  Safe prompt generated: ${result}`);
+        return result;
+      }
+    } catch (error) {
+      console.error(`  Safe prompt attempt ${attempt + 1} error: ${error.message}`);
+    }
+    if (attempt < 2) await new Promise(r => setTimeout(r, 2000));
+  }
+  return categoryFallbacks[categorySlug] || 'beautiful arrangement of colorful products on a clean modern table, warm ambient lighting, cozy home atmosphere';
+}
+
 async function generateImage(titleRo, slug, categorySlug) {
   const categoryPrompts = {
     'carucioare-accesorii-bebe': 'in a bright and cheerful nursery, soft warm lighting, pastel colors, safe family atmosphere',
@@ -158,7 +193,7 @@ async function generateImage(titleRo, slug, categorySlug) {
 
   console.log(`  Generating image for: ${titleRo}`);
 
-  const MAX_IMAGE_RETRIES = 3;
+  const MAX_IMAGE_RETRIES = 4;
   let promptFlagged = false;
 
   for (let attempt = 1; attempt <= MAX_IMAGE_RETRIES; attempt++) {
@@ -173,12 +208,20 @@ async function generateImage(titleRo, slug, categorySlug) {
 
 
   try {
-    const titleEn = await translateToEnglish(titleRo);
-    console.log(`  Translated title: ${titleEn}`);
+    let prompt;
 
-    const setting = categoryPrompts[categorySlug] || 'in a modern home setting, soft natural lighting, clean contemporary background';
-    const subject = promptFlagged ? await rephraseWithoutBrands(titleEn) : titleEn;
-    const prompt = `Realistic photograph of ${subject} ${setting}, no text, no brand name, no writing, no words, no letters, no numbers. Photorealistic, high quality, professional product photography.`;
+    if (attempt >= 3) {
+      // Last resorts: use fully safe prompt with no reference to original subject
+      const safeSubject = await generateSafePrompt(titleRo, categorySlug);
+      prompt = `Realistic photograph of ${safeSubject}, no text, no writing, no words, no letters, no numbers. Photorealistic, high quality, professional photography.`;
+    } else {
+      const titleEn = await translateToEnglish(titleRo);
+      console.log(`  Translated title: ${titleEn}`);
+
+      const setting = categoryPrompts[categorySlug] || 'in a modern home setting, soft natural lighting, clean contemporary background';
+      const subject = promptFlagged ? await rephraseWithoutBrands(titleEn) : titleEn;
+      prompt = `Realistic photograph of ${subject} ${setting}, no text, no brand name, no writing, no words, no letters, no numbers. Photorealistic, high quality, professional product photography.`;
+    }
 
     const formData = new FormData();
     formData.append('prompt', prompt);
