@@ -625,6 +625,11 @@ p {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-2xl);
+  min-width: 0;
+}
+
+.article-layout > * {
+  min-width: 0;
 }
 
 @media (min-width: 1024px) {
@@ -756,6 +761,8 @@ p {
   font-size: 1.05rem;
   line-height: 1.9;
   max-width: 680px;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
 .article-content h2 {
