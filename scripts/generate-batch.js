@@ -76,6 +76,15 @@ function stripStrong(str) {
   return str.replace(/<\/?strong>/g, '');
 }
 
+function stripFakeLinks(html, pagesDir) {
+  return html.replace(/<a\s+href="\/([^"#][^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (match, linkPath, text) => {
+    const slug = linkPath.replace(/\/$/, '');
+    if (fs.existsSync(path.join(pagesDir, `${slug}.astro`))) return match;
+    if (fs.existsSync(path.join(pagesDir, slug))) return match;
+    return text;
+  });
+}
+
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -821,6 +830,7 @@ ${guideHtml}
 `;
 
   const outputPath = path.join(rootDir, 'src', 'pages', `${slug}.astro`);
+  pageContent = stripFakeLinks(pageContent, path.join(rootDir, 'src', 'pages'));
   fs.writeFileSync(outputPath, pageContent);
   console.log(`  Article page created: ${outputPath}`);
 
