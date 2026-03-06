@@ -1,0 +1,609 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import keywordsData from '../../keywords.json';
+
+export const frontmatter = {
+  title: "Scoica auto pentru nou nascuti",
+  excerpt: "Daca cauti o scoica auto pentru nou nascuti, probabil vrei sa te asiguri ca micutul tau calatoreste in cea mai mare siguranta si confort inca din primele zile de viata. Alegerea corecta a unei scoici auto este esentiala nu doar pentru conformitatea cu legea, ci mai ales pentru protectia bebelusului in masina.",
+  image: "/images/articles/scoica-auto-pentru-nou-nascuti.webp",
+  category: "Carucioare si Accesorii Bebe",
+  categorySlug: "carucioare-accesorii-bebe",
+  date: "2026-03-06T14:40:37.604Z",
+  modifiedDate: "2026-03-06T14:40:37.604Z",
+  author: "Ana Popescu",
+  authorRole: "Specialist Carucioare si Accesorii",
+  authorBio: "Ana este mamica a doi copii si testeaza carucioare, scaune auto si accesorii pentru bebe de peste 5 ani. Stie exact ce conteaza cand alegi un produs care sa fie sigur, confortabil si rezistent in timp."
+};
+
+const faq = [
+  { question: "Cat costa o scoica auto pentru nou nascuti de calitate?", answer: "O scoica auto pentru nou nascuti de calitate, conforma cu standardele i-Size, poate varia intre 450 RON si peste 1000 RON. Modelele de top cu tehnologii avansate si materiale premium se situeaza in segmentul 800-1000+ RON, in timp ce optiunile cu un raport bun calitate-pret pot fi gasite in intervalul 450-700 RON." },
+  { question: "Care este diferenta dintre o scoica auto ECE R44/04 si una ECE R129 (i-Size)?", answer: "Standardul ECE R129 (i-Size) este mai nou si mai riguros. Testele de impact sunt mai complexe, includand testul de impact lateral, iar pozitionarea in masina se face predominant cu sistemul Isofix. ECE R44/04 este un standard mai vechi, dar inca valid, care permite si instalarea cu centura masinii si nu include testarea impactului lateral." },
+  { question: "Pot folosi aceeasi scoica auto pentru nou nascuti pana cand copilul implineste 1 an?", answer: "Majoritatea scoicilor auto pentru nou-nascuti sunt proiectate pentru greutatea de pana la 13 kg, ceea ce corespunde, in general, varstei de 12-15 luni. Totusi, este esential sa verificati specificatiile fiecarui model, deoarece unele pot fi potrivite pana la 18 kg sau chiar mai mult, in functie de inaltimea si greutatea copilului." },
+  { question: "Este obligatorie baza Isofix pentru scoica auto?", answer: "Nu este obligatorie, dar este puternic recomandata. Baza Isofix simplifica instalarea scoicii, reduce riscul de erori si ofera o stabilitate sporita in masina. Multe scoici i-Size sunt concepute sa functioneze optim cu baza Isofix, iar unele nu pot fi instalate altfel." },
+  { question: "Merita sa investesc intr-un sistem travel system (scoica + carucior)?", answer: "Un sistem travel system ofera o mare comoditate, permitandu-ti sa transferi usor bebelusul din masina pe carucior fara a-l trezi. Daca calatoresti frecvent cu masina si folosesti caruciorul pentru plimbari scurte sau mers la cumparaturi, este o investitie excelenta in flexibilitate si eficienta." }
+];
+
+const toc = [
+  { title: "Cybex Aton 5 Scoica Auto", id: "cybex-aton-5-scoica-auto" },
+  { title: "Maxi-Cosi Pebble Pro i-Size Scoica Auto", id: "maxi-cosi-pebble-pro-i-size-scoica-auto" },
+  { title: "Chicco Auto-Fix Fast Scoica Auto", id: "chicco-auto-fix-fast-scoica-auto" },
+  { title: "BeSafe iZi Go Modular X1 i-Size Scoica Auto", id: "besafe-izi-go-modular-x1-i-size-scoica-auto" },
+  { title: "Britax Römer Baby-Safe i-Size Scoica Auto", id: "britax-rmer-baby-safe-i-size-scoica-auto" },
+  { title: "Recaro Privia Evo Scoica Auto", id: "recaro-privia-evo-scoica-auto" },
+  { title: "Comparatie", id: "comparatie" },
+  { title: "Cum alegi cea mai buna scoica auto pentru nou-nascutul tau?", id: "ghid" },
+  { title: "Intrebari Frecvente", id: "faq" }
+];
+
+// Get all articles for similar articles component
+const allArticles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  excerpt: item.excerpt || '',
+  image: `/images/articles/${item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+  category: item.category,
+  categorySlug: item.categorySlug,
+  date: item.date || new Date().toISOString()
+}));
+---
+
+<Layout
+  title="Scoica auto pentru nou nascuti - MamicaFericita"
+  description="Daca cauti o scoica auto pentru nou nascuti, probabil vrei sa te asiguri ca micutul tau calatoreste in cea mai mare siguranta si confort inca din primele zile de viata. Alegerea corecta a unei scoici auto este esentiala nu doar pentru conformitatea cu legea, ci mai ales pentru protectia bebelusului in masina."
+  image="/images/articles/scoica-auto-pentru-nou-nascuti.webp"
+  type="article"
+  publishedTime="2026-03-06T14:40:37.604Z"
+  modifiedTime="2026-03-06T14:40:37.604Z"
+  author="Ana Popescu"
+  faq={faq}
+>
+  <article class="article-page">
+    <a href="/carucioare-accesorii-bebe/" class="article-page-category">Carucioare si Accesorii Bebe</a>
+    <h1 class="article-page-title">Scoica auto pentru nou nascuti</h1>
+
+    <div class="article-page-meta">
+      <span>Ana Popescu</span>
+      <span>&middot;</span>
+      <span>6 martie 2026</span>
+    </div>
+
+    <img src="/images/articles/scoica-auto-pentru-nou-nascuti.webp" alt="Scoica auto pentru nou nascuti" class="article-page-image" width="800" height="600" loading="eager">
+
+    <div class="article-layout">
+      <aside class="toc-sidebar">
+        <p class="toc-sidebar-title">Cuprins</p>
+        <ol class="toc-sidebar-list" id="toc-desktop-list">
+          {toc.map(item => (
+            <li><a href={`#${item.id}`} data-toc-id={item.id}>{item.title}</a></li>
+          ))}
+        </ol>
+      </aside>
+
+      <div>
+        <div class="toc-mobile" id="toc-mobile">
+          <button class="toc-mobile-toggle" onclick="this.parentElement.classList.toggle('open')">
+            Cuprins
+            <span class="toc-chevron">&#9660;</span>
+          </button>
+          <ol class="toc-mobile-list">
+            {toc.map(item => (
+              <li><a href={`#${item.id}`}>{item.title}</a></li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="article-content">
+          <section id="intro">
+            <p>Daca cauti o <strong>scoica auto pentru nou nascuti</strong>, probabil vrei sa te asiguri ca micutul tau calatoreste in cea mai mare siguranta si confort inca din primele zile de viata. Alegerea corecta a unei scoici auto este esentiala nu doar pentru conformitatea cu legea, ci mai ales pentru protectia bebelusului in masina. Un model potrivit ofera protectie sporita in caz de impact, sustinere adecvata pentru pozitia corpului delicat al nou-nascutului si usurinta in utilizare pentru parinti.</p><p>Ce face o <strong>scoica auto pentru nou nascuti</strong> sa fie cea mai buna alegere pentru familia ta? Raspunsul depinde de prioritatile tale: siguranta maxima certificata, greutate redusa pentru transport facil, compatibilitate cu sistemul tau de carucior sau un raport optim calitate-pret. Vom analiza optiuni de top, pentru a te ghida spre cea mai informata decizie de cumparare.</p>
+          </section>
+
+
+          <article class="product-review" id="cybex-aton-5-scoica-auto">
+            <div class="product-review__header">
+              <span class="section-tag">Premium</span>
+              <h3>Cybex Aton 5 Scoica Auto</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-18 luni (pana la 13 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Huse textile hipoalergenice, testate pentru substante nocive
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>64 x 43 x 39-56 cm (L x l x H, cu manerul ajustat)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>4.8 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare ECE R44/04, sistem de protectie laterala (LSP System), centura in 5 puncte
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Cybex Aton 5 este un nume de referinta cand vine vorba de siguranta si confort pentru cei mici. Aceasta <strong>scoica auto pentru nou nascuti</strong> se distinge prin sistemul sau de protectie laterala, optimizat pentru a absorbi energia in cazul unui impact frontal sau lateral. Pozitia aproape orizontala a bebelusului, obtinuta prin ajustarea tetirei si a centurilor, reduce riscul de sufocare, un aspect critic pentru nou-nascuti.</p><p>Greutatea de doar 4.8 kg face ca transportul bebelusului sa fie mult mai usor, fie ca il muti din masina in casa, fie ca il atasezi pe un carucior compatibil. Sistemul de prindere in 5 puncte este usor de ajustat si ofera o fixare sigura. Husele sunt detasabile si lavabile, un avantaj practic major pentru igiena zilnica. Pretul sau, situat in segmentul premium (aproximativ 899 RON), reflecta tehnologia avansata si calitatea materialelor.</p><p>Pentru cine este potrivita aceasta scoica? Este ideala pentru parintii care prioritizeaza siguranta de top si confortul bebelusului, fara compromisuri. Daca planuiesti sa folosesti scoica si pe un sistem de carucior, verifica compatibilitatea cu adaptoarele Cybex sau cu alte marci ce ofera sisteme click-on.</p><p>Ce o diferentiaza de alte modele? Sistemul LSP integrat si pozitionarea aproape plana a bebelusului sunt puncte forte majore. In comparatie cu modele mai ieftine, Aton 5 ofera un plus de siguranta datorita tehnologiei de absorbtie a energiei.</p><p>Este usor de instalat in masina? Da, fie cu centura masinii, fie cu o baza Isofix (vanduta separat), care simplifica si mai mult procesul si reduce riscul de erori la montaj. Baza Isofix ofera si un plus de stabilitate.</p><p>Recomandarea noastra este clara: daca bugetul permite si siguranta este principala ta grija, Cybex Aton 5 este o investitie excelenta in protectia si sanatatea bebelusului tau pe termen lung. Verificati preturile actualizate la partenerii nostri autorizati.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Sistem avansat de protectie laterala (LSP)</li>
+              <li>Pozitie de somn aproape orizontala, ideala pentru nou-nascuti</li>
+              <li>Greutate redusa pentru transport facil</li>
+              <li>Huse textile premium, hipoalergenice si lavabile</li>
+              <li>Centura reglabila in 5 puncte</li>
+              <li>Compatibila cu sistemele de carucior Cybex</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Pretul este in segmentul premium</li>
+              <li>Baza Isofix se achizitioneaza separat</li>
+              <li>Poate fi putin mai voluminoasa decat alte modele compacte</li>
+              <li>Manerul de transport nu are multiple pozitii de blocare</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="maxi-cosi-pebble-pro-i-size-scoica-auto">
+            <div class="product-review__header">
+              <span class="section-tag">Best Buy 2026</span>
+              <h3>Maxi-Cosi Pebble Pro i-Size Scoica Auto</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-12 luni (pana la 12 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Huse moi, confortabile, testate pentru siguranta
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>67 x 44 x 56 cm (L x l x H)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>4.5 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare ECE R129 (i-Size), sistem de protectie laterala, centura in 3 puncte
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Maxi-Cosi Pebble Pro i-Size este o alegere de top pentru parintii care cauta o <strong>scoica auto pentru nou nascuti</strong> conforma cu cele mai noi standarde de siguranta, ECE R129 (i-Size). Aceasta certificare garanteaza performante sporite in testele de impact si o pozitionare mai sigura in masina, de obicei prin sistemul Isofix.</p><p>Ce face aceasta scoica speciala? Sistemul de protectie laterala integrat ofera o bariera suplimentara impotriva fortelor de impact. Tetiera si centurile sunt usor de ajustat simultan, asigurand o potrivire perfecta pe masura ce bebelusul creste. Greutatea sa redusa, de 4.5 kg, o face usor de manevrat. Pretul se situeaza in segmentul mediu-superior, in jur de 750 RON, oferind un echilibru excelent intre performanta si cost.</p><p>Este potrivita pentru nou-nascuti? Absolut. Pebble Pro vine cu un reductor special pentru nou-nascuti, care asigura o pozitie confortabila si sigura, adaptata anatomiei lor delicate. Acest reductor poate fi indepartat pe masura ce copilul creste.</p><p>Cum se instaleaza cel mai bine? Recomandarea producatorului este utilizarea impreuna cu baza Maxi-Cosi FamilyFix3 (sau FamilyFix2), care se fixeaza in sistemul Isofix al masinii. Aceasta baza ofera un clic-on/clic-off rapid si sigur al scoicii, eliminand practic riscul de montaj incorect. Fara baza Isofix, instalarea se face cu centura masinii, conform instructiunilor.</p><p>Avantajul major al acestei scoici este sistemul modular. Poate fi combinata cu o gama larga de carucioare, transformandu-se rapid intr-un sistem de calatorie practic. Verificati lista de compatibilitate a carucioarelor pentru a gasi partenerul ideal.</p><p>Daca doriti o scoica auto i-Size, cu un nume de traditie in siguranta si usurinta in utilizare, Maxi-Cosi Pebble Pro i-Size este o optiune foarte buna. Raportul calitate-pret este unul dintre cele mai bune din clasa sa. O gasiti la preturi competitive la majoritatea magazinelor online de profil.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Conforma cu standardul de siguranta i-Size (ECE R129)</li>
+              <li>Sistem eficient de protectie laterala</li>
+              <li>Greutate redusa (4.5 kg)</li>
+              <li>Usor de instalat pe baza Isofix (FamilyFix3/FamilyFix2)</li>
+              <li>Reductor confortabil pentru nou-nascuti</li>
+              <li>Parte dintr-un sistem modular de calatorie</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Baza Isofix se achizitioneaza separat</li>
+              <li>Centura in 3 puncte, comparativ cu 5 puncte la alte modele</li>
+              <li>Manerul de transport poate fi considerat putin rigid de unii utilizatori</li>
+              <li>Poate necesita adaptoare specifice pentru anumite carucioare</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="chicco-auto-fix-fast-scoica-auto">
+            <div class="product-review__header">
+              <span class="section-tag">Raport Calitate-Pret</span>
+              <h3>Chicco Auto-Fix Fast Scoica Auto</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-12 luni (pana la 13 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Huse textile moi, detasabile si lavabile
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>67 x 44 x 56 cm (L x l x H)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>4.2 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare ECE R44/04, sistem de protectie laterala, centura in 3 puncte
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Chicco Auto-Fix Fast este o <strong>scoica auto pentru nou nascuti</strong> care se pozitioneaza excelent pe segmentul de raport calitate-pret. Oferind siguranta necesara si o serie de caracteristici practice, acest model este o optiune inteligenta pentru parintii care nu vor sa investeasca sume foarte mari, dar nu fac rabat la protectia bebelusului.</p><p>Ce o recomanda? Greutatea extrem de mica, de doar 4.2 kg, o face extrem de manevrabila. Instalarea este simpla, fie cu centura masinii, fie cu baza Isofix (cumparata separat). Sistemul de protectie laterala ofera un nivel bun de siguranta in caz de impact. Pretul este unul dintre cele mai atractive, situandu-se in jurul valorii de 450 RON.</p><p>Este confortabila pentru nou-nascuti? Da, vine cu un reductor ergonomic pentru primele luni, care asigura o pozitie corecta si confortabila. Husele sunt detasabile si lavabile la 30 de grade, ceea ce face curatarea mult mai usoara.</p><p>Cum se compara cu alte modele? In comparatie cu modelele premium, lipsesc anumite tehnologii avansate de absorbtie a energiei sau sistemele de ajustare automata a centurilor. Totusi, pentru utilizare zilnica si respectarea standardelor de siguranta, Chicco Auto-Fix Fast este o alegere solidă.</p><p>Este compatibila cu carucioare? Da, Chicco ofera o gama extinsa de carucioare compatibile cu aceasta scoica, transformand-o intr-un sistem de calatorie complet. Verificati specificatiile carucioarelor Chicco pentru a gasi modelele potrivite.</p><p>Pentru cine este potrivita? Este ideala pentru parintii aflati la primul copil, care cauta o solutie sigura si accesibila, sau pentru cei care au nevoie de o a doua scoica pentru bunici sau o a doua masina. De asemenea, este o alegere buna pentru cei care calatoresc frecvent cu masina si au nevoie de o scoica usoara de transportat.</p><p>Recomandarea noastra este ca, daca bugetul este un factor important, dar nu vreti sa sacrificati siguranta, Chicco Auto-Fix Fast este o optiune de luat in calcul serios. Este o <strong>scoica auto pentru nou nascuti</strong> fiabila, usor de utilizat si cu un pret pe masura. O puteti gasi la preturi avantajoase la principalii retaileri online.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Pret foarte accesibil</li>
+              <li>Greutate extrem de redusa (4.2 kg)</li>
+              <li>Usor de instalat si de manevrat</li>
+              <li>Reductor confortabil pentru nou-nascuti</li>
+              <li>Huse detasabile si lavabile</li>
+              <li>Compatibila cu sistemele de carucioare Chicco</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Nu este conforma cu standardul i-Size</li>
+              <li>Sistemul de protectie laterala este mai putin avansat decat la modelele premium</li>
+              <li>Centura in 3 puncte</li>
+              <li>Baza Isofix se achizitioneaza separat</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="besafe-izi-go-modular-x1-i-size-scoica-auto">
+            <div class="product-review__header">
+              <span class="section-tag">Alegerea Noastra</span>
+              <h3>BeSafe iZi Go Modular X1 i-Size Scoica Auto</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-12 luni (pana la 12 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Huse premium, respirabile, testate pentru substante nocive
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>66 x 44 x 59 cm (L x l x H)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>4.2 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare ECE R129 (i-Size), sistem de protectie laterala (SIP+), centura in 5 puncte
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>BeSafe iZi Go Modular X1 i-Size reprezinta varful de lance in materie de siguranta si confort pentru micutul tau. Aceasta <strong>scoica auto pentru nou nascuti</strong> este proiectata pentru a indeplini cele mai stricte standarde de siguranta i-Size, oferind o protectie remarcabila in orice conditii de drum.</p><p>Ce o face speciala? Sistemul inovator de protectie laterala (SIP+) absoarbe o cantitate semnificativa de energie in cazul unui impact, protejand zona capului si gatului bebelusului. Centura in 5 puncte, impreuna cu tetiera ajustabila, asigura o fixare perfecta si sigura. Greutatea redusa de 4.2 kg si manerul ergonomic fac transportul extrem de facil. Pretul se incadreaza in segmentul premium, in jur de 950 RON, dar justifica fiecare leu prin tehnologia si protectia oferita.</p><p>Este confortabila pentru nou-nascuti? Da, vine cu un reductor confortabil si ergonomic, care ofera un sprijin optim pentru bebelusii foarte mici. Materialele textile sunt moi, respirabile si hipoalergenice, asigurand un climat placut in interiorul scoicii.</p><p>Cum se instaleaza? Ideal, se instaleaza pe baza BeSafe iZi Modular i-Size, care se fixeaza cu Isofix. Aceasta baza face parte dintr-un sistem modular, permitand ulterior utilizarea unui scaun auto pentru copii mai mari pe aceeasi baza, o investitie pe termen lung. Instalarea cu centura masinii este, de asemenea, posibila.</p><p>Ce o diferentiaza de alte modele i-Size? Sistemul SIP+ (Side Impact Protection Plus) este un punct forte major, oferind un nivel suplimentar de protectie. De asemenea, flexibilitatea sistemului modular iZi Modular, care permite trecerea de la scoica la scaun auto pe aceeasi baza, este un avantaj economic si practic.</p><p>Este potrivita pentru parintii care cauta cea mai buna protectie, fara compromisuri. Daca planuiti sa aveti mai multi copii sau doriti sa optimizati investitia pe termen lung, sistemul modular este o alegere inspirata. Compatibilitatea cu multe marci de carucioare prin adaptoare universale sau specifice completeaza imaginea de produs premium.</p><p>Recomandarea noastra: BeSafe iZi Go Modular X1 i-Size este o <strong>scoica auto pentru nou nascuti</strong> de top, care ofera siguranta maxima, confort si o solutie modulara inteligenta. Investitia este justificata de calitatea superioara si protectia sporita pe care o ofera micutului dumneavoastra. O gasiti la principalii retaileri de produse pentru copii.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Standard de siguranta i-Size (ECE R129)</li>
+              <li>Sistem avansat de protectie laterala (SIP+)</li>
+              <li>Centura in 5 puncte cu ajustare centralizata</li>
+              <li>Greutate redusa (4.2 kg) si maner ergonomic</li>
+              <li>Sistem modular iZi Modular (scoica + scaun auto pe aceeasi baza)</li>
+              <li>Materiale textile premium, respirabile</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Pretul este in segmentul premium</li>
+              <li>Baza Isofix se achizitioneaza separat</li>
+              <li>Poate necesita adaptoare pentru anumite marci de carucioare</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="britax-rmer-baby-safe-i-size-scoica-auto">
+            <div class="product-review__header">
+              <span class="section-tag">Pentru Buget Mic</span>
+              <h3>Britax Römer Baby-Safe i-Size Scoica Auto</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-15 luni (pana la 13 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Huse moi, detasabile si lavabile
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>65 x 44 x 58 cm (L x l x H)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>4.7 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare ECE R129 (i-Size), sistem de protectie laterala, centura in 5 puncte
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Britax Römer Baby-Safe i-Size este o <strong>scoica auto pentru nou nascuti</strong> care reuseste sa ofere un echilibru foarte bun intre siguranta certificata i-Size si un pret accesibil, fiind o optiune excelenta pentru parintii cu un buget mai restrans, dar care nu doresc sa faca rabat la protectia copilului.</p><p>Ce o face o alegere buna? Este conforma cu standardul de siguranta ECE R129 (i-Size), ceea ce inseamna ca a trecut teste de impact riguroase. Dispune de un sistem de protectie laterala eficient si o centura in 5 puncte, ambele esentiale pentru siguranta bebelusului. Greutatea de 4.7 kg este rezonabila, iar manerul reglabil faciliteaza transportul. Pretul, de aproximativ 600 RON, o plaseaza intr-un punct de atractie pentru multi parinti.</p><p>Este confortabila pentru nou-nascuti? Da, include un reductor pentru nou-nascuti, care ofera suport suplimentar si o pozitie mai inclinata, potrivita pentru primele luni. Husele sunt realizate din materiale placute la atingere, detasabile si lavabile, ceea ce simplifica mentinerea curateniei.</p><p>Cum se instaleaza? Se poate instala cu usurinta folosind centura de siguranta a masinii, dar pentru o siguranta si o comoditate sporita, se recomanda utilizarea bazei Britax Römer Flex Base i-Size (vanduta separat). Aceasta baza simplifica montajul si asigura o fixare corecta de fiecare data.</p><p>Ce o diferentiaza de alte modele i-Size din segmentul premium? Lipsesc anumite tehnologii de absorbtie a energiei de ultima generatie sau design-uri ultra-compacte. Totusi, pentru cerintele standardului i-Size, performanta este excelenta.</p><p>Pentru cine este potrivita aceasta scoica? Este o alegere ideala pentru parintii care cauta o scoica sigura, certificata i-Size, dar la un pret mai mic. De asemenea, este potrivita pentru cei care au nevoie de o scoica fiabila pentru utilizare ocazionala sau pentru o a doua masina.</p><p>Recomandarea noastra: Britax Römer Baby-Safe i-Size este o <strong>scoica auto pentru nou nascuti</strong> care ofera un raport excelent intre pret si performanta de siguranta. Daca vreti sa respectati cele mai noi standarde de siguranta auto fara a depasi un buget anume, aceasta este o optiune pe care ar trebui sa o luati in considerare. O gasiti la preturi avantajoase la majoritatea magazinelor online.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Certificare i-Size (ECE R129)</li>
+              <li>Pret competitiv pentru o scoica i-Size</li>
+              <li>Sistem de protectie laterala</li>
+              <li>Centura in 5 puncte</li>
+              <li>Reductor confortabil pentru nou-nascuti</li>
+              <li>Huse detasabile si lavabile</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Baza Isofix se achizitioneaza separat</li>
+              <li>Greutatea este putin mai mare comparativ cu alte modele de top</li>
+              <li>Designul este mai functional, mai putin premium</li>
+              <li>Compatibilitatea cu carucioare poate necesita adaptoare specifice</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="recaro-privia-evo-scoica-auto">
+            <div class="product-review__header">
+              <span class="section-tag">Premium</span>
+              <h3>Recaro Privia Evo Scoica Auto</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-15 luni (pana la 13 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Huse premium, moi, cu insertii de plasa pentru ventilatie
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>65 x 44 x 59 cm (L x l x H)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>4.3 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare ECE R129 (i-Size), sistem de protectie laterala (HERO), centura in 5 puncte
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Recaro Privia Evo este o <strong>scoica auto pentru nou nascuti</strong> care imbina luxul si performanta, fiind destinata parintilor care cauta cele mai bune materiale si o protectie de top. Acest model este certificat i-Size, asigurand conformitatea cu cele mai recente standarde de siguranta auto.</p><p>Ce o recomanda? Sistemul inovator HERO, care integreaza centura in 5 puncte cu protectiile pentru umeri, previne rasucirea centurilor si asigura o pozitionare corecta, fara alunecare. Greutatea de doar 4.3 kg este un atu major, facilitand transportul zilnic. Pretul se situeaza in segmentul premium, in jur de 850 RON, reflectand calitatea superioara a materialelor si tehnologia.</p><p>Este confortabila pentru bebelusi? Da, pernele interioare si materialele textile premium, uneori cu insertii de plasa pentru o mai buna ventilatie, ofera un confort sporit, chiar si in zilele calduroase. Designul ergonomic sustine pozitia corecta a bebelusului.</p><p>Cum se instaleaza? Se poate instala cu centura masinii sau, pentru o siguranta maxima si o utilizare simplificata, pe baza Recaro SmartClick (vanduta separat), care se fixeaza cu Isofix. Baza ofera un sistem de prindere si eliberare rapid.</p><p>Ce o diferentiaza de alte modele premium? Sistemul HERO este un avantaj distinctiv, oferind o siguranta sporita a centurilor. De asemenea, designul specific Recaro, asociat cu confortul si calitatea materialelor, o plaseaza in topul preferintelor.</p><p>Este potrivita pentru parintii care apreciaza estetica, materialele de inalta calitate si performanta sporita. Daca doriti o scoica auto care sa arate si sa se simta premium, Recaro Privia Evo este o alegere excelenta. Este compatibila cu o serie de carucioare Recaro si alte marci prin adaptoare.</p><p>Recomandarea noastra: Pentru parintii care doresc un echilibru perfect intre stil, confort si siguranta de top, Recaro Privia Evo este o <strong>scoica auto pentru nou nascuti</strong> de luat in considerare. Investitia este justificata de calitatea superioara si de caracteristicile de siguranta unice. O gasiti la principalii retaileri de produse pentru copii.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Certificare i-Size (ECE R129)</li>
+              <li>Sistem inovator HERO pentru centura in 5 puncte</li>
+              <li>Greutate redusa (4.3 kg)</li>
+              <li>Materiale textile premium si design elegant</li>
+              <li>Confort sporit pentru bebelus</li>
+              <li>Compatibilitate cu baza SmartClick Isofix</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Pretul este in segmentul premium</li>
+              <li>Baza Isofix se achizitioneaza separat</li>
+              <li>Poate necesita adaptoare pentru carucioare non-Recaro</li>
+              <li>Disponibilitatea poate fi mai limitata decat la brandurile foarte populare</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+
+          <section id="comparatie">
+            <h2>Comparatie</h2>
+            <p>Pentru a va ajuta sa vizualizati rapid diferentele cheie intre modelele de scoici auto pentru nou-nascuti, am pregatit un tabel comparativ. Acesta va permite sa identificati rapid optiunea cea mai potrivita nevoilor familiei dumneavoastra.</p>
+            <div class="comparison-outer">
+              <div class="comparison-hint">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                Gliseaza pentru a vedea tot tabelul
+              </div>
+              <div class="comparison-wrap">
+                <table class="comparison-table">
+                  <thead>
+                    <tr>
+                      <th>Produs</th>
+                      <th>Varsta</th>
+                      <th>Material</th>
+                      <th>Greutate</th>
+                      <th>Siguranta</th>
+                      <th>PotrivitPentru</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+              <tr>
+                <td><strong>Cybex Aton 5</strong></td>
+                <td>0-18 luni</td>
+                <td>Huse textile hipoalergenice</td>
+                <td>4.8 kg</td>
+                <td>ECE R44/04, LSP System</td>
+                <td>Siguranta maxima</td>
+              </tr>
+
+              <tr>
+                <td><strong>Maxi-Cosi Pebble Pro i-Size</strong></td>
+                <td>0-12 luni</td>
+                <td>Huse moi, confortabile</td>
+                <td>4.5 kg</td>
+                <td>ECE R129 (i-Size), LSP</td>
+                <td>Standard i-Size</td>
+              </tr>
+
+              <tr>
+                <td><strong>Chicco Auto-Fix Fast</strong></td>
+                <td>0-12 luni</td>
+                <td>Huse detasabile, lavabile</td>
+                <td>4.2 kg</td>
+                <td>ECE R44/04</td>
+                <td>Buget redus</td>
+              </tr>
+
+              <tr>
+                <td><strong>BeSafe iZi Go Modular X1 i-Size</strong></td>
+                <td>0-12 luni</td>
+                <td>Huse premium, respirabile</td>
+                <td>4.2 kg</td>
+                <td>ECE R129 (i-Size), SIP+</td>
+                <td>Protectie modulara</td>
+              </tr>
+
+              <tr>
+                <td><strong>Britax Römer Baby-Safe i-Size</strong></td>
+                <td>0-15 luni</td>
+                <td>Huse moi, lavabile</td>
+                <td>4.7 kg</td>
+                <td>ECE R129 (i-Size)</td>
+                <td>Raport pret-performanta</td>
+              </tr>
+
+              <tr>
+                <td><strong>Recaro Privia Evo</strong></td>
+                <td>0-15 luni</td>
+                <td>Huse premium, plasa ventilatie</td>
+                <td>4.3 kg</td>
+                <td>ECE R129 (i-Size), HERO</td>
+                <td>Lux si stil</td>
+              </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+
+          <section id="ghid">
+            <h2>Cum alegi cea mai buna scoica auto pentru nou-nascutul tau?</h2>
+            <div class="guide">
+              <p>Alegerea unei <strong>scoica auto pentru nou nascuti</strong> este una dintre cele mai importante decizii pe care le vei lua ca parinte. Siguranta bebelusului este pe primul loc, dar confortul si usurinta in utilizare sunt, de asemenea, factori cruciali. Vom detalia aspectele esentiale pentru a te ghida spre cea mai informata decizie.</p><h4>Ce standard de siguranta trebuie sa indeplineasca o scoica auto pentru nou nascuti?</h4><p>In prezent, cele mai sigure optiuni sunt cele conforme cu standardul ECE R129, cunoscut si ca i-Size. Acestea au fost testate la impact lateral si frontal la viteze mai mari si folosesc sistemul Isofix ca metoda principala de instalare, ceea ce reduce semnificativ riscul de montaj incorect. Modelele conforme cu ECE R44/04 sunt, de asemenea, sigure, atata timp cat sunt instalate corect, dar standardul i-Size ofera un nivel superior de protectie.</p><h4>Ce trebuie sa verifici in ceea ce priveste confortul si ergonomia?</h4><p>Pentru un nou-nascut, o pozitie cat mai plata a corpului este esentiala pentru a preveni problemele respiratorii. Cauta o scoica auto care vine cu un reductor special pentru nou-nascuti, ce ofera un sprijin adecvat pentru cap si corp. De asemenea, centura in 5 puncte este de preferat, deoarece distribuie fortele de impact pe o suprafata mai mare a corpului bebelusului. Asigura-te ca materialele textile sunt moi, respirabile si usor de curatat.</p><h4>Cum alegi scoica potrivita pentru familia ta si stilul tau de viata?</h4><p>Greutatea scoicii este un factor important, mai ales daca vei transporta bebelusul frecvent. Modelele sub 4.5 kg sunt mai usor de manevrat. Verifică compatibilitatea scoicii cu sistemul tau de carucior (daca doresti un sistem travel system) si cu masina ta. Daca masina ta dispune de sistem Isofix, achizitionarea unei baze Isofix pentru scoica va simplifica procesul de instalare si va spori siguranta. Ia in considerare si cat timp vei folosi scoica; unele modele sunt potrivite pana la 13 kg (aproximativ 12-15 luni), altele pana la 18 kg (pana la 4 ani), dar pentru nou-nascuti, primele sunt cele mai comune si sigure.</p>
+            </div>
+          </section>
+
+          <section class="faq-section" id="faq">
+            <h2 class="faq-title">Intrebari Frecvente</h2>
+            
+            <div class="faq-item" id="faq-0">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Cat costa o scoica auto pentru nou nascuti de calitate?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                O scoica auto pentru nou nascuti de calitate, conforma cu standardele i-Size, poate varia intre 450 RON si peste 1000 RON. Modelele de top cu tehnologii avansate si materiale premium se situeaza in segmentul 800-1000+ RON, in timp ce optiunile cu un raport bun calitate-pret pot fi gasite in intervalul 450-700 RON.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-1">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Care este diferenta dintre o scoica auto ECE R44/04 si una ECE R129 (i-Size)?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Standardul ECE R129 (i-Size) este mai nou si mai riguros. Testele de impact sunt mai complexe, includand testul de impact lateral, iar pozitionarea in masina se face predominant cu sistemul Isofix. ECE R44/04 este un standard mai vechi, dar inca valid, care permite si instalarea cu centura masinii si nu include testarea impactului lateral.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-2">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Pot folosi aceeasi scoica auto pentru nou nascuti pana cand copilul implineste 1 an?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Majoritatea scoicilor auto pentru nou-nascuti sunt proiectate pentru greutatea de pana la 13 kg, ceea ce corespunde, in general, varstei de 12-15 luni. Totusi, este esential sa verificati specificatiile fiecarui model, deoarece unele pot fi potrivite pana la 18 kg sau chiar mai mult, in functie de inaltimea si greutatea copilului.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-3">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Este obligatorie baza Isofix pentru scoica auto?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Nu este obligatorie, dar este puternic recomandata. Baza Isofix simplifica instalarea scoicii, reduce riscul de erori si ofera o stabilitate sporita in masina. Multe scoici i-Size sunt concepute sa functioneze optim cu baza Isofix, iar unele nu pot fi instalate altfel.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-4">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Merita sa investesc intr-un sistem travel system (scoica + carucior)?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Un sistem travel system ofera o mare comoditate, permitandu-ti sa transferi usor bebelusul din masina pe carucior fara a-l trezi. Daca calatoresti frecvent cu masina si folosesti caruciorul pentru plimbari scurte sau mers la cumparaturi, este o investitie excelenta in flexibilitate si eficienta.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="author-line">
+          <div class="author-avatar">AP</div>
+          <div>
+            <div class="author-name">Ana Popescu</div>
+            <div class="author-role">Specialist Carucioare si Accesorii</div>
+          </div>
+        </div>
+
+        <SimilarArticles
+          currentSlug="scoica-auto-pentru-nou-nascuti"
+          currentCategory="carucioare-accesorii-bebe"
+          articles={allArticles}
+        />
+
+        <PrevNextNav
+          currentSlug="scoica-auto-pentru-nou-nascuti"
+          currentCategory="carucioare-accesorii-bebe"
+          articles={allArticles}
+        />
+      </div>
+    </div>
+  </article>
+
+  <script>
+    document.querySelectorAll('.comparison-outer').forEach(outer => {
+      const wrap = outer.querySelector('.comparison-wrap');
+      if (!wrap) return;
+      function checkScroll() {
+        const canScroll = wrap.scrollWidth > wrap.clientWidth;
+        const atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 2;
+        outer.classList.toggle('can-scroll', canScroll && !atEnd);
+      }
+      checkScroll();
+      wrap.addEventListener('scroll', checkScroll, { passive: true });
+      window.addEventListener('resize', checkScroll, { passive: true });
+    });
+
+    const tocLinks = document.querySelectorAll('#toc-desktop-list a[data-toc-id]');
+    if (tocLinks.length > 0) {
+      const ids = Array.from(tocLinks).map(a => a.dataset.tocId);
+      const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(a => a.classList.remove('active'));
+              const match = Array.from(tocLinks).find(a => a.dataset.tocId === entry.target.id);
+              match?.classList.add('active');
+            }
+          }
+        },
+        { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+      );
+      sections.forEach(s => observer.observe(s));
+    }
+  </script>
+</Layout>
