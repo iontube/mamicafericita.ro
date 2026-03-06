@@ -154,7 +154,7 @@ function shouldRunToday(keywordsPath) {
 async function generateStats() {
   const pagesDir = path.join(projectDir, 'src', 'pages');
   const publicDir = path.join(projectDir, 'public');
-  const excludePages = new Set(['index', 'contact', 'cookies', 'privacy-policy', 'privacy', 'gdpr', 'sitemap', '404', 'about', 'terms']);
+  const excludePages = new Set(['index', 'contact', 'cookies', 'privacy-policy', 'privacy', 'gdpr', 'sitemap', '404', 'about', 'terms', 'disclaimer-afiliere', 'politica-cookies', 'politica-de-confidentialitate', 'politica-confidentialitate', 'termeni-si-conditii']);
 
   const files = await fs.readdir(pagesDir);
   const articles = files.filter(f => {
