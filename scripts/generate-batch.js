@@ -663,7 +663,7 @@ ${compRows}
 
   const pubDateDisplay = new Date(date).toLocaleDateString('ro-RO', { year: 'numeric', month: 'long', day: 'numeric' });
 
-  const pageContent = `---
+  let pageContent = `---
 import Layout from '../layouts/Layout.astro';
 import SimilarArticles from '../components/SimilarArticles.astro';
 import PrevNextNav from '../components/PrevNextNav.astro';
