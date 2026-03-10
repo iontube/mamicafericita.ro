@@ -1,0 +1,545 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SimilarArticles from '../components/SimilarArticles.astro';
+import PrevNextNav from '../components/PrevNextNav.astro';
+import keywordsData from '../../keywords.json';
+
+export const frontmatter = {
+  title: "Patut co-sleeping atasat de pat",
+  excerpt: "Daca cauti un patut co-sleeping atasat de pat, probabil vrei sa maximizezi proximitatea cu bebelusul tau in timpul noptii, fara a compromite spatiul sau confortul in dormitorul vostru comun. Aceasta solutie permite bebelusului sa doarma in siguranta langa tine, facilitand alaptarea si calmarea rapida, in timp ce tu te poti odihni mai bine stiind ca cel mic este aproape.",
+  image: "/images/articles/patut-co-sleeping-atasat-de-pat.webp",
+  category: "Camera Copilului",
+  categorySlug: "camera-copilului",
+  date: "2026-03-10T15:02:43.386Z",
+  modifiedDate: "2026-03-10T15:02:43.386Z",
+  author: "Raluca Marin",
+  authorRole: "Designer Interior Camera Copilului",
+  authorBio: "Raluca are experienta in design interior pentru camere de copii si bebelusi. Recomanda mobilier, decoratiuni si accesorii care transforma camera micutului intr-un spatiu sigur, functional si placut."
+};
+
+const faq = [
+  { question: "Cat costa in medie un patut co-sleeping atasat de pat?", answer: "Preturile pentru un patut co-sleeping atasat de pat variaza considerabil, incepand de la aproximativ 450 lei pentru modelele de baza si putand ajunge pana la 1400 lei sau chiar mai mult pentru modelele premium din lemn masiv sau cu functii avansate. Modelele din gama medie se situeaza in jur de 600-900 lei." },
+  { question: "Care e diferenta intre un patut co-sleeping si un landou?", answer: "Un patut co-sleeping este proiectat sa se ataseze ferm de patul parintilor, avand o latura detasabila sau rabatabila. Un landou (sau bassinet) este un cos separat, de obicei portabil, pe care il poti aseza langa pat, dar nu se ataseaza fizic si sigur de acesta. Patutul co-sleeping ofera o solutie mai stabila si integrata pentru somnul langa parinte." },
+  { question: "Merita sa cumpar un patut co-sleeping daca am deja un patut normal?", answer: "Da, merita daca iti doresti sa maximizezi proximitatea cu bebelusul in primele luni, facilitand alaptarea si calmarea rapida pe timpul noptii. Un patut co-sleeping ofera siguranta unui spatiu propriu pentru bebe, eliminand riscurile impartirii patului parintilor, si poate imbunatati calitatea somnului mamei. Nu inlocuieste patutul normal, ci il completeaza pentru o perioada." },
+  { question: "Ce varsta are bebelusul cand nu mai poate folosi patutul co-sleeping?", answer: "Majoritatea patuturilor co-sleeping sunt recomandate pentru bebelusi de la nastere pana la aproximativ 6 luni, sau pana cand ating greutatea maxima admisa (de obicei 9 kg). De asemenea, trebuie sa renunti la el cand bebelusul incepe sa se ridice in picioare sau sa se rostogoleasca activ, pentru a preveni accidentele." },
+  { question: "Pot folosi patutul co-sleeping atasat de pat pe durata intregii nopti?", answer: "Da, patutul co-sleeping atasat de pat este conceput special pentru utilizare pe toata durata noptii. Sistemul de prindere sigur si designul care il mentine aliniat cu patul parintilor permit acest lucru. Este o alternativa sigura la impartirea patului, asigurand ca bebelusul are propriul spatiu delimitat, dar la indemana." }
+];
+
+const toc = [
+  { title: "Chicco Next2Me Air", id: "chicco-next2me-air" },
+  { title: "Babybay Maxi Original", id: "babybay-maxi-original" },
+  { title: "Lorelli Nest Bedside", id: "lorelli-nest-bedside" },
+  { title: "Hauck Beside Me", id: "hauck-beside-me" },
+  { title: "Kinderkraft Neste Up", id: "kinderkraft-neste-up" },
+  { title: "Comparatie", id: "comparatie" },
+  { title: "Cum alegi cel mai bun patut co-sleeping atasat de pat?", id: "ghid" },
+  { title: "Intrebari Frecvente", id: "faq" }
+];
+
+// Get all articles for similar articles component
+const allArticles = keywordsData.completed.map(item => ({
+  title: item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1),
+  slug: item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, ''),
+  excerpt: item.excerpt || '',
+  image: `/images/articles/${item.keyword.toLowerCase()
+    .replace(/ă/g, 'a').replace(/â/g, 'a').replace(/î/g, 'i')
+    .replace(/ș/g, 's').replace(/ț/g, 't')
+    .replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}.webp`,
+  category: item.category,
+  categorySlug: item.categorySlug,
+  date: item.date || new Date().toISOString()
+}));
+---
+
+<Layout
+  title="Patut co-sleeping atasat de pat - MamicaFericita"
+  description="Daca cauti un patut co-sleeping atasat de pat, probabil vrei sa maximizezi proximitatea cu bebelusul tau in timpul noptii, fara a compromite spatiul sau confortul in dormitorul vostru comun. Aceasta solutie permite bebelusului sa doarma in siguranta langa tine, facilitand alaptarea si calmarea rapida, in timp ce tu te poti odihni mai bine stiind ca cel mic este aproape."
+  image="/images/articles/patut-co-sleeping-atasat-de-pat.webp"
+  type="article"
+  publishedTime="2026-03-10T15:02:43.386Z"
+  modifiedTime="2026-03-10T15:02:43.386Z"
+  author="Raluca Marin"
+  faq={faq}
+>
+  <article class="article-page">
+    Camera Copilului
+    <h1 class="article-page-title">Patut co-sleeping atasat de pat</h1>
+
+    <div class="article-page-meta">
+      <span>Raluca Marin</span>
+      <span>&middot;</span>
+      <span>10 martie 2026</span>
+    </div>
+
+    <img src="/images/articles/patut-co-sleeping-atasat-de-pat.webp" alt="Patut co-sleeping atasat de pat" class="article-page-image" width="800" height="600" loading="eager">
+
+    <div class="article-layout">
+      <aside class="toc-sidebar">
+        <p class="toc-sidebar-title">Cuprins</p>
+        <ol class="toc-sidebar-list" id="toc-desktop-list">
+          {toc.map(item => (
+            <li><a href={`#${item.id}`} data-toc-id={item.id}>{item.title}</a></li>
+          ))}
+        </ol>
+      </aside>
+
+      <div>
+        <div class="toc-mobile" id="toc-mobile">
+          <button class="toc-mobile-toggle" onclick="this.parentElement.classList.toggle('open')">
+            Cuprins
+            <span class="toc-chevron">&#9660;</span>
+          </button>
+          <ol class="toc-mobile-list">
+            {toc.map(item => (
+              <li><a href={`#${item.id}`}>{item.title}</a></li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="article-content">
+          <section id="intro">
+            <p>Daca cauti un <strong>patut co-sleeping atasat de pat</strong>, probabil vrei sa maximizezi proximitatea cu bebelusul tau in timpul noptii, fara a compromite spatiul sau confortul in dormitorul vostru comun. Aceasta solutie permite bebelusului sa doarma in siguranta langa tine, facilitand alaptarea si calmarea rapida, in timp ce tu te poti odihni mai bine stiind ca cel mic este aproape. Alegerea unui <strong>patut co-sleeping atasat de pat</strong> presupune evaluarea unor criterii precum siguranta, functiile de ajustare, materialele folosite si usurinta in montare si demontare.</p><p>Ce inseamna de fapt un <strong>patut co-sleeping atasat de pat</strong> si de ce a devenit atat de popular in randul parintilor moderni? Practic, este un patut special conceput pentru a se fixa ferm de patul parintilor, avand o latura detasabila sau rabatabila care se aliniazza perfect cu salteaua parintelui. Aceasta configuratie creeaza un spatiu de dormit comun, dar delimitat, oferind bebelusului propriul sau spatiu sigur, in timp ce mentine contactul vizual si fizic cu parintii. Este o alternativa sigura la impartirea patului parintilor, eliminand riscurile de sufocare sau cadere.</p><p>In acest articol, vom analiza cele mai bune optiuni de <strong>patut co-sleeping atasat de pat</strong> disponibile pe piata din Romania in 2026. Vom compara specificatii, vom evalua avantaje si dezavantaje si vom oferi recomandari personalizate pentru diferite nevoi si bugete, ajutandu-te sa faci cea mai informata decizie pentru familia ta.</p>
+          </section>
+
+
+          <article class="product-review" id="chicco-next2me-air">
+            <div class="product-review__header">
+              <span class="section-tag">Alegerea Noastra</span>
+              <h3>Chicco Next2Me Air</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-6 luni (pana la 9 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Cadru din aluminiu, tesatura respirabila 3D, saltea confortabila
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>93 x 69 x 66-83 cm (Lxlxh ajustabil)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>8.4 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare EN 1130, sistem de prindere sigur, margini rotunjite
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Chicco Next2Me Air se distinge prin designul sau inteligent, axat pe confortul sporit atat al bebelusului, cat si al parintilor. Structura sa usoara din aluminiu, combinata cu peretii din plasa 3D pe ambele parti, asigura o ventilatie excelenta, esentiala pentru un somn linistit al bebelusului, mai ales in lunile calde. Sistemul de atasare la patul parintilor este simplu si sigur, asigurand stabilitatea patutului si prevenind deplasarea acestuia pe timpul noptii.</p><p>Este sigur pentru nou-nascuti? Da, Next2Me Air este certificat conform standardelor europene EN 1130, iar salteaua sa ofera un suport optim pentru coloana vertebrala in primele luni de viata. Latura detasabila permite accesul facil la bebelus pentru alaptare sau linistire, iar patul se ajusteaza pe inaltime pentru a se potrivi perfect cu majoritatea paturilor standard.</p><p>Un avantaj major este usurinta cu care se monteaza si se demonteaza, fiind ideal si pentru familiile care calatoresc frecvent. Dimensiunile compacte il fac potrivit chiar si pentru dormitoare mai mici, iar greutatea de 8.4 kg permite mutarea lui dintr-o camera in alta, daca este necesar. In comparatie cu paturile traditionale, Next2Me Air ofera o solutie mult mai ergonomica pentru co-sleeping.</p><p>Totusi, acest model nu este lipsit de mici dezavantaje. Suprafata de dormit, desi confortabila, este mai mica decat cea a unui patut standard (aproximativ 85x50 cm), limitand utilizarea pe masura ce bebelusul creste si devine mai activ. De asemenea, desi materialul este respirabil, salteaua inclusa ar putea fi imbunatatita cu una mai ferma, conform recomandarilor unor specialisti in somnul bebelusului.</p><p>Pentru cine este potrivit? Chicco Next2Me Air este o alegere excelenta pentru parintii care cauta un <strong>patut co-sleeping atasat de pat</strong> sigur, ventilat si usor de utilizat, in special pentru nou-nascuti si bebelusi pana in 6 luni. Este ideal pentru mamele care alapteaza si pentru oricine doreste sa maximizeze legatura cu bebelusul in timpul somnului.</p><p>Recomandarea noastra este sa optati pentru Chicco Next2Me Air daca prioritizati ventilatia, usurinta in utilizare si un design modern. Pretul sau, in jur de 950 lei, reflecta calitatea materialelor si brandul de renume. Il puteti gasi la majoritatea magazinelor specializate in produse pentru copii.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Ventilatie excelenta datorita peretilor din plasa 3D</li>
+              <li>Sistem de atasare sigur si usor de utilizat</li>
+              <li>Design compact si portabil</li>
+              <li>Materiale de calitate superioara</li>
+              <li>Ideal pentru alaptare frecventa</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Suprafata de dormit relativ mica pentru bebelusi mai mari</li>
+              <li>Salteaua inclusa ar putea fi mai ferma</li>
+              <li>Pretul poate fi considerat ridicat de catre unii parinti</li>
+              <li>Poate necesita un adaptor suplimentar pentru paturi cu margini foarte inalte sau groase</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="babybay-maxi-original">
+            <div class="product-review__header">
+              <span class="section-tag">Premium</span>
+              <h3>Babybay Maxi Original</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-14 luni (pana la 15 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Lemn masiv de fag, lacuit cu vopsea pe baza de apa
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>101 x 52 x 79 cm (Lxlxh)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>14 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare TUV, sistem de prindere robust, fara margini ascutite
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Babybay Maxi Original reprezinta o optiune premium in categoria de <strong>patut co-sleeping atasat de pat</strong>, impresionand prin calitatea materialelor si versatilitatea sa. Construit din lemn masiv de fag, acest patut nu doar ca arata elegant in orice dormitor, dar este si extrem de durabil. Finisajul cu lac pe baza de apa este sigur pentru bebelusi, eliminand riscul de expunere la substante chimice nocive.</p><p>Ce îl face diferit față de alte modele? Babybay Maxi Original se distinge prin posibilitatea de a fi transformat. Odată ce bebelușul depășește faza de co-sleeping, patutul poate fi convertit într-un tarc de joacă, un scaun de masă sau o bancuță pentru copii, extinzându-i astfel utilitatea pe termen lung. Această adaptabilitate îl face o investiție pe termen lung.</p><p>Sistemul de prindere este deosebit de robust, asigurând că patutul rămâne fixat de patul părinților, indiferent de mișcările bebelușului. Dimensiunile sale sunt generoase, oferind suficient spațiu pentru ca micuțul să se dezvolte confortabil. Certificarea TUV garantează respectarea celor mai înalte standarde de siguranță, oferind liniște părinților.</p><p>Un dezavantaj major este greutatea sa considerabilă (14 kg), ceea ce îl face mai puțin portabil comparativ cu alte modele. Montajul, deși nu complicat, necesită o atenție sporită datorită componentelor din lemn masiv. De asemenea, prețul este pe măsură, plasându-l în segmentul premium al pieței.</p><p>Babybay Maxi Original este ideal pentru părinții care caută un produs sustenabil, de înaltă calitate, din materiale naturale, și care doresc o soluție ce poate fi utilizată o perioadă mai lungă de timp, prin transformările posibile. Este potrivit pentru bebeluși de la naștere până la aproximativ 14 luni, oferind un spațiu generos.</p><p>Recomandarea noastră este Babybay Maxi Original dacă bugetul vă permite și prioritizați durabilitatea, materialele naturale și posibilitatea de transformare. Prețul se situează în jurul valorii de 1400 lei. Este o investiție pe termen lung în confortul și siguranța bebelușului dumneavoastră.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Lemn masiv de fag, material natural și durabil</li>
+              <li>Poate fi transformat în tarc, scaun de masă sau bancuță</li>
+              <li>Spațiu generos de dormit</li>
+              <li>Sistem de prindere foarte sigur și stabil</li>
+              <li>Design elegant și finisaje de înaltă calitate</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Greutate considerabilă, mai puțin portabil</li>
+              <li>Preț ridicat</li>
+              <li>Montajul poate necesita mai mult timp și efort</li>
+              <li>Necesită o saltea specială Babybay, care se achiziționează separat</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="lorelli-nest-bedside">
+            <div class="product-review__header">
+              <span class="section-tag">Raport Calitate-Pret</span>
+              <h3>Lorelli Nest Bedside</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-6 luni (pana la 9 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Cadru metalic, textil din poliester, saltea inclusa
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>95 x 55 x 75-90 cm (Lxlxh ajustabil)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>9.5 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare EN 1130, sistem de prindere cu curele, bara de protectie integrata
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Lorelli Nest Bedside oferă o soluție accesibilă pentru părinții care doresc beneficiile unui <strong>patut co-sleeping atasat de pat</strong> fără a investi o sumă foarte mare. Acest model combină funcționalitatea cu un design simplu, dar eficient, punând accent pe proximitatea cu bebelușul.</p><p>Cum se diferențiază de concurență în acest segment de preț? Lorelli Nest Bedside se concentrează pe elementele esențiale: un cadru stabil, o saltea confortabilă și un sistem de prindere sigur. Latura rabatabilă permite transformarea rapidă a patutului într-un spațiu de co-sleeping, facilitând accesul la bebeluș pe timpul nopții. Patul se ajustează pe înălțime, adaptându-se la majoritatea paturilor de adulți.</p><p>Este potrivit pentru utilizare de la naștere? Da, conform certificării EN 1130, patutul este conceput pentru a oferi un mediu sigur pentru nou-născuți. Textura materialului este plăcută la atingere, iar salteaua inclusă oferă un suport decent pentru primele luni. Greutatea de 9.5 kg îl face relativ ușor de manevrat prin casă.</p><p>Care sunt punctele slabe? Deși oferă un raport calitate-preț bun, materialele folosite nu sunt la fel de premium ca la modelele mai scumpe. Sistemul de prindere, deși sigur, ar putea fi mai intuitiv la montare. De asemenea, unii părinți au raportat că salteaua inclusă este puțin prea subțire și ar putea necesita un strat suplimentar de confort sau o saltea dedicată, achiziționată separat.</p><p>Pentru cine este recomandat? Lorelli Nest Bedside este o opțiune fantastică pentru părinții aflați la primul copil, care au un buget limitat, dar nu vor să renunțe la avantajele co-sleeping-ului. Este ideal pentru utilizare în primele 6 luni de viață ale bebelușului.</p><p>Recomandarea noastră este să luați în considerare Lorelli Nest Bedside dacă prioritizați un preț accesibil și funcționalitatea de bază a unui <strong>patut co-sleeping atasat de pat</strong>. Prețul său, în jur de 550 lei, îl face o alegere foarte atractivă. Poate fi achiziționat din magazinele online specializate.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Preț foarte accesibil</li>
+              <li>Sistem de ajustare pe înălțime</li>
+              <li>Saltea inclusă</li>
+              <li>Design simplu și funcțional</li>
+              <li>Ușor de asamblat (în general)</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Materialele nu sunt la fel de premium ca la modelele de top</li>
+              <li>Salteaua ar putea fi mai groasă/mai fermă</li>
+              <li>Sistemul de prindere ar putea fi mai greu de ajustat la anumite tipuri de paturi</li>
+              <li>Durabilitatea pe termen foarte lung ar putea fi o preocupare</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="hauck-beside-me">
+            <div class="product-review__header">
+              <span class="section-tag">Best Buy 2026</span>
+              <h3>Hauck Beside Me</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-6 luni (pana la 9 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Cadru din aluminiu, textil din poliester respirabil, saltea
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>95 x 54 x 69-85 cm (Lxlxh ajustabil)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>8.1 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare EN 1130, sistem de prindere cu centuri, margini moi
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Hauck Beside Me se poziționează ca o soluție echilibrată, oferind funcționalități solide la un preț competitiv, ceea ce îl face un candidat puternic pentru titlul de Best Buy 2026 în categoria <strong>patut co-sleeping atasat de pat</strong>. Designul său modern și materialele respirabile sunt concepute pentru a maximiza confortul bebelușului.</p><p>Ce oferă Hauck Beside Me în plus față de alte opțiuni similare? Acest model excelează prin ușurința sa în utilizare și montaj. Cadru din aluminiu îi conferă rezistență, dar îl menține la o greutate redusă (8.1 kg), facilitând mutarea. Latura rabatabilă se integrează perfect cu patul părintelui, iar ajustarea pe înălțime se face cu precizie, asigurând o aliniere optimă.</p><p>Este acest patut sigur pentru nou-nascuti? Da, Hauck Beside Me este certificat EN 1130 și dispune de un sistem de prindere eficient cu centuri, care fixează patutul de cadrul patului părintelui. Marginea superioară este moale la atingere, iar spațiul interior este conceput pentru a oferi un cocon de siguranță bebelușului.</p><p>Care sunt limitările? Deși salteaua inclusă este decentă, unii părinți ar putea dori una mai fermă, în special pentru nou-născuții foarte mici. De asemenea, dimensiunea patutului este standard pentru co-sleeping, ceea ce înseamnă că va trebui înlocuit pe măsură ce copilul crește și începe să se ridice în picioare sau să se miște mai mult (de obicei în jurul vârstei de 6 luni).</p><p>Pentru cine este cel mai potrivit? Hauck Beside Me este ideal pentru părinții care caută un <strong>patut co-sleeping atasat de pat</strong> fiabil, ușor de utilizat și cu un design atrăgător, la un preț corect. Este o opțiune excelentă pentru primele luni de viață ale bebelușului, când apropierea constantă este benefică.</p><p>Recomandarea noastră este Hauck Beside Me pentru cei care caută cea mai bună valoare pentru banii investiți în 2026. Prețul său, de aproximativ 700 lei, îl face extrem de competitiv. Este disponibil în majoritatea magazinelor online și fizice de profil.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Raport excelent calitate-preț</li>
+              <li>Ușor de montat și demontat</li>
+              <li>Design modern și materiale respirabile</li>
+              <li>Portabilitate bună datorită greutății reduse</li>
+              <li>Sistem de prindere sigur</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Salteaua ar putea fi mai fermă pentru unii utilizatori</li>
+              <li>Limita de greutate și vârstă este standard (până la 9 kg / 6 luni)</li>
+              <li>Nu oferă funcționalități suplimentare (precum transformarea)</li>
+              <li>Poate necesita o husă de saltea suplimentară pentru a crește confortul</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-review" id="kinderkraft-neste-up">
+            <div class="product-review__header">
+              <span class="section-tag">Pentru Buget Mic</span>
+              <h3>Kinderkraft Neste Up</h3>
+              <div class="product-review__specs-grid">
+              <div class="product-review__spec">
+                <strong>Varsta recomandata</strong>0-6 luni (pana la 9 kg)
+              </div>
+              <div class="product-review__spec">
+                <strong>Material</strong>Cadru metalic, textil din poliester, saltea
+              </div>
+              <div class="product-review__spec">
+                <strong>Dimensiuni</strong>100 x 64 x 85 cm (Lxlxh)
+              </div>
+              <div class="product-review__spec">
+                <strong>Greutate</strong>10 kg
+              </div>
+              <div class="product-review__spec">
+                <strong>Siguranta</strong>Certificare EN 1130, sistem de prindere cu curele, colțuri rotunjite
+              </div>
+              </div>
+            </div>
+            <div class="product-review__content">
+              <p>Kinderkraft Neste Up demonstrează că un <strong>patut co-sleeping atasat de pat</strong> accesibil poate fi, în același timp, sigur și funcțional. Acest model se adresează părinților care doresc să beneficieze de avantajele co-sleeping-ului fără a depăși un buget stabilit.</p><p>Ce face Kinderkraft Neste Up o opțiune bună pentru un buget mic? Principala sa atracție este prețul, care îl face unul dintre cele mai accesibile modele de pe piață. Pe lângă acest aspect, oferă funcționalitatea de bază a unui patut de co-sleeping: posibilitatea de a fi atașat de patul părintelui, cu o latură rabatabilă pentru acces ușor. Se ajustează pe înălțime, adaptându-se la diferite paturi.</p><p>Este acest patut sigur pentru nou-nascuti? Da, respectă standardele de siguranță EN 1130, iar sistemul de prindere cu curele este conceput pentru a asigura stabilitatea. Materialul textil este ușor de curățat, iar salteaua inclusă oferă un confort de bază pentru somnul bebelușului în primele luni.</p><p>Care sunt compromisurile? La acest nivel de preț, calitatea materialelor este, inevitabil, mai inferioară comparativ cu brandurile premium. Deși funcțional, sistemul de prindere ar putea fi mai robust. Unii utilizatori au menționat că salteaua este destul de subțire și ar putea necesita un suport suplimentar sau o saltea mai groasă, achiziționată separat, pentru un confort optim pe termen lung.</p><p>Pentru cine este cel mai potrivit? Kinderkraft Neste Up este o alegere excelentă pentru părinții care au un buget strict limitat, dar doresc să experimenteze beneficiile co-sleeping-ului. Este ideal pentru utilizare temporară sau pentru cei care nu doresc să investească mult într-un produs pe care îl vor folosi doar în primele luni.</p><p>Recomandarea noastră este Kinderkraft Neste Up dacă bugetul este principala dumneavoastră preocupare. Prețul său, în jur de 450 lei, îl face extrem de atractiv. Este o soluție practică pentru a începe aventura co-sleeping-ului. Poate fi găsit în marile magazine online.</p>
+
+              <div class="product-review__lists">
+                <div>
+                  <h4>Avantaje</h4>
+                  <ul class="product-review__pros">
+              <li>Cel mai accesibil preț</li>
+              <li>Funcționalitate de bază a co-sleeping-ului</li>
+              <li>Ușor de utilizat</li>
+              <li>Ajustabil pe înălțime</li>
+              <li>Material textil ușor de curățat</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4>Dezavantaje</h4>
+                  <ul class="product-review__cons">
+              <li>Calitatea materialelor este inferioară comparativ cu modelele mai scumpe</li>
+              <li>Salteaua inclusă este subțire</li>
+              <li>Sistemul de prindere ar putea fi mai robust</li>
+              <li>Design simplist, fără funcții suplimentare</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+
+          <section id="comparatie">
+            <h2>Comparatie</h2>
+            <p>Pentru a vă ajuta să vizualizați rapid diferențele dintre modelele de <strong>patut co-sleeping atasat de pat</strong> analizate, am creat un tabel comparativ. Acesta evidențiază specificațiile cheie și ne ajută să înțelegem mai bine pentru cine este potrivit fiecare produs.</p>
+            <div class="comparison-outer">
+              <div class="comparison-hint">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                Gliseaza pentru a vedea tot tabelul
+              </div>
+              <div class="comparison-wrap">
+                <table class="comparison-table">
+                  <thead>
+                    <tr>
+                      <th>Produs</th>
+                      <th>Varsta</th>
+                      <th>Material</th>
+                      <th>Greutate</th>
+                      <th>Siguranta</th>
+                      <th>PotrivitPentru</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+              <tr>
+                <td><strong>Chicco Next2Me Air</strong></td>
+                <td>0-6 luni</td>
+                <td>Aluminiu, plasa 3D</td>
+                <td>8.4 kg</td>
+                <td>EN 1130</td>
+                <td>Ventilatie, portabilitate</td>
+              </tr>
+
+              <tr>
+                <td><strong>Babybay Maxi Original</strong></td>
+                <td>0-14 luni</td>
+                <td>Lemn masiv fag</td>
+                <td>14 kg</td>
+                <td>TUV</td>
+                <td>Durabilitate, transformabil</td>
+              </tr>
+
+              <tr>
+                <td><strong>Lorelli Nest Bedside</strong></td>
+                <td>0-6 luni</td>
+                <td>Metal, poliester</td>
+                <td>9.5 kg</td>
+                <td>EN 1130</td>
+                <td>Buget redus, functional</td>
+              </tr>
+
+              <tr>
+                <td><strong>Hauck Beside Me</strong></td>
+                <td>0-6 luni</td>
+                <td>Aluminiu, poliester</td>
+                <td>8.1 kg</td>
+                <td>EN 1130</td>
+                <td>Valoare, usurinta</td>
+              </tr>
+
+              <tr>
+                <td><strong>Kinderkraft Neste Up</strong></td>
+                <td>0-6 luni</td>
+                <td>Metal, poliester</td>
+                <td>10 kg</td>
+                <td>EN 1130</td>
+                <td>Buget minim, accesibil</td>
+              </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+
+          <section id="ghid">
+            <h2>Cum alegi cel mai bun patut co-sleeping atasat de pat?</h2>
+            <div class="guide">
+              <p>Alegerea unui <strong>patut co-sleeping atasat de pat</strong> potrivit poate face o diferență semnificativă în calitatea somnului tău și a bebelușului. Mai jos găsești câteva criterii esențiale de care să ții cont.</p><h4>Ce criterii de siguranță trebuie să urmăresc?</h4><p>Siguranța este primordială. Asigură-te că patutul este certificat conform standardelor europene, cum ar fi EN 1130. Verifică sistemul de prindere la patul părinților – acesta trebuie să fie robust și să prevină orice mișcare neintenționată a patutului. Marginile trebuie să fie rotunjite, iar materialele non-toxice, fără BPA.</p><h4>Ce înseamnă ajustabilitate și de ce este importantă?</h4><p>Un patut co-sleeping bun permite ajustarea înălțimii pentru a se alinia perfect cu salteaua patului tău. Majoritatea modelelor oferă mai multe trepte de reglare. Unele permit și înclinarea saltelei, un aspect util pentru bebelușii cu reflux sau congestie nazală. Verifică dacă sistemul de prindere se potrivește cu tipul patului tău (cu sau fără picioare, cu margini groase etc.).</p><h4>Ce materiale sunt recomandate pentru confort și igienă?</h4><p>Pentru un confort optim, alege un patut cu o saltea fermă, dar confortabilă, ideal din materiale respirabile. Cadrele din aluminiu sunt mai ușoare și mai portabile, în timp ce cele din lemn masiv oferă o senzație premium și o durabilitate sporită. Textilele detașabile și lavabile sunt un mare plus pentru igienă.</p><h4>Cât de importantă este portabilitatea și greutatea?</h4><p>Dacă intenționezi să muți patutul frecvent prin casă sau să îl iei cu tine în călătorii, greutatea și sistemul de pliere sunt factori importanți. Modelele mai ușoare (sub 10 kg) sunt mai ușor de manevrat. Totuși, nu sacrifica stabilitatea pentru portabilitate – un patut mai greu, dar mai stabil, este de preferat pentru utilizarea zilnică la domiciliu.</p>
+            </div>
+          </section>
+
+          <section class="faq-section" id="faq">
+            <h2 class="faq-title">Intrebari Frecvente</h2>
+            
+            <div class="faq-item" id="faq-0">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Cat costa in medie un patut co-sleeping atasat de pat?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Preturile pentru un patut co-sleeping atasat de pat variaza considerabil, incepand de la aproximativ 450 lei pentru modelele de baza si putand ajunge pana la 1400 lei sau chiar mai mult pentru modelele premium din lemn masiv sau cu functii avansate. Modelele din gama medie se situeaza in jur de 600-900 lei.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-1">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Care e diferenta intre un patut co-sleeping si un landou?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Un patut co-sleeping este proiectat sa se ataseze ferm de patul parintilor, avand o latura detasabila sau rabatabila. Un landou (sau bassinet) este un cos separat, de obicei portabil, pe care il poti aseza langa pat, dar nu se ataseaza fizic si sigur de acesta. Patutul co-sleeping ofera o solutie mai stabila si integrata pentru somnul langa parinte.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-2">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Merita sa cumpar un patut co-sleeping daca am deja un patut normal?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Da, merita daca iti doresti sa maximizezi proximitatea cu bebelusul in primele luni, facilitand alaptarea si calmarea rapida pe timpul noptii. Un patut co-sleeping ofera siguranta unui spatiu propriu pentru bebe, eliminand riscurile impartirii patului parintilor, si poate imbunatati calitatea somnului mamei. Nu inlocuieste patutul normal, ci il completeaza pentru o perioada.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-3">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Ce varsta are bebelusul cand nu mai poate folosi patutul co-sleeping?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Majoritatea patuturilor co-sleeping sunt recomandate pentru bebelusi de la nastere pana la aproximativ 6 luni, sau pana cand ating greutatea maxima admisa (de obicei 9 kg). De asemenea, trebuie sa renunti la el cand bebelusul incepe sa se ridice in picioare sau sa se rostogoleasca activ, pentru a preveni accidentele.
+              </div>
+            </div>
+
+            <div class="faq-item" id="faq-4">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+                Pot folosi patutul co-sleeping atasat de pat pe durata intregii nopti?
+                <span class="faq-icon">+</span>
+              </button>
+              <div class="faq-answer">
+                Da, patutul co-sleeping atasat de pat este conceput special pentru utilizare pe toata durata noptii. Sistemul de prindere sigur si designul care il mentine aliniat cu patul parintilor permit acest lucru. Este o alternativa sigura la impartirea patului, asigurand ca bebelusul are propriul spatiu delimitat, dar la indemana.
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="author-line">
+          <div class="author-avatar">RM</div>
+          <div>
+            <div class="author-name">Raluca Marin</div>
+            <div class="author-role">Designer Interior Camera Copilului</div>
+          </div>
+        </div>
+
+        <SimilarArticles
+          currentSlug="patut-co-sleeping-atasat-de-pat"
+          currentCategory="camera-copilului"
+          articles={allArticles}
+        />
+
+        <PrevNextNav
+          currentSlug="patut-co-sleeping-atasat-de-pat"
+          currentCategory="camera-copilului"
+          articles={allArticles}
+        />
+      </div>
+    </div>
+  </article>
+
+  <script>
+    document.querySelectorAll('.comparison-outer').forEach(outer => {
+      const wrap = outer.querySelector('.comparison-wrap');
+      if (!wrap) return;
+      function checkScroll() {
+        const canScroll = wrap.scrollWidth > wrap.clientWidth;
+        const atEnd = wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 2;
+        outer.classList.toggle('can-scroll', canScroll && !atEnd);
+      }
+      checkScroll();
+      wrap.addEventListener('scroll', checkScroll, { passive: true });
+      window.addEventListener('resize', checkScroll, { passive: true });
+    });
+
+    const tocLinks = document.querySelectorAll('#toc-desktop-list a[data-toc-id]');
+    if (tocLinks.length > 0) {
+      const ids = Array.from(tocLinks).map(a => a.dataset.tocId);
+      const sections = ids.map(id => document.getElementById(id)).filter(Boolean);
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              tocLinks.forEach(a => a.classList.remove('active'));
+              const match = Array.from(tocLinks).find(a => a.dataset.tocId === entry.target.id);
+              match?.classList.add('active');
+            }
+          }
+        },
+        { rootMargin: '-80px 0px -60% 0px', threshold: 0 }
+      );
+      sections.forEach(s => observer.observe(s));
+    }
+  </script>
+</Layout>
