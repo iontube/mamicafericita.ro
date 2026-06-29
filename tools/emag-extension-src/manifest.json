@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "MamicaFericita — eMAG collector",
+  "version": "1.0.0",
+  "description": "Extrage produse copii/bebe de pe eMAG (rating, pret, imagini) si le trimite la colector. Filtru pe nr. recenzii.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "*://www.emag.ro/*",
+    "https://emagcollect.chaosproxyfb5a2eac.workers.dev/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["*://www.emag.ro/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": { "default_popup": "popup.html", "default_title": "eMAG collector" }
+}
