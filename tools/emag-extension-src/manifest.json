@@ -6,7 +6,7 @@
   "permissions": ["storage"],
   "host_permissions": [
     "*://www.emag.ro/*",
-    "https://emagcollect.chaosproxyfb5a2eac.workers.dev/*"
+    "https://emagcollect.twilight-violet-8a8b.workers.dev/*"
   ],
   "background": { "service_worker": "background.js" },
   "content_scripts": [
