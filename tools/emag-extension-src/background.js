@@ -1,5 +1,5 @@
 // Service worker: primeste produse de la content-script si le POST-eaza la colector (fara CORS).
-const COLLECTOR = 'https://emagcollect.chaosproxyfb5a2eac.workers.dev';
+const COLLECTOR = 'https://emagcollect.twilight-violet-8a8b.workers.dev';
 const SECRET = 'mf_emag_2026';
 
 chrome.runtime.onMessage.addListener((msg, _sender, reply) => {
